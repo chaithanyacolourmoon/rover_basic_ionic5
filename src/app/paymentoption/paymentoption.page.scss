@@ -1,0 +1,84 @@
+ion-button {
+    height: 40px;
+    text-transform: initial;
+    --border-radius: 22px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    width: 60%;
+    --background: #d9340f;
+    font-weight: 600;
+      }
+
+    .label {
+        font-size: 18px;
+    margin-left: 12px;
+    }  
+
+    .addressbtn {
+        display: block;
+        width: 90%;
+        text-transform: uppercase;
+        outline: none;
+        padding: 14px 25px;
+        border-radius: 25px;   
+        color: #fff;
+        margin: auto;
+        background: var(--cm-main-color);
+    }
+
+    .payment {
+        padding: 10px 20px;
+    background: #fff;
+    margin: 10px;
+    }
+
+    ion-item{
+        --background:transparent;
+        padding: 0px 0px;
+        border-radius: 20px;
+        ion-label{
+            padding-left:20px;
+            color:#000;
+            // font-weight:bold;
+            p{
+                color:var(--cm-no-item-color);
+                font-size:12px;
+            }
+        }
+       
+    }
+    
+    .item-radio-checked{
+        background-color: #fff;
+        padding: 0px 0px;
+        border-radius: 20px;
+        border-color:var(--cm-main-color);
+        ion-label{
+            padding-left:20px;
+            color:#000;
+            // font-weight:bold;
+            p{
+                color:var(--cm-no-item-color);
+                font-size:12px;
+            }
+        }
+    }
+    ion-radio {
+        --color-checked: var(--cm-main-color);
+        // display: none;
+    }
+
+    .back{
+        background: #f3fff6;
+        border-radius:10px;
+    }
+
+    .msg{
+        color: red;
+        text-align: right;
+        margin: 0px;
+        font-size: 12px;
+    }
+
+    

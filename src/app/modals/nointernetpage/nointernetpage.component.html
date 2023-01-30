@@ -1,0 +1,19 @@
+
+
+<ion-content>
+  <div align='center' class="payment" style="padding-top:50%;">
+    <img class="fade_in" src="assets/images/Cuttings/no_internet.png" />
+    <h4 style="padding-top:20px;">
+     <span *ngIf="!utilserv.getTranslation('No-Internet-Connection')">No Internet Connection</span> 
+      <span class="other_lang">{{utilserv.getTranslation('No-Internet-Connection')}}</span></h4>
+    <p>
+      <span *ngIf="!utilserv.getTranslation('Please-check-your-network-settings-and')">
+        Please check your network settings and  <br /></span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Please-check-your-network-settings-and')">
+        {{utilserv.getTranslation('Please-check-your-network-settings-and')}} <br /></span>
+     
+      <span *ngIf="!utilserv.getTranslation('Try-Again')">Try Again</span>
+      <span class="other_lang">{{utilserv.getTranslation('Try-Again')}}</span></p>
+  </div>
+
+</ion-content>

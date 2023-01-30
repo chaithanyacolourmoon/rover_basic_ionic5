@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-button style="--background:none" routerLink="/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Order-Placed')">Order Placed</span> 
+      <span class="other_lang">{{utilserv.getTranslation('Order-Placed')}}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #fff;">
+  <div class="failure">
+      
+    <h4>We have placed your order. You can pay the amount at the time of delivery.
+      <br/><br/>
+      Order No. #{{order_id}}
+    </h4>
+    <ion-button class="order_details" (click)="goOrderDetail()">View Order Details</ion-button>
+    <h5>Or</h5>
+    <ion-button class="try_again" *ngIf="selected_method=='Razorpay' && utilserv.setting_data?.payment_razorpay=='Yes'" (click)="doOnline()">Razorpay Try Again</ion-button><br/>
+    <ion-button class="try_again" *ngIf="selected_method=='Cashfree' && utilserv.setting_data?.cashfree=='Yes'" (click)="cashfreepay()">CashFree Try Again</ion-button><br/>
+    <ion-button class="try_again" *ngIf="selected_method=='Paytm' && utilserv.setting_data?.payment_paytm=='Yes'">Paytm Try Again</ion-button><br/>
+
+    <ion-button class="home" (click)="goHome()">Back To Home</ion-button>
+  </div>
+    
+</ion-content>

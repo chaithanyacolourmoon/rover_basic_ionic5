@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Subscription')">Subscription</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Subscription')">{{utilserv.getTranslation('Subscription')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div align="center" class="sub_logo">
+    <div *ngIf="sub_show=='false'">
+      <img style="position:relative;top:-20px;" src="../../assets/images/adv_cuttings/bg_img.png" />
+      <img class="bike" src="../../assets/images/Cuttings/vip_logo.png" />
+      <!-- <img src="../../assets/images/adv_cuttings/vip_logo.png" /> -->
+      <div class="spc_offer">
+        <h1>VERY SPECIAL<br/>
+          OFFERS FOR<br/>
+          VERY SPECIAL<br/>
+          PEOPLE.</h1>
+      </div>
+      <div class="member">
+        <p>Become a member and<br/>
+          Enjoy Unlimited Free Home Delivery</p>
+      </div>
+    </div>
+    <div class="active_sub" *ngIf="sub_show=='true'">
+      <h5>Your Current Subscription</h5>
+      <div class="current_sub">
+          <div>
+            <div class="plan">
+              <h2>
+                <span style="float: left;
+                position: relative;
+                left: 0px;
+                margin: auto;
+                display: block;">{{sub_plan_title}}</span>
+                <span style="text-align: right;
+                position: relative;
+                right: 0px;
+                margin: auto;
+                display: block;">₹{{sub_plan_price}}</span>
+              </h2>
+              <p>Unlimited Free Home Delivery</p>
+              <ion-row style="padding-top:15px;">
+                <ion-col size="2" style="padding:0px;">
+                  <div class="clock">
+                    <img src="../../assets/images/Cuttings/time.svg" />
+                  </div>
+                </ion-col>
+                <ion-col size="10" style="padding:0px;">
+                  <p style="margin:0px;font-size:15px;">Expiring on <br/>
+                  {{sub_end_date}}</p>
+                </ion-col>
+              </ion-row>
+            </div>
+            <ion-row style="margin-top:-20px;">
+              <ion-col size="6" style="padding:0px;">
+              </ion-col>
+              <ion-col size="6" style="padding:0px">
+                <div class="premium">
+                  <p style="margin:0px;font-size:12px;">Premium Plan</p>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+      </div>
+    </div>
+    <div [ngClass]="sub_show=='false'?'package':'package_other'">
+      <div style="padding: 0px 10px;" *ngIf="sub_show=='false'">
+        <ion-radio-group [(ngModel)]="package_id" (ionChange)="subChange($event)">
+          <ion-item lines="none" *ngFor="let p of sub_plans"
+           [ngClass]="package_id==p.plan_id?'item_active':'item'">
+            <ion-label>
+              <h4 style="color: #000;
+              font-weight: bold;
+              font-size: 16px;">{{p.title}}</h4>
+              <h5>
+                <span [ngClass]="p.mrp?'all_color':''">₹{{p.price}} &nbsp;</span>
+                <span *ngIf="p.mrp" style="text-decoration:line-through">₹ {{p.mrp}}</span></h5>
+            </ion-label>
+            <ion-radio slot="end" [value]="p.plan_id"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
+        <ion-button (click)="buySub()">Buy Subscription</ion-button>
+      </div>
+
+      <div class="faq">
+        <h6>Faq</h6>
+        <div *ngFor="let f of sub_faq">
+          <h4>{{f.title}}</h4>
+          <p>{{f.description}}
+            </p>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+
+</ion-content>
+
+<ion-footer style="background:#fff;">
+  <h4 (click)="goTerms()">Terms & Conditions</h4>
+</ion-footer>

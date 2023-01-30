@@ -1,0 +1,217 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Favorites')">Favorites</span>
+      <span class="other_lang">{{utilserv.getTranslation('Favorites')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="!wishlist">
+    <ion-item *ngFor="let number of [0,1,2,3,4]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated style="border-radius: 0px;
+        width: 45px;
+        height: 45px;
+        margin-top: -3px;"></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </div>
+  <div *ngIf="wishlist">
+    <div *ngFor="let list of wishlist" class="product_list">
+      <ion-row *ngFor="let product of list?.product_details" class="products">
+        <ion-col size="4">
+          <div *ngFor="let price of product?.price">
+            <div *ngIf="product.selectedItem == price.id">
+                <div class="offer" *ngIf="price.discount">
+                    {{price.discount}} OFF
+                 </div>
+            </div>
+            
+          </div>
+          <img [src]="product.image" onerror="this.src='assets/images/default.png'" 
+          (click)="viewProduct(product.product_id)" style="object-fit: contain;
+          height: 100px;
+          width: 200px">
+        </ion-col>
+        <ion-col size="8" class="content">
+          <div *ngFor="let price of product.price">
+            <ion-row>
+              <ion-col size="10" style="padding:0px;">
+                <h6 style="margin-top:3px" *ngIf="product.selectedItem == price.id">
+                  &#x20B9;{{price.price}}  <span class="mrp" *ngIf="price.discount!='0 %'">&#x20B9;{{price.mrp}}</span></h6>
+              </ion-col>
+              <ion-col size="2" style="padding:0px;" *ngIf="product.selectedItem == price.id">
+                <div (click)="deleteItem_fromWishlist(list.id)" style="background: #e5e5e5;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                padding: 7px;">
+                  <ion-icon style="color:var(--cm-no-item-color);" name="close"></ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+  
+          <h6>{{product.name}}</h6>
+          <div *ngFor="let price of product.price">
+            <div [ngClass]="(product.price.length>1)?'select_class':''" (click)="selcteQuantity(product.product_id,product.name,product.price,product.selectedItem)"
+             *ngIf="product.selectedItem == price.id">
+              {{price.quantity}}
+              <span *ngIf="product.price.length>1" style="float:right;"><ion-icon name="arrow-down"></ion-icon></span>
+            </div>
+          </div>
+          <div *ngFor="let price of product.price">
+            <div *ngIf="price.stock_status=='In Stock'">
+              <div *ngIf="product.selectedItem == price.id">
+                <ion-button (click)="addtocartitem(product)" *ngIf="!price.cart_qty">
+                  <span *ngIf="!utilserv.getTranslation('Add')">Add</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Add')}}</span>
+                </ion-button>
+                <div class="quantity" *ngIf="price.cart_qty">
+                  <div class='minus' style="float: left;" (click)="decrease(product.product_id,1,product)">
+                  <span>
+                    -
+                  </span> 
+                  </div>
+                  <span style="position: relative;
+                  top: 7px;
+                  left: 3px;color:#fff;">{{price.cart_qty}}</span>
+                  <div class='minus' style="float: right;left:3px;" (click)="increase(product.product_id,2,product)">
+                    <span>
+                    +
+                    </span> 
+                  </div>
+                </div>
+                <div style="color:red;font-size:12px;text-align:right">
+                  You Save &#x20B9; {{price.save}}
+                </div>
+              </div>
+            </div>
+            
+            <div *ngIf="price.stock_status=='Out Of Stock'">
+              <div *ngIf="product.selectedItem == price.id">
+                <p style="color: red;
+                font-weight: bold;font-size:15px;">Out Of Stock</p>
+                <div style="color:red;font-size:12px;text-align:right">
+                  You Save &#x20B9; {{price.save}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+    
+    <div *ngIf="wishlist.length==0">
+      <div class="noproducts">
+        <div style="margin-top: 10%;width: 100%;">
+          <img [src]="no_icon" onerror="this.src='assets/images/default.png'" style="margin:auto;display:block">
+        </div>
+        <h5>Oppss!</h5>
+         <p>{{no_message}}</p>
+        </div>
+    </div>
+  </div>
+ 
+  <!-- <ion-row *ngIf="this.wishlist!=null">
+    <ion-col size="6" style="padding: 5px;" *ngFor="let list of wishlist">
+          <div class="categorylist" *ngFor="let image of list.product_details">
+        <img [src]="image.image" (click)="viewProduct(list.product_id)">
+        <h6>{{image.name}}</h6>
+        <div *ngFor="let price of image.price">
+          <h6 style="margin-top:3px" [(ngModel)]="selectedprice" *ngIf="list.selectedItem == price.id">
+            MRP : &#x20B9; {{price.price}}</h6>
+          </div>
+      </div>
+      <ion-icon name="trash-outline" (click)="deleteItem_fromWishlist(list.id)"></ion-icon>
+    </ion-col>
+  
+  </ion-row> -->
+    
+    
+
+      
+      <!-- <h5 style="width: 100%;text-align: center;margin-top: 10%;color: var(--cm-no-item-color);">No Products Found</h5> -->
+</ion-content>
+
+<ion-footer>
+  <!-- <div class="footericons">
+    <img src="assets/images/facebook-icon.svg" (click)="goFacebook()">
+    <img src="assets/images/instagram.svg" (click)="goInsta()">
+    <img src="assets/images/watsapp.svg" (click)="goWhatsapp()">
+    <img src="assets/images/mail.svg" (click)="mailto()">
+  </div> -->
+  <ion-tab-bar>
+    <ion-tab-button (click)="goHomeTab()">
+      <img *ngIf="homeActive==false" src="assets/images/Cuttings/home_black.png" />
+      <img *ngIf="homeActive==true" class="active" src="assets/images/Cuttings/home.png" />
+      <ion-label [ngClass]="(homeActive==true)?'text_active':'text'">
+       <span *ngIf="!utilserv.getTranslation('Home')">Home</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Home')">{{utilserv.getTranslation('Home')}}</span>
+      </ion-label>
+      <!-- <ion-label *ngIf="home_trans" [ngClass]="(homeActive==true)?'text_active':'text'">{{home_trans}}</ion-label> -->
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goCategoryTab()">
+      <img *ngIf="categoryActive==false" src="assets/images/Cuttings/Categories_black.png" />
+      <img *ngIf="categoryActive==true" class="active" src="assets/images/Cuttings/Categories.png" />
+      <ion-label [ngClass]="(categoryActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('Categories')">Categories</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Categories')">{{utilserv.getTranslation('Categories')}}</span>
+      </ion-label>
+      <!-- <ion-label *ngIf="cat_trans" [ngClass]="(categoryActive==true)?'text_active':'text'">{{cat_trans}}</ion-label> -->
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goFavouriteTab()">
+      <img *ngIf="favouriteActive==false" src="assets/images/Cuttings/Favorites_black.png" />
+      <img *ngIf="favouriteActive==true" class="active" src="assets/images/Cuttings/Favorites.png" />
+      <ion-label [ngClass]="(favouriteActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('Favorites')">Favorites</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Favorites')">{{utilserv.getTranslation('Favorites')}}</span>
+      </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goOrdersTab()">
+      <img *ngIf="ordersActive==false" src="assets/images/Cuttings/My_Orders_black.png" />
+      <img *ngIf="ordersActive==true" class="active" src="assets/images/Cuttings/My_Orders.png" />
+      <ion-label [ngClass]="(ordersActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('My-Orders')">My Orders</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('My-Orders')">{{utilserv.getTranslation('My-Orders')}}</span>
+      </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="notification_count" (click)="goNotificationTab()">
+      <img style="position:relative;top:10px;" *ngIf="notificationActive==false" src="assets/images/Cuttings/Notification_black.png" />
+      <img style="position:relative;top:10px;" *ngIf="notificationActive==true" class="active" src="assets/images/Cuttings/Notification.png" />
+      <ion-badge color="danger" class="badge_noti" *ngIf="notification_count">{{notification_count}}</ion-badge>
+      <ion-label style="position:relative;top:-10px;" [ngClass]="(notificationActive==true)?'text_active':'text'" class="font_7">
+        <span *ngIf="!utilserv.getTranslation('Notification')">Notification </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Notification')">{{utilserv.getTranslation('Notification')}}</span>
+      </ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="!notification_count" (click)="goNotificationTab()">
+      <img *ngIf="notificationActive==false" src="assets/images/Cuttings/Notification_black.png" />
+      <img *ngIf="notificationActive==true" class="active" src="assets/images/Cuttings/Notification.png" />
+      <ion-badge color="danger" class="badge_noti" *ngIf="notification_count">{{notification_count}}</ion-badge>
+      <ion-label [ngClass]="(notificationActive==true)?'text_active':'text'" class="font_7">
+        <span *ngIf="!utilserv.getTranslation('Notification')">Notification </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Notification')">{{utilserv.getTranslation('Notification')}}</span>
+      </ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

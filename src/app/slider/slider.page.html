@@ -1,0 +1,68 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>slider</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-slides pager="true" [options]="slideOpts" class="home" #mySlider>
+
+
+
+    <ion-slide class="slider2">
+
+        <img style="width: 100%;
+        max-width: 100%;
+        height: 60%;" src="assets/images/Cuttings/bg_onbard.png" />
+        <img class="bike ball" src="assets/images/Cuttings/Easy_shopping.png" />
+        <p class="bold family" style="margin-bottom: 5%;">Easy Shopping</p>
+        <div class="slide">
+        <p class="m-0 family" style="margin-top: 0px !important;
+        font-size: 17px;
+        color: #5a5a5a;">We support the artisans who create wonderful, original works</p>
+        <!-- <div class="footer">
+          <ion-button class="color" (click)="goToLocation()">
+            <img slot="start" src="assets/images/loc_slide.png" /> Get Location
+          </ion-button>
+        </div> -->
+      </div>
+
+      <ion-button (click)="goNext()">Next</ion-button>
+    </ion-slide>
+
+    <!-- <ion-slide class="slider3">
+      <div class="slide">
+          <img class="" src="assets/images/slider/icon_5.png" style="width: 29%;
+          float: left;margin-left: 30px;height:100px" />
+          <img class="" src="assets/images/slider/icon_6.png" style="width: 29%;
+          float: right;margin-right: 30px;height:100px;" />
+          <div style="margin-top: 12%;" align="center">
+            <img class="ball" slot="start" src="assets/images/slider/icon_4.png" style="width: 50%;max-height:255px;height:255px;object-fit:cover" />
+          </div>
+       
+        <div>
+          <p class="family">5 Stages of Quality checks before it reaches you!</p>
+
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide class="slider1">
+      <div class="slide">
+          <img src="assets/images/slider/icon_3.png" class="firstslide">
+          <img class="mt10_per fade_in ball" src="assets/images/slider/icon_2.png" />
+
+        <p class="family">Free Contact-less Delivery right at your door step!</p>
+
+        <ion-button class="color" (click)="goToLocation()" *ngIf="pincode==null && location==null">
+          Continue
+        </ion-button>
+
+        <ion-button class="color" (click)="goTohome()" *ngIf="pincode!=null && location!=null">
+          Go To Home
+        </ion-button>
+
+      </div>
+    </ion-slide> -->
+
+  </ion-slides>
+</ion-content>

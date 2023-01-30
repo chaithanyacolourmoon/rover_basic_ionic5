@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons> -->
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('Brand-Filter')">Brand Filter </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('Brand-Filter')">{{utilserv.getTranslation('Brand-Filter')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form>
+    <div class="homesearch">
+      <ion-searchbar placeholder="Search a brand" name="search_key"
+        (ionInput)="filterItems($event)"
+        style="--border-radius:10px;">
+      </ion-searchbar>
+    </div>
+  </form>
+  <ion-row>
+    <!-- <ion-col size="5">
+      <ion-segment [(ngModel)]="currentSegment" (ionChange)="selectAttrVal($event)">
+        <ion-segment-button value="{{at.title}}" *ngFor="let at of attributelist">
+          <ion-label>{{at.title}}</ion-label>
+        </ion-segment-button>
+
+      </ion-segment>
+    </ion-col> -->
+    <ion-col size="12">
+      <ion-list *ngIf="attributelist.length>0">
+        <ion-item *ngFor="let atval of attributelist">
+          <ion-label>{{atval.title}}</ion-label>
+          <ion-checkbox slot="start" (ionChange)="selectAttrVal($event,atval.title)"
+            [checked]="atval.is_checked"></ion-checkbox>
+        </ion-item>
+
+      </ion-list>
+      <div *ngIf="attributelist.length==0">
+        <p class="no_data">No Brands Found For This Category</p>
+      </div>
+      
+    </ion-col>
+  </ion-row>
+</ion-content>
+<ion-footer >
+  <ion-row style="background: #fff;" *ngIf="attributelist.length>0">
+    <ion-col size="6" (click)="reset()">
+      <ion-button (click)="reset()" expand="block" fill="clear" size="small">
+        Reset <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="6" (click)="apply()">
+      <ion-button expand="block" fill="clear" size="small">
+        Apply
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row style="background: #fff;" *ngIf="attributelist.length==0">
+    <ion-col size="12" (click)="reset()">
+      <ion-button (click)="reset()" expand="block" fill="clear" size="small">
+        Cancel <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

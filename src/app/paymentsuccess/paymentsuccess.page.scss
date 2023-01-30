@@ -1,0 +1,24 @@
+.orderplaced {
+    text-align: center;
+    p {         
+   margin: 15px 30px;
+   color: grey;
+   line-height: 23px;
+    }
+    h6 {
+        // text-decoration: underline;
+        color: e90d0b;
+    }
+}
+.backtohome {    
+    display: block;
+    width: 90%;
+    text-transform: uppercase;
+    outline: none;
+    padding: 20px 25px;
+    border-radius: 10px;
+    color: #fff;
+    margin: auto;
+    background: var(--cm-main-color);
+    margin-top: 5%; 
+}

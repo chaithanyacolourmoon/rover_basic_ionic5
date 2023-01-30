@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('Write-A-Review')">Add Cash </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('Write-A-Review')">{{utilserv.getTranslation('Write-A-Review')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="background:var(--cm-main-color)">
+    <div align="center" class="content">
+      <ion-row class="amount">
+        <ion-col size="3">
+
+        </ion-col>
+        <ion-col size="1">
+          &#x20B9; 
+        </ion-col>
+        <ion-col size="4">
+          <div>
+            <ion-input #input type="tel" maxlength="6" [(ngModel)]="amount"> 
+            </ion-input>
+          </div>
+           
+        </ion-col>
+        <ion-col size="2">
+          /-
+        </ion-col>
+        <ion-col size="3">
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button [ngClass]="amount=='100'?'active_btn':'amount_btn'" (click)="cashAmount(100)">&#x20B9; 100 /-</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button [ngClass]="amount=='500'?'active_btn':'amount_btn'" class="amount_btn" (click)="cashAmount(500)">&#x20B9; 500 /-</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button [ngClass]="amount=='1000'?'active_btn':'amount_btn'" class="amount_btn" (click)="cashAmount(1000)">&#x20B9; 1000 /-</ion-button>
+        </ion-col>
+      </ion-row>
+     
+    </div>
+  </div>
+
+  <div style="padding:20px 5px;">
+    <ion-row 
+     *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.payment_razorpay=='Yes'" [ngClass]="select_pay=='Razorpay' ? 'active' : ''" (click)="radioGroupChange('Razorpay')">
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/razorpay.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          <span *ngIf="!utilserv.getTranslation('Pay-With-Razor-Pay')">
+           Pay With Razor Pay
+          </span>
+          <span *ngIf="utilserv.getTranslation('Pay-With-Razor-Pay')">
+            {{utilserv.getTranslation('Pay-With-Razor-Pay')}}
+          </span>
+         
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.payment_paytm=='Yes'" [ngClass]="select_pay=='Paytm' ? 'active' : ''" (click)="radioGroupChange('Paytm')">
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/paytm.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          
+          <span *ngIf="!utilserv.getTranslation('Pay-With-Paytm')">
+            Pay With Paytm
+          </span>
+          <span *ngIf="utilserv.getTranslation('Pay-With-Paytm')">
+            {{utilserv.getTranslation('Pay-With-Paytm')}}
+          </span>
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="utilserv.setting_data?.payment_gateway=='Yes'  && utilserv.setting_data?.cashfree=='Yes'" [ngClass]="select_pay=='Cashfree' ? 'active' : ''" (click)="radioGroupChange('Cashfree')"> 
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/cash.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          
+          <span *ngIf="!utilserv.getTranslation('Pay-With-Cash-Free')">
+            Pay With Cash Free
+          </span>
+          <span *ngIf="utilserv.getTranslation('Pay-With-Cash-Free')">
+            {{utilserv.getTranslation('Pay-With-Cash-Free')}}
+          </span>
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-button routerLink="/addcash" (click)="addCash(amount)">Add Cash</ion-button>
+</ion-content>

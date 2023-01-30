@@ -1,0 +1,77 @@
+ion-content{
+    // --background:#e2fce7;
+    .content{
+        padding:10px;
+        padding-top:5%;
+
+        p{
+            font-size:12px;
+        }
+
+        .code{
+            background: #c0f0c9;
+            width: 50%;
+            margin: 10px;
+            border-radius: 10px;
+            padding: 8px;
+            border: 2px dotted var(--cm-head-back-color);
+            .no{
+                font-weight:bold;
+                margin:0px;
+                font-size:25px;
+                text-transform: uppercase;
+            }
+            .copy{
+                float: right;
+                margin-top: 6px;
+                font-size: 20px;
+                
+            }
+        }
+    }
+
+    .whatsapp{
+        background: #c6e9cc;
+        color: #0d6816;
+        padding: 10px;
+        border-radius: 50%;
+        width: 50px;
+        height: 48px;
+    }
+    .twitter{
+        background: #d2f6ea;
+        padding: 10px;
+        border-radius: 50%;
+        width: 50px;
+        height: 48px;
+        color:#0d90f5;
+    }
+    .facebook{
+        background: #cae6e9;
+        padding: 10px;
+        border-radius: 50%;
+        width: 50px;
+        height: 48px;
+        color:#2853fc;
+    }
+    .gmail{
+        background: #e4e4d0;
+        padding: 10px;
+        border-radius: 50%;
+        width: 50px;
+        height: 48px;
+        color:#f34a3e;
+    }
+    .sms{
+        background: #ccf6e8;
+        padding: 10px;
+        border-radius: 50%;
+        width: 50px;
+        height: 48px;
+        color:#2a706c;
+    }
+
+    ion-icon{
+        font-size:25px;
+    }
+}

@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar style="--background:#fff">
+    <ion-title (click)="skipClick()">
+      <span *ngIf="!utilserv.getTranslation('Skip')">Skip</span>
+     <span class="other_lang">
+      {{utilserv.getTranslation('Skip')}}
+     </span> 
+    </ion-title>
+  </ion-toolbar>
+  
+</ion-header>
+<ion-content class="login">
+  <!-- <div>
+    <img src="assets/images/logo.jpeg">
+  </div> -->
+  <ion-grid style="padding: 0;">
+    <div class="loginbox">
+      <ion-row>
+        <ion-col size="12">
+          <h4 *ngIf="!utilserv.getTranslation('Let-Get-Started')">Let's Get Started</h4>
+          <h4 *ngIf="utilserv.getTranslation('Let-Get-Started')">{{utilserv.getTranslation('Let-Get-Started')}}</h4>
+          <h3 *ngIf="!utilserv.getTranslation('Klhaskaa-Creations')">Rovor</h3>
+          <h3 *ngIf="utilserv.getTranslation('Klhaskaa-Creations')">{{utilserv.getTranslation('Klhaskaa-Creations')}}</h3>
+          <h6 *ngIf="!utilserv.getTranslation('Create-an-account-to-continue')">Create an account to continue.</h6>
+          <h6 *ngIf="utilserv.getTranslation('Create-an-account-to-continue')">{{utilserv.getTranslation('Create-an-account-to-continue')}}</h6>
+          <form #userregister="ngForm" (ngSubmit)="registerSubmit(userregister.value)">
+            <div style="padding-top:1%;">
+              <ion-item>
+                <ion-icon name="person-outline" class="loginicon"></ion-icon>
+                <ion-input type="text" placeholder="Full Name *" name="name" ngModel></ion-input>
+              </ion-item>
+              <ion-item class="inputbox1">
+                <ion-icon name="mail-outline" class="loginicon"></ion-icon>
+                <ion-input type="text" placeholder="Email *" name="email" ngModel></ion-input>
+              </ion-item>
+              <ion-item class="inputbox1">
+                <ion-icon name="call-outline" class="loginicon"></ion-icon>
+                <ion-input maxlength="10" type="tel" placeholder="Phone *" name="mobile" ngModel></ion-input>
+              </ion-item>
+              <ion-item class="inputbox1">
+                <ion-icon name="lock-closed-outline" class="loginicon"></ion-icon>
+                <ion-input [type]="passwordType" placeholder="Password (at least 8 characters) *" name="password" ngModel></ion-input>
+                <ion-icon class="loginicon" item-end [name]="passwordIcon" (click)='hideShowPassword()' style="margin-right:0px;"></ion-icon>
+              </ion-item>
+              <ion-item *ngIf="utilserv.setting_data?.referral=='Yes'">
+                <ion-icon name="people-outline" class="loginicon"></ion-icon>
+                <ion-input type="text" placeholder="Referral Code" name="referral_code" ngModel></ion-input>
+              </ion-item>
+              <!-- <div style="text-align: center;margin: 2px 20px;">
+                <ion-checkbox style="margin-top:3%" name="email_sub" [(ngModel)]="email_sub">
+                </ion-checkbox><span class="checkemail">Send me updates about promotional offers and messages via
+                  email</span>
+              </div> -->
+              <button type="submit" expand="block" class="loginbtn">
+                <span *ngIf="!utilserv.getTranslation('Register')">Register</span> 
+                <span class="other_lang">{{utilserv.getTranslation('Register')}}</span>
+                </button>
+            </div>
+          </form>
+        </ion-col>
+      </ion-row>
+
+      <h6 style="color:black" class="register center" routerLink="/login">
+        <span *ngIf="!utilserv.getTranslation('Already-have-an-Account')">
+          Already have an Account ?
+        </span>
+        <span *ngIf="utilserv.getTranslation('Already-have-an-Account')">
+          {{utilserv.getTranslation('Already-have-an-Account')}} ?
+        </span><span style="color: #f91d1d;"> 
+       <span *ngIf="!utilserv.getTranslation('Login')">
+        Login
+       </span><span class="other_lang">{{utilserv.getTranslation('Login')}}</span> </span>
+      </h6>
+    </div>
+  </ion-grid>
+</ion-content>

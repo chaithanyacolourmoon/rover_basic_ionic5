@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('Write-A-Review')">My Wallet </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('Write-A-Review')">{{utilserv.getTranslation('Write-A-Review')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div style="background:var(--cm-main-color)">
+    <div class="content">
+      <p>Current Balance
+        <span>&#x20B9; {{walletAmount}} /-</span>
+      </p>
+      <ion-button routerLink="/addcash">Add Cash</ion-button>
+    </div>
+  </div>
+
+  <div class="trans">
+    <h4>My Transactions</h4>
+    <div *ngIf="wallet_transcation?.length>0">
+      <ion-row class="noti" *ngFor="let w of wallet_transcation">
+        <ion-col size="2">
+          <div class="image" *ngIf="w.type=='Credit'">
+            <img src="../../assets/images/new_cuttings/add_monye.svg" style="border-radius:50%;" />
+          </div>
+
+          <div class="image" *ngIf="w.type=='Debit'">
+            <img src="../../assets/images/new_cuttings/add_monye_red.svg" style="border-radius:50%;" />
+          </div>
+          
+        </ion-col>
+        <ion-col size="10">
+          <div class="detail">
+            <h5>{{w.remarks}}<br/>
+            <span class="date">{{w.date}}
+            </span>
+            <span *ngIf="w.type=='Credit'" class="rs">+ ₹{{w.amount}}</span>
+            <span *ngIf="w.type=='Debit'" class="debit">- ₹{{w.amount}}</span>
+            </h5>
+            
+          </div>
+          
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row class="noti">
+        <ion-col size="2">
+          <div class="image">
+            <img src="../../assets/images/new_cuttings/add_monye_red.svg" style="border-radius:50%;" />
+          </div>
+          
+        </ion-col>
+        <ion-col size="10">
+          <div class="detail">
+            <h5>Grocery<br/>
+            <span class="date">09 Feb, 2020, 02:40 PM
+            </span>
+            <span class="debit">+ ₹150</span>
+            </h5>
+            
+          </div>
+          
+        </ion-col>
+      </ion-row> -->
+    </div>
+    
+    <div *ngIf="wallet_transcation?.length==0">
+      <p style="text-align: center;
+      padding-top: 30%;color:var(--cm-no-item-color)">No Tanscations</p>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,85 @@
+.orderhistory {
+    background: #fff;
+    width: 100%;
+    border: 1px solid #c9c5c5;
+    margin: 10px;
+    /* border-radius: 10px; */
+    padding: 5px;
+    box-shadow: 0px 0px 10px 3px #f1f1f1;
+    h6 {
+        font-size: 16px;
+    margin: 3px;
+    }
+    .address {
+        margin: 7px;
+    font-size: 13px;
+    color: grey;
+    line-height: 18px;
+    display: -webkit-box;
+    max-width: 350px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    }
+    .lefttitle {
+        font-size: 13px;
+        margin: 6px;
+        font-weight: 500;
+        line-height: 18px;
+    }
+    .righttitle {
+        font-size: 13px;
+        margin: 6px;
+        color: grey;
+        line-height: 18px;
+      margin: 5px;
+    }
+    .amount {
+        font-weight: 600;
+    }
+}
+
+.segment-button-checked 
+{
+    color: #eb1d21 !important;
+    --color-checked: #eb1d21 !important;
+}
+
+.segment-button-checked 
+    {
+        color: #000 !important;
+        --color-checked: #000 !important;
+    }
+    
+    ion-segment{ 
+        box-shadow: 0px 5px 6px -4px #ededed;
+        // border-bottom: 1px solid #ccc; 
+    }
+
+    .ongoing_btn{
+        --box-shadow: none;
+        --background: #ffded5;
+        --color: #f24417;
+        text-transform: none;
+        width: 100%;
+        --border-radius: 0px;
+        font-size: 9px;
+        button{
+            padding-left:0px !important;
+            padding-right:0px !important;
+        }
+    }
+
+    .order_detail{
+        h5{
+            margin-bottom:0px;
+            color:#717171;
+            font-size:14px;
+            margin-top:10px;
+        }
+        h4{
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    }

@@ -1,0 +1,293 @@
+.product {
+    // padding: 6px 10px;
+    .title{
+        padding:6px 10px;
+    }
+    .unit{
+        border-top:1px solid #f0f0f0;
+        margin: -5px;
+        padding: 6px 15px;
+    }
+    h5 {
+        font-weight: 600;
+        font-size: 15px;
+        margin: 0px;
+        margin-bottom:10px;
+       
+    }
+    h6 {
+        font-weight: 600;
+        font-size: 12px;
+        margin: 4px;
+    }
+    p {
+        font-size: 14px;
+        margin: 3px;
+    }
+}
+
+.productdetails {
+    padding: 10px;
+    border-top: 10px solid #f1f1f1;
+    h5 {
+        font-weight: 600;
+        font-size: 15px;
+        margin: 4px;
+    }
+    p {
+        text-align: justify;
+        margin: 8px;
+        font-size: 12px;
+        color: #808581;
+        padding-top: 10px;
+    }
+}
+.bag {
+    text-align: center;
+    background: var(--cm-main-color);
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.wishlist {
+  //  color: #e90d0b;
+    text-align: center;
+    font-size: 25px;
+    padding: 5px 0px;
+}
+
+ion-select {
+    margin: 7px 2px;
+    // border: 1px solid grey;
+    width: 50%;
+    height: 50px;
+    padding: 3px 5px;
+    text-align: center;
+    border: 1px solid var(--cm-main-color);
+    color: var(--cm-main-color);
+    border-radius: 10px;
+}
+
+// .cartcount {
+//     float: right;
+//     border-radius: 50%;
+//     position: relative;
+//     right: 28px;
+//     width: 20px;
+//     text-align: center;
+//     height: 20px;
+//     top: -8px;
+// }
+
+.quantity {
+    background: var(--cm-no-item-color); 
+    padding: 3px 5px 0px;
+    ion-icon {
+        font-size: 34px;
+        color: #fff;
+    //  transform: rotate(90deg);
+    }
+    span{               
+        color: #fff;
+        font-size: 20px;
+        position: relative;
+        top: -10px;
+        padding: 11px;              
+    }
+}
+
+.segment-button-checked 
+{
+    color: var(--cm-main-color) !important;
+    --color-checked: var(--cm-main-color) !important;
+}
+
+ion-segment{ 
+    // box-shadow: 0px 5px 6px -4px #ededed;
+    width:50%;
+    margin:0px;
+    // border-bottom: 1px solid #ccc; 
+}
+
+.other_seller{
+    border: 1px solid #9c9c9c;
+    padding: 10px 5px;
+    border-radius: 10px;
+    height:310px;
+    width: 100%;
+
+    h4{
+        margin: 0px;
+        color: var(--cm-main-color);
+        text-align: left;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    h3{
+      font-size: 15px;
+      margin: 0px;
+      position: relative;
+      text-align:left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+
+    .other{
+        font-size: 15px;
+        margin: 0px;
+        position: relative;
+        text-align:left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+        line-height:20px;
+      }
+
+    ion-row{
+      padding-top:10px;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      ion-button{
+        --box-shadow: none;
+        --background: var(--cm-main-color);
+        --border-radius: 15px;
+        width: 100%;
+        height: 30px;
+      }
+    }
+  }
+
+.seller{
+    border: 1px solid #9c9c9c;
+    padding: 10px 5px;
+    border-radius: 10px;
+    height:360px;
+    width: 100%;
+
+    h4{
+        margin: 0px;
+        color: var(--cm-main-color);
+        text-align: left;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    h3{
+      font-size: 15px;
+      margin: 0px;
+      position: relative;
+      text-align:left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+
+    .other{
+        font-size: 15px;
+        margin: 0px;
+        position: relative;
+        text-align:left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+        line-height:20px;
+      }
+
+    ion-row{
+      padding-top:10px;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      ion-button{
+        --box-shadow: none;
+        --background: var(--cm-main-color);
+        --border-radius: 15px;
+        width: 100%;
+        height: 30px;
+      }
+    }
+  }
+
+  .quantity_1{
+    margin-top: 10px;
+    background: var(--cm-main-color);
+    width: 70px;
+    height: 25px;
+    border-radius: 10px;
+    margin-left: 5px;
+    .minus_1{
+        width: 25px;
+        height: 25px;
+        background: var(--cm-add-color);
+        color: #fff;
+        border-radius: 50%;
+        position: relative;
+        top: 0px;
+        left: -5px;
+        span{
+          font-size: 25px;
+          position: relative;
+          top: -5px;
+          left: 1px;
+          font-weight: bold;
+        }
+    }
+}
+
+  .quantity{
+    padding-top: 10px;
+    background: var(--cm-main-color);
+    width: 70px;
+    height: 50px;
+    border-radius: 10px;
+    margin-left: 0px;
+
+    .minus{
+        width: 25px;
+        height: 25px;
+        background: var(--cm-add-color);
+        color: #fff;
+        border-radius: 50%;
+        position: relative;
+        top: -3px;
+        left: -5px;
+        span{
+            font-size: 25px;
+            position: relative;
+            top: -5px;
+            left: -6px;
+            font-weight: bold;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    ion-footer{
+        img{
+            width:8% !important
+        }
+    }
+}

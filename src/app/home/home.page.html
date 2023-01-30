@@ -1,0 +1,409 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-menu-toggle slot="start">
+      <img src="assets/images/Cuttings/menu.png" class="iconmenu" style="width:50px;">
+    </ion-menu-toggle>
+    <!-- <img src="assets/images/logohome.png" class="logo" /> -->
+    <div class="title">
+      <h6>
+        <span *ngIf="!utilserv.getTranslation('Klhaskaa-Creations')">Rovor</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Klhaskaa-Creations')">{{utilserv.getTranslation('Klhaskaa-Creations')}}</span>
+        <span>
+        <!-- <ion-icon name="arrow-down"></ion-icon> -->
+      </span></h6>
+    </div>
+    <!-- <div class="title" routerLink="/location">
+      <h6>
+        <span *ngIf="!utilserv.getTranslation('Your-Location')">Your Location </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Your-Location')">{{utilserv.getTranslation('Your-Location')}}</span>
+        <span>
+        <ion-icon name="arrow-down"></ion-icon>
+      </span></h6>
+      <p *ngIf="!map_location">{{currentcity}}</p>
+      <p *ngIf="map_location">{{map_location}}</p>
+    </div> -->
+    <div routerLink="/searchlist" slot="end" class="cart_icon">
+      <ion-icon name="search" class="pic"></ion-icon>
+      <!-- <ion-icon name="person" class="pic" (click)="presentPopover($event)"></ion-icon> -->
+    </div>
+    <div class="cart_icon" slot="end">
+      <img src="assets/images/Cuttings/cart.svg" routerLink="/revieworder" style="position: relative;
+      width: 100%;">
+      <ion-badge color="danger" class="cartcount" routerLink="/revieworder">{{cartCount}}</ion-badge>
+    </div>
+   
+  
+    <!-- <img src="assets/images/username.png" style="float: right; left: 53px;top: 8px;position: relative;" (click)="presentPopover($event)" *ngIf="user_id" />
+    -->
+   
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content_box">
+    <!-- <p class="update" 
+      *ngIf="utilserv.version_data">
+      {{utilserv.version_data}}
+      <span *ngIf="utilserv.version_data!='you are using latest version'" class="blink_me" (click)="updateapp()">Update</span>
+    </p> -->
+    <!-- <p class="update" *ngIf="utilserv.appVersion!=utilserv.back_version">{{utilserv.version_data?.message}}
+      <span class="blink_me" (click)="updateapp()">Update</span></p> -->
+    <div *ngIf="!earliest" class="custom-skeleton">
+      <ion-row>
+        <ion-col size="2">
+          <!-- <div class="calendar"> -->
+            <ion-skeleton-text animated style="border-radius:50%;
+            height: 45px;
+            margin-top: -5px;"></ion-skeleton-text>
+          <!-- </div> -->
+        </ion-col>
+        <ion-col size="10" style="padding-top:5px;">
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row *ngIf="earliest && utilserv.setting_data?.delivery_slots=='Yes'">
+      <ion-col size="2">
+        <div class="calendar">
+          <img src="assets/images/Cuttings/calendr.svg" />
+        </div>
+      </ion-col>
+      <ion-col size="10" style="padding-top:3x;">
+        <h6 class="m-0" style="font-size:14px;">
+          <span *ngIf="!utilserv.getTranslation('Earliest-Deliver')">Earliest Deliver :</span>
+          <!-- <span class="blink_me" style="float:right;"><ion-button class="buy_now" (click)="buyNow()">Buy Now</ion-button></span> -->
+          <span class="other_lang" *ngIf="utilserv.getTranslation('Earliest-Deliver')">{{utilserv.getTranslation('Earliest-Deliver')}} :</span>
+          <br/> {{earliest?.slot}}</h6>
+        <p class="m-0 font_13" style="color:grey">{{earliest?.delivery_message}}</p>
+      </ion-col>
+    </ion-row>
+    <!-- <div>
+      <ion-searchbar class="searchlist" routerLink="/searchlist" Placeholder="search for products & brands etc">
+      </ion-searchbar>
+    </div> -->
+   
+    <div *ngIf="!banners">
+      <div class="custom-skeleton">
+        <ion-slides [options]="slideOpts" class="mainslider" style="padding-top:10px;">
+          <ion-slide *ngFor="let number of [0,1,2,3,4]">
+            <ion-skeleton-text animated style="width:325px;height:165px;border-radius:20px;"></ion-skeleton-text>
+          </ion-slide>
+        </ion-slides>
+        
+      </div>
+    </div>
+    <ion-slides *ngIf="banners" [options]="slideOpts" class="mainslider" style="padding-top:10px;">
+        <ion-slide *ngFor="let slider of banners">
+          <div class="slide_image"
+          [style.backgroundImage]="'url('+slider.image+')'" (click)="goBanner(slider)">
+          </div>
+        </ion-slide>
+      <!-- <ion-slide *ngFor="let slider of banners">
+        <img [src]="slider.image" (click)="goBanner(slider)"
+        style="width:100%;height:182px;object-fit: cover;border-radius:20px;" />
+      </ion-slide> -->
+
+    </ion-slides>
+
+    <div *ngIf="categories.length==0" style="padding: 3px 3px;padding-top:10px;">
+      <div class="custom-skeleton">
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        <ion-slides [options]="slidesOptsHeader" loop="true" style="padding-top:10px;">
+          <ion-slide *ngFor="let number of [0,1,2,3,4]">
+            <div class="category_slide">
+              <ion-skeleton-text animated></ion-skeleton-text>
+              <h6>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h6>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </div>
+     <div style="padding: 3px 3px;" *ngIf="categories.length>0">
+      <h4><span>
+        <span *ngIf="!utilserv.getTranslation('Categories')">Categories</span>
+          <span class="other_lang" *ngIf="utilserv.getTranslation('Categories')">{{utilserv.getTranslation('Categories')}}</span></span>
+        <!-- <span *ngIf="cat_trans" >{{cat_trans}}</span> -->
+        <span class="common_color font_13" style="float:right" (click)="goCategory()">
+          <span *ngIf="!utilserv.getTranslation('See-All')">See All</span>
+          <span class="other_lang" *ngIf="utilserv.getTranslation('See-All')">{{utilserv.getTranslation('See-All')}}</span>
+        </span>
+      </h4>
+      <!-- <ion-slides [options]="slidesOptsHeader" loop="true">
+        <ion-slide *ngFor="let slider of categories">
+          <div style="width:100%;">
+            <div class="category" (click)="gotoProductList(slider)">
+              <img [src]="slider.image" onerror="this.src='assets/images/default.png'" />
+            </div>
+            <h6 class="cattitle">{{slider.category}}</h6>
+          </div>
+        </ion-slide>
+      </ion-slides> -->
+      <ion-slides [options]="slidesOptsHeader" loop="true">
+        <ion-slide class="category" *ngFor="let slider of categories">
+          <div style="width:100%;">
+            <div class="catimg" (click)="gotoProductList(slider)">
+              <img [src]="slider.image" onerror="this.src='assets/images/default.png'" />
+            </div>
+            <h6 class="cattitle">{{slider.category}}</h6>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  
+
+    <div *ngIf="!hotlineproducts" style="padding-top:10px;">
+      <div class="custom-skeleton">
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        <ion-slides pager="true" [options]="slideOpts1" style="padding-top:10px;">
+          <ion-slide *ngFor="let number of [0,1,2,3,4]">
+            <div class="seller" style="width:100%;height:auto;">
+              <ion-skeleton-text animated></ion-skeleton-text>
+              <h4 class="m-0 common_color">
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h4>
+              <h3><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h3>
+              <p><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></p>
+            </div>
+            
+          </ion-slide>
+        </ion-slides>
+      </div>
+  
+    </div>
+    <!-- {{hotlineproducts}} -->
+    <div *ngIf="hotlineproducts.length>0">
+      <h6>
+        <span *ngIf="!utilserv.getTranslation('Best-Sellers')">Best Sellers</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Best-Sellers')">{{utilserv.getTranslation('Best-Sellers')}}</span>
+        <span class="common_color font_13" style="float:right" (click)="goBestSeller()">
+          <span *ngIf="!utilserv.getTranslation('See-All')">See All</span>
+          <span class="other_lang" *ngIf="utilserv.getTranslation('See-All')">{{utilserv.getTranslation('See-All')}}</span>
+        </span>
+      </h6>
+      <!-- <h6 *ngIf="best_trans">{{best_trans}}</h6> -->
+      <ion-slides pager="true" [options]="slideOpts1">
+        <ion-slide *ngFor="let product of hotlineproducts">
+          <div [ngClass]="other_class==true?'seller':'other_seller'">
+            <div class="offer" *ngIf="product.price[0].discount">
+              {{product.price[0].discount}} OFF
+            </div>
+            <img [src]="product.image" style="object-fit:contain;width: 96%;margin: 3px;border: 1px solid #f2f2f2;height:130px;"
+            (click)="viewProduct(product.id)" onerror="this.src='assets/images/default.png'" />
+            <h4 class="m-0 common_color">
+              {{product.price[0].quantity}}
+            </h4>
+            <h3>{{product.name}}</h3>
+            <p class="other" *ngIf="product.other_language_name">({{product.other_language_name}})</p>
+              <ion-row>
+                <ion-col size="6" style="padding:0px;" *ngIf="!product.price[0].cart_qty && product.price[0].stock_status=='Out Of Stock'">
+                  <p style="color: red;
+                  font-weight: bold;font-size:10px;position:relative;top:10px;">Out Of Stock</p>
+                </ion-col>
+                <ion-col size="6" style="padding:0px;" *ngIf="!product.price[0].cart_qty && product.price[0].stock_status=='In Stock'">
+                  <ion-button (click)="addtocartitem(product)">
+                    <span *ngIf="!utilserv.getTranslation('Add')">
+                      Add
+                    </span>
+                    <span class="other_lang">
+                      {{utilserv.getTranslation('Add')}}
+                    </span></ion-button>
+                </ion-col>
+                <ion-col size="6" style="padding:0px;" *ngIf="product.price[0].cart_qty">
+                  <div class="quantity">
+                    <div class='minus' style="float: left;" (click)="decrease(product.id,1,product.price[0].id,product)">
+                     <span>
+                      -
+                     </span> 
+                    </div>
+                    <span style="position: relative;
+                    top: 0px;
+                    left: -4px;
+                    color: #fff;
+                    font-size: 12px;">{{product.price[0].cart_qty}}</span>
+                    <div class='minus' style="float: right;left:3px;" (click)="increase(product.id,2,product.price[0].id,product)">
+                      <span>
+                       +
+                      </span> 
+                     </div>
+                  </div>
+                </ion-col>
+                <ion-col size="6" style="padding:0px;padding-top:10px;">
+                    <p class="m-0" style="color:#808180;font-weight:bold;font-size:12px;"><s>&#8377; {{product.price[0].mrp}}</s></p>
+                    <p class="m-0" style="color:var(--cm-main-color);font-weight:bold;font-size:12px;">&#8377; {{product.price[0].price}}</p>
+                </ion-col>
+                <div *ngIf="product.price[0].save" style="position:relative;color:red;font-size:12px;right:0px;
+                left:0px;margin:auto;padding-top:5px;">
+                  You Save &#x20B9; {{product.price[0].save}}
+                </div>
+              </ion-row>
+          </div>
+          
+        </ion-slide>
+        <!-- <ion-slide>
+          <img src="assets/images/hotline2.png" style="width: 100%;margin: 3px;" />
+        </ion-slide>
+        <ion-slide>
+          <img src="assets/images/hotline3.png" style="width: 100%;margin: 3px;" />
+        </ion-slide> -->
+      </ion-slides>
+  
+    </div>
+
+    <!-- <div *ngIf="hotlineproducts.length==0">
+      <div class="sub">
+        <img [src]="no_icon" onerror="this.src='assets/images/default.png'" style="margin: auto;
+        display: block;
+        margin-top: 10%;
+        border-radius: 50%;
+        height: 75%;
+        width: 75%;" />
+        <p style="padding-top:5%;text-align:center;padding-bottom:10%;">
+          <span *ngIf="!utilserv.getTranslation('Currently-there-are-no-products-available-for-purchase')">
+            Currently there are no products available for purchase</span>
+          <span *ngIf="utilserv.getTranslation('Currently-there-are-no-products-available-for-purchase')">
+            {{utilserv.getTranslation('Currently-there-are-no-products-available-for-purchase')}}</span>
+          <span *ngIf="!utilserv.getTranslation('in-this-location-Please-change-location-to-get-the-products')">
+            in this location. Please change location to get the products!!</span>
+          <span class="other_lang" *ngIf="utilserv.getTranslation('in-this-location-Please-change-location-to-get-the-products')">
+            {{utilserv.getTranslation('in-this-location-Please-change-location-to-get-the-products')}}!!
+          </span>
+        </p>
+      </div>
+    </div> -->
+    <div *ngIf="utilserv.setting_data?.subscription=='Yes'">
+      <div *ngIf="sub_show=='false'" style="padding-top:10px;">
+        <div>
+          <img src="../../assets/images/Cuttings/sub_banner.png" (click)="goSubscription()" class="sub_image" />
+        </div>
+      </div>
+    </div>
+    
+    <div style="padding-top:10px;">
+      <div *ngFor="let a of ad_1"  style="padding:5px 0px;">
+        <img [src]="a.image" onerror="this.src='assets/images/default.png'" (click)="goBanner(a)" 
+        class="slide_image"
+         />
+         <!-- style="padding:5px 0px;width:100%;
+        height: 145px;
+        border-radius: 20px;
+        object-fit: cover;" -->
+      </div>
+      <div *ngFor="let b of ad_2"  style="padding:5px 0px;">
+        <img [src]="b.image" onerror="this.src='assets/images/default.png'" (click)="goBanner(b)" class="slide_image" />
+      </div>
+      <div *ngFor="let c of ad_3" style="padding:5px 0px;">
+        <img [src]="c.image" onerror="this.src='assets/images/default.png'" (click)="goBanner(c)" class="slide_image" />
+      </div>
+      <!-- <img src="assets/images/Cuttings/Pepper.png" style="padding:0px 0px 10px;" />
+      <img src="assets/images/Cuttings/Fresh_clove.png" style="padding:0px 0px 10px;" /> -->
+    </div>
+  
+    <!-- <div class="quality">
+      <ion-row style="padding:10px 5px">
+        <ion-col size="4">
+          <img src="assets/images/quality-products.svg">
+          <h6><b>Quality Products</b><br>
+            sourced by LANDED
+            after quality check</h6>
+        </ion-col>
+        <ion-col size="4">
+          <img src="assets/images/freeshipping.svg">
+          <h6><b>Free shipping</b><br> for
+            orders above
+            Rs.1000/-</h6>
+        </ion-col>
+        <ion-col size="4">
+          <img src="assets/images/deals-discounts.svg">
+          <h6><b>Deals & Discounts</b><br>
+            Offers conventional
+            online store</h6>
+        </ion-col>
+      </ion-row>
+    </div> -->
+  </div>
+  
+
+</ion-content>
+
+
+<ion-footer>
+  <!-- <div class="footericons">
+    <img src="assets/images/facebook-icon.svg" (click)="goFacebook()">
+    <img src="assets/images/instagram.svg" (click)="goInsta()">
+    <img src="assets/images/watsapp.svg" (click)="goWhatsapp()">
+    <img src="assets/images/mail.svg" (click)="mailto()">
+  </div> -->
+  <ion-tab-bar>
+    <ion-tab-button (click)="goHomeTab()">
+      <img *ngIf="homeActive==false" src="assets/images/Cuttings/home_black.png" />
+      <img *ngIf="homeActive==true" class="active" src="assets/images/Cuttings/home.png" />
+      <ion-label [ngClass]="(homeActive==true)?'text_active':'text'">
+       <span *ngIf="!utilserv.getTranslation('Home')">Home</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Home')">{{utilserv.getTranslation('Home')}}</span>
+      </ion-label>
+      <!-- <ion-label *ngIf="home_trans" [ngClass]="(homeActive==true)?'text_active':'text'">{{home_trans}}</ion-label> -->
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goCategoryTab()">
+      <img *ngIf="categoryActive==false" src="assets/images/Cuttings/Categories_black.png" />
+      <img *ngIf="categoryActive==true" class="active" src="assets/images/Cuttings/Categories.png" />
+      <ion-label [ngClass]="(categoryActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('Categories')">Categories</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Categories')">{{utilserv.getTranslation('Categories')}}</span>
+      </ion-label>
+      <!-- <ion-label *ngIf="cat_trans" [ngClass]="(categoryActive==true)?'text_active':'text'">{{cat_trans}}</ion-label> -->
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goFavouriteTab()">
+      <img *ngIf="favouriteActive==false" src="assets/images/Cuttings/Favorites_black.png" />
+      <img *ngIf="favouriteActive==true" class="active" src="assets/images/Cuttings/Favorites.png" />
+      <ion-label [ngClass]="(favouriteActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('Favorites')">Favorites</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Favorites')">{{utilserv.getTranslation('Favorites')}}</span>
+      </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goOrdersTab()">
+      <img *ngIf="ordersActive==false" src="assets/images/Cuttings/My_Orders_black.png" />
+      <img *ngIf="ordersActive==true" class="active" src="assets/images/Cuttings/My_Orders.png" />
+      <ion-label [ngClass]="(ordersActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('My-Orders')">My Orders</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('My-Orders')">{{utilserv.getTranslation('My-Orders')}}</span>
+      </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="notification_count" (click)="goNotificationTab()">
+      <img style="position:relative;top:10px;" *ngIf="notificationActive==false" src="assets/images/Cuttings/Notification_black.png" />
+      <img style="position:relative;top:10px;" *ngIf="notificationActive==true" class="active" src="assets/images/Cuttings/Notification.png" />
+      <ion-badge color="danger" class="badge_noti" *ngIf="notification_count">{{notification_count}}</ion-badge>
+      <ion-label style="position:relative;top:-10px;" [ngClass]="(notificationActive==true)?'text_active':'text'" class="font_7">
+        <span *ngIf="!utilserv.getTranslation('Notification')">Notification </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Notification')">{{utilserv.getTranslation('Notification')}}</span>
+      </ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="!notification_count" (click)="goNotificationTab()">
+      <img *ngIf="notificationActive==false" src="assets/images/Cuttings/Notification_black.png" />
+      <img *ngIf="notificationActive==true" class="active" src="assets/images/Cuttings/Notification.png" />
+      <ion-badge color="danger" class="badge_noti" *ngIf="notification_count">{{notification_count}}</ion-badge>
+      <ion-label [ngClass]="(notificationActive==true)?'text_active':'text'" class="font_7">
+        <span *ngIf="!utilserv.getTranslation('Notification')">Notification </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Notification')">{{utilserv.getTranslation('Notification')}}</span>
+      </ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
+
+<style>
+  .pic {
+    font-size: 23px;
+    border-radius: 50%;
+    color: #fff;
+    /* top: 8px; */
+    position: relative;
+    /* left: -9px; */
+    padding: 4px;
+  }
+</style>

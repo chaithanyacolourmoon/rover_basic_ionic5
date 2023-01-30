@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar style="--background:#fff">
+    <ion-title (click)="skipClick()">
+      <span *ngIf="!utilserv.getTranslation('Skip')">Skip</span> 
+       <span class="other_lang">{{utilserv.getTranslation('Skip')}}</span>
+     </ion-title>
+  </ion-toolbar>
+  
+</ion-header>
+<ion-content class="login">
+  <!-- <div>
+    <img src="assets/images/logo.jpeg">
+  </div> -->
+  <ion-grid style="padding: 0;">
+    <div class="loginbox">
+      <ion-row>
+        <ion-col size="12">
+          <h4 *ngIf="!utilserv.getTranslation('Welcome-to')">Welcome to</h4>
+          <h4 *ngIf="utilserv.getTranslation('Welcome-to')">{{utilserv.getTranslation('Welcome-to')}}</h4>
+          <h3 *ngIf="!utilserv.getTranslation('Klhaskaa-Creations')">Rovor</h3>
+          <h3 *ngIf="utilserv.getTranslation('Klhaskaa-Creations')">{{utilserv.getTranslation('Klhaskaa-Creations')}}</h3>
+          <h6>
+            <span *ngIf="!utilserv.getTranslation('Enter-your-Klhaskaa-Creations-details-for-a')">
+              Enter your Rovor details for a
+            </span>
+            <span *ngIf="!utilserv.getTranslation('personalised-experience')">
+              personalised experience
+            </span>
+            <span *ngIf="utilserv.getTranslation('Enter-your-Klhaskaa-Creations-details-for-a')">
+              {{utilserv.getTranslation('Enter-your-Klhaskaa-Creations-details-for-a')}} 
+            </span>
+            <span *ngIf="utilserv.getTranslation('personalised-experience')">
+              {{utilserv.getTranslation('personalised-experience')}}
+            </span>
+            </h6>
+          <!-- <form #userlogin="ngForm" (ngSubmit)="onClickSubmit(userlogin.value)"> -->
+          <form>
+            <div style="padding-top:5%">
+              <ion-item class="inputbox1">
+                <ion-icon name="call-outline" class="loginicon"></ion-icon>
+                <ion-input maxlength="10" type="tel" placeholder="Mobile *" name="mobile" [(ngModel)]="data.mobile"></ion-input>
+
+              </ion-item>
+              <ion-item class="inputbox1">
+                <ion-icon name="lock-closed-outline" class="loginicon"></ion-icon>
+                <ion-input [type]="passwordType" placeholder="Password *" name="password"  [(ngModel)]="data.password"></ion-input>
+                <ion-icon class="loginicon" item-end [name]="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+              </ion-item>
+              <p class="forgot" (click)="forgotmodal()">
+               <span *ngIf="!utilserv.getTranslation('Forgot-Password')">Forgot Password ?</span> 
+                <span *ngIf="utilserv.getTranslation('Forgot-Password')" class="other_lang">{{utilserv.getTranslation('Forgot-Password')}} ?</span></p>
+              <button type="submit" expand="block" class="loginbtn" (click)="onClickSubmit(data)">
+                <span *ngIf="!utilserv.getTranslation('Login')">Login</span><span class="other_lang">{{utilserv.getTranslation('Login')}}</span></button>
+            </div>
+          </form>
+        </ion-col>
+
+      </ion-row>
+
+      <h6 style="color:black;" class="register center" (click)="registerClick()">
+        <span *ngIf="!utilserv.getTranslation('Do-not-have-an-account')">
+          Don't have an account? 
+        </span>
+        <span *ngIf="utilserv.getTranslation('Do-not-have-an-account')">
+          {{utilserv.getTranslation('Do-not-have-an-account')}}? 
+        </span>
+        <span style="color: #f91d1d;" *ngIf="!utilserv.getTranslation('Register')">Register</span> 
+        <span style="color: #f91d1d;"> {{utilserv.getTranslation('Register')}} </span></h6>
+    </div>
+  </ion-grid>
+</ion-content>

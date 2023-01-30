@@ -1,0 +1,167 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Delivery-Address')">Delivery Address</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Delivery-Address')">{{utilserv.getTranslation('Delivery-Address')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- style="--background: #f1f1f1;" -->
+  <div *ngIf="!addresslist">
+    <ion-item *ngFor="let number of [0,1,2,3,4]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated style="border-radius: 0px;
+        width: 45px;
+        height: 45px;
+        margin-top: -3px;"></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </div>
+  
+ 
+  <ion-grid *ngIf="addresslist">
+    
+    <div *ngIf="addresslist">
+      <h5 style="padding:0px 10px;">
+        <span *ngIf="!utilserv.getTranslation('Select-Deliver-Address')">Select Deliver Address</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Select-Deliver-Address')">{{utilserv.getTranslation('Select-Deliver-Address')}}</span>
+        <span style="color:var(--cm-main-color);float:right;" (click)="addAddress()">
+          <span *ngIf="!utilserv.getTranslation('Add-New')">Add New</span>
+          <span class="other_lang" *ngIf="utilserv.getTranslation('Add-New')">{{utilserv.getTranslation('Add-New')}}</span></span></h5>
+        <div class="p_10" *ngFor="let a of addresslist" style="border-bottom:1px solid #d8d8d8;">
+          <ion-radio-group [(ngModel)]="selected_address_id" (ionChange)="radioGroupChange($event)">
+            <ion-item lines="none">
+              <ion-radio [value]="a.id"></ion-radio>
+              <ion-label>
+                <h4 style="color: #000;
+                font-weight: bold;
+                font-size: 16px;">{{a.address_type}} Address</h4>
+                <h4 style="color: #000;
+                font-weight: bold;
+                font-size: 16px;">{{a.name}}</h4>
+                <p>
+                  {{a.address}},
+                  <br>{{a.city}},
+                  <span *ngIf="a.location!=''">{{a.location}},</span>
+                  <br>{{a.pincode}}<span *ngIf="a.landmark!=''">,{{a.landmark}}</span><br />
+                </p>
+                Mobile: {{a.mobile}}
+              </ion-label>
+            </ion-item>
+          </ion-radio-group>
+        </div>
+    </div>
+    <ion-grid *ngIf="addresslist?.length==0" style="padding-top:10%;">
+      <div align="center">
+        <img [src]="no_icon" onerror="this.src='assets/images/default.png'" style="margin:auto;display:block">
+        <h5 style="color:red;" *ngIf="!utilserv.getTranslation('No-Address-Added-Yet')">No Address Added Yet</h5>
+        <h5 style="color:red;" class="other_lang" *ngIf="utilserv.getTranslation('No-Address-Added-Yet')">{{utilserv.getTranslation('No-Address-Added-Yet')}}!</h5>
+        <h6 class="addresstext" style="padding-top:10px;"
+        *ngIf="!utilserv.getTranslation('Tap-Add-New-above-to-add-your-first-shipping-Address-and-start-Shopping')">
+        Tap 'Add New' above to add your first shipping Address and start Shopping!</h6>
+        <h6 class="addresstext" style="padding-top:10px;" 
+          *ngIf="!utilserv.getTranslation('Tap-Add-New-above-to-add-your-first-shipping-Address-and-start-Shopping')">
+          {{utilserv.getTranslation('Tap-Add-New-above-to-add-your-first-shipping-Address-and-start-Shopping')}}</h6>
+      </div>
+      
+      <!-- <p class="addresstext" *ngIf="!utilserv.getTranslation('Please-Add-A-New-Address')">Please add a new address</p>
+      <h5 class="addresstext other_lang" *ngIf="utilserv.getTranslation('Please-Add-A-New-Address')">{{utilserv.getTranslation('Please-Add-A-New-Address')}}!</h5> -->
+    </ion-grid>
+    <!-- <ion-row>
+      <ion-col size="12">
+        <div class="defaultaddress" *ngFor="let a of addresslist">
+          <ion-row>
+            <ion-col size="12">
+              <h4 style="margin-top: 0%;margin-bottom:0px;"> {{a.name}}
+              </h4>
+            </ion-col>
+          </ion-row>
+          <p style="margin-top:0px;">
+            {{a.flat_no}},{{a.apt}},{{a.street_address}},{{a.city}},{{a.location}},{{a.sub_location}},{{a.landmark}}
+            <br>
+            {{a.mobile}}
+          </p>
+          <button class="adressselect" [ngClass]="{'active_btn':selected_address_id == a.id}"
+            (click)="select_address(a.id)">Select</button>
+        </div>
+
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+  <!-- <button class="addressbtn" routerLink="/addaddress" style="margin-top: 20px;">
+    add new address
+  </button> -->
+  <div class="btn" routerLink="/addaddress"><span style="position: relative;top:-3px;left:3px;">+</span></div>
+</ion-content>
+<!-- *ngIf="addresslist.length != 0||addresslist.length != null " -->
+<!-- <ion-footer>
+  <button class="addressbtn" (click)="Delivery_address()" style="width: 100%;border-radius: 0;">
+    Next
+  </button>
+</ion-footer> -->
+<ion-footer *ngIf="addresslist">
+  <ion-row style="background: var(--cm-main-color);padding:0px 2%">
+    <ion-col size="2">
+      <img style="width:90%;" src="assets/images/cart_new.svg" />
+    </ion-col>
+    <ion-col size="5" class="total" style="padding-top:10px;">
+      <h6>{{cart_count}} <span *ngIf="!utilserv.getTranslation('Item')">item(s)</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Item')">{{utilserv.getTranslation('Item')}}</span>
+      </h6>
+      <p> ₹ {{totalamount}}</p>
+    </ion-col>
+    <ion-col size="5" style="text-align:right;color:#fff;padding-top:10px;" (click)="Delivery_address()">
+     <h4 style='margin: 10px 0px;'> 
+      <span *ngIf="!utilserv.getTranslation('Proceed')">Proceed</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Proceed')">{{utilserv.getTranslation('Proceed')}}</span>
+       <span style="position: relative;
+       top: 3px;"><ion-icon name="arrow-forward"></ion-icon></span>
+     </h4>  
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+    <ion-col size="6" class="total">
+      <h6>Grand Total</h6>
+      <p> ₹ {{totalamount}}</p>
+    </ion-col>
+    <ion-col size="6" class="proceed" (click)="Delivery_address()">
+      proceed
+    </ion-col>
+  </ion-row> -->
+</ion-footer>
+
+<style>
+  .active_btn {
+    color: #fff;
+    float: right;
+    background: #e90d0b;
+    margin-top: -22px;
+    padding: 4px;
+    font-size: 12px;
+  }
+
+  .inactive_btn {
+    background: #fff;
+    color: #000;
+    float: right;
+    margin-top: -22px;
+    padding: 4px;
+    font-size: 12px;
+  }
+</style>

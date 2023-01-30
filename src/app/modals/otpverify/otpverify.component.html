@@ -1,0 +1,22 @@
+<ion-content style="--background: #00000070">
+
+  <div class="modalbox1">
+    <div style="width:80%;margin:auto;">
+      <div>
+        <img style="margin:auto;display:block;width:100%;padding-top:5%;" src="assets/images/Cuttings/verified.png">
+      </div>
+      <div class="center">
+        <h4>
+          <span *ngIf="!utilserv.getTranslation('Verified')">Verified!!</span> 
+          <span class="other_lang" *ngIf="utilserv.getTranslation('Verified')">{{utilserv.getTranslation('Verified')}}!!</span></h4>
+        <h6 style="color:#898989;font-size:13px;">{{message}}</h6>
+      </div>
+    </div>
+    <button class="registerbtn" type="submit" (click)="goHome()">
+     <span *ngIf="!utilserv.getTranslation('Browse-Shop')">
+      Browse Shop
+     </span> <span class="other_lang">{{utilserv.getTranslation('Browse-Shop')}}</span>
+    </button>
+  </div>
+
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('About-Us')">About Us </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('About-Us')">{{utilserv.getTranslation('About-Us')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12">
+      <div class="terms">
+        <p [innerHTML]="description"></p>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>

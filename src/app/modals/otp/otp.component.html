@@ -1,0 +1,80 @@
+<ion-content style="--background: #00000070">
+
+  <div class="modalbox1">
+    <div>
+        <img style="margin:auto;display:block;padding-top:10%;width:50%;" src="assets/images/Cuttings/logo.png">
+    </div>
+    <!-- <div class="otptitle">
+      <h6>OTP</h6>
+      <ion-icon name="close" slot="end" class="modelclose" (click)="modalClose()"></ion-icon>
+    </div> -->
+    <h6 class='center'>
+      <span *ngIf="!utilserv.getTranslation('Please-Enter-OTP-Sent-To')">
+        Please Enter OTP Sent To <br/>
+      </span>
+      <span *ngIf="utilserv.getTranslation('Please-Enter-OTP-Sent-To')">
+        {{utilserv.getTranslation('Please-Enter-OTP-Sent-To')}} <br/>
+      </span>
+      +91 {{mobile_number}}<br/>
+      <span class="blink_me" style="color:var(--cm-no-item-color);position:relative;top:5px;"
+       *ngIf="!utilserv.getTranslation('Your-Default-OTP-is') && utilserv.setting_data?.default_otp_status=='Yes'">
+        TYPE {{utilserv.setting_data?.default_otp}} (demo OTP)
+      </span> 
+      <span *ngIf="utilserv.getTranslation('Your-Default-OTP-is') && utilserv.setting_data?.default_otp_status=='Yes'">
+        {{utilserv.getTranslation('Your-Default-OTP-is')}} {{utilserv.setting_data?.default_otp}}
+      </span> 
+      </h6>
+    <form #otpForm="ngForm" (ngSubmit)="otpSubmit(otpForm.value)">
+      <div style="width:80%;margin:auto"><!--class="otpclas"-->
+        <!-- <ion-row style="padding: 20px 10px;">
+          <ion-col size="3">
+            <ion-input type="tel" class="otp" maxlength="1" #Field1 (keyup)="gotonext(Field2)" name="otp1"
+              [(ngModel)]="otp1">
+            </ion-input>
+          </ion-col>
+          <ion-col size="3">
+            <ion-input type="tel" class="otp" maxlength="1" #Field2 (keyup)="gotonext(Field3)" name="otp2"
+              [(ngModel)]="otp2">
+            </ion-input>
+          </ion-col>
+          <ion-col size="3">
+            <ion-input type="tel" class="otp" maxlength="1" #Field3 (keyup)="gotonext(Field4)" name="otp3"
+              [(ngModel)]="otp3">
+            </ion-input>
+          </ion-col>
+          <ion-col size="3">
+            <ion-input type="tel" class="otp" maxlength="1" #Field4 name="otp4" [(ngModel)]="otp4">
+            </ion-input>
+          </ion-col>
+
+        </ion-row> -->
+        <div class="otpInputs"> 
+          <ng-otp-input (onInputChange)="onOtpChange($event)"
+          [config]="{length:4,allowNumbersOnly:true,inputStyles:{'width': '50px','height': '50px', 'border-radius':'50%','background':'#e5e6ea','border':'1px solid #e5e6ea','color':'#000','margin-left':'10px','margin-right':'0px'}}">
+              
+            </ng-otp-input>
+        </div>
+        <div class="center">
+          <h6 style="color:var(--cm-main-color)">
+            <span *ngIf="!utilserv.getTranslation('Did-not-receive-a-code')">
+              Didn't receive a code?
+            </span>
+            <span *ngIf="utilserv.getTranslation('Did-not-receive-a-code')">
+              {{utilserv.getTranslation('Did-not-receive-a-code')}}?
+            </span>
+          </h6>
+          <h5 style="color:#f91d1d;margin-top:0px;" (click)="resendOtp()">
+           <span *ngIf="!utilserv.getTranslation('Resend')">Resend</span> 
+            <span class="other_lang">{{utilserv.getTranslation('Resend')}}</span>
+            </h5>
+        </div>
+        
+        
+      </div>
+      <button class="registerbtn" type="submit">
+        <span *ngIf="!utilserv.getTranslation('Continue')">Continue</span> <span class="other_lang">{{utilserv.getTranslation('Continue')}}</span>
+      </button>
+    </form>
+  </div>
+
+</ion-content>

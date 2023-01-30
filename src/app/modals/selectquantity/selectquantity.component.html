@@ -1,0 +1,27 @@
+<ion-content style="--background: #00000070">
+
+  <div class="modalbox1">
+    <div class='head'>
+      <h4>
+       <span *ngIf="!utilserv.getTranslation('Available-Quantities-For')">
+        Available Quantites For
+       </span>
+        <span class="other_lang">{{utilserv.getTranslation('Available-Quantities-For')}}</span>
+        <span style="float:right;color:#000;position: relative;
+        top: -12px;
+        right: 2px;" (click)="dismissModal()"><ion-icon name="close"></ion-icon></span>
+      </h4>
+      <h6 class='center'>{{product_name}}
+      </h6>
+    </div>
+
+      <div class="price">
+        <div *ngFor="let p of price_list" style="border-bottom:1px solid #e5e5e5">
+          <p (click)="selectPrice(p.id)" [ngClass]="(p.id==price_id)?'item_active':''">
+            {{p.quantity}} - <span class="actual">&#x20B9;{{p.price}}  </span><span class="mrp">&#x20B9;{{p.mrp}}</span></p>
+        </div>
+        
+      </div> 
+  </div>
+
+</ion-content>

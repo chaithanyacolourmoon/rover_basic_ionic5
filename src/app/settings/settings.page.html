@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('Settings')">Settings </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('Settings')">{{utilserv.getTranslation('Settings')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <div class="version"> 
+    <div class="grey" *ngIf="utilserv.appVersion<utilserv.setting_data?.android_app_version">
+     <h4>Currently you are using version {{utilserv.appVersion}}.0</h4> 
+      <p>We added lot of new features and fix some bugs to make your experience as smooth as possible</p>
+    </div>
+    <div style="padding-top:60%;" *ngIf="utilserv.version_data=='you are using latest version' && utilserv.appVersion==utilserv.setting_data?.android_app_version">
+      App is up to date <br/>
+      Version {{utilserv.appVersion}}.0
+    </div>
+    <div *ngIf="utilserv.appVersion<utilserv.setting_data?.android_app_version">
+      <h4 style="color:red;">
+        Time To update !
+      </h4>
+      New Version Available {{utilserv.setting_data?.android_app_version}}.0
+    </div>
+  </div>
+  <div style="margin-top: 10%;">
+    <button class="updatebtn" (click)="updateapp()" *ngIf="utilserv.appVersion<utilserv.setting_data?.android_app_version">
+      <span>
+        Update
+      </span> <span class="other_lang">{{utilserv.getTranslation('Update')}}</span></button>
+  </div>
+</ion-content>
+
+<style>
+  .updatebtn {
+    outline: none;
+    font-size: 20px;
+    padding: 10px 20px;
+    background: var(--cm-main-color);
+    margin: auto;
+    display: block;
+    color: #fff;
+    border-radius: 7px;
+    width:45%;
+  }
+
+  .version {
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+    padding: 10px;
+    text-transform: capitalize;
+    padding-top: 30px;
+  }
+  h4{
+    font-weight: 900;
+    font-size: 15px;
+  }
+  .grey{
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+  }
+</style>

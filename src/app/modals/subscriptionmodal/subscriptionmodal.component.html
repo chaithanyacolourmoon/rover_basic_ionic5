@@ -1,0 +1,78 @@
+<ion-content class="main-view" style=" --background: transparent;">
+  
+  <div class="overlay" (click)="modalHeadClose()"></div>
+  <div class="modal_content">
+    <div align="center" class="sub_img">
+      <div class="image">
+        <img src="../../../assets/images/adv_cuttings/vip_logo.png" />
+      </div>
+    </div>
+    <div class="sub_img" style="top:-20px;">
+      <div class="close" (click)="modalHeadClose()">
+        <ion-icon name="close"></ion-icon>
+      </div>
+    </div>
+    <div class="sub_content" align="center">
+      <h5 style="color:var(--cm-main-color);margin: 0px;
+      font-size: 20px;
+      font-weight: bold;">
+        <span *ngIf="!utilserv.getTranslation('Choose-your-plan')">Choose your plan</span>
+        <span class="other_lang">{{utilserv.getTranslation('Choose-your-plan')}}</span>
+      </h5>
+      <div style="margin:0px -10px;padding-top:10px;">
+        <div>
+          <ion-radio-group [(ngModel)]="package_id" (ionChange)="subChange($event)">
+            <ion-item lines="none" *ngFor="let p of sub_plans"
+            [ngClass]="package_id==p.plan_id?'item_active':'item'">
+              <ion-label>
+                <h4 style="color: #000;
+                font-weight: bold;
+                font-size: 16px;">{{p.title}}</h4>
+                <h5><span [ngClass]="p.mrp?'all_color':''">₹{{p.price}} &nbsp;</span>
+                  <span *ngIf="p.mrp" style="text-decoration:line-through">₹ {{p.mrp}}</span>
+                </h5>
+              </ion-label>
+              <ion-radio slot="end" [value]="p.plan_id"></ion-radio>
+            </ion-item>
+            <!-- <ion-item lines="none" [ngClass]="package=='3 Months'?'item_active':'item'">
+             
+              <ion-label>
+                <h4 style="color: #000;
+                font-weight: bold;
+                font-size: 16px;">3 Months Plan</h4>
+                <h5><span style="color:var(--cm-main-color);">₹120</span>&nbsp;
+                  <span style="text-decoration:line-through">₹179</span></h5>
+              </ion-label>
+              <ion-radio slot="end" value="3 Months"></ion-radio>
+            </ion-item>
+            <ion-item lines="none" [ngClass]="package=='6 Months'?'item_active':'item'">
+              <ion-label>
+                <h4 style="color: #000;
+                font-weight: bold;
+                font-size: 16px;">6 Months Plan</h4>
+                <h5>₹119</h5>
+              </ion-label>
+              <ion-radio slot="end" value="6 Months"></ion-radio>
+            </ion-item> -->
+          </ion-radio-group>
+         </div>
+       </div>
+
+       <h6>Unlimited FREE HOME DELIVERY with<br/>
+        NO MINIMUM ORDER VALUE on all plans.</h6>
+      <div *ngFor="let p of sub_plans">
+        <ion-button (click)="modalClose()" *ngIf="package_id==p.plan_id">
+          <span *ngIf="!utilserv.getTranslation('Apply')">Buy {{p.title}}</span>
+        </ion-button>
+      </div>
+      <div *ngIf="!package_id">
+        <ion-button (click)="modalClose()">
+          <span *ngIf="!utilserv.getTranslation('Apply')">Buy Plan</span>
+        </ion-button>
+      </div>
+      
+      <a (click)="goTerms()" style="color:var(--cm-p-color);padding:10px 0px;text-decoration: underline;">T&C apply</a>
+    </div>
+    
+  </div>
+</ion-content>

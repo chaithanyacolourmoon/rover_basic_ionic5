@@ -1,0 +1,127 @@
+.sortlabel {
+    font-size: 12px;
+}
+.main-view{
+    --background: transparent;
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: .8;
+    background-color:#35353500;
+  }
+  .modal_content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 65%;
+    z-index: 100;
+    margin: 0 auto;
+    color: #333;
+    background-color: #fefefe;
+    box-shadow: 0 2px 3px rgba(51, 51, 51, 0.35);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    overflow: hidden;
+    bottom: 0;
+    overflow-y: scroll;
+    border-radius:10px 10px 0px 0px;
+}
+
+ion-button{
+  margin: auto;
+  display: block;
+  width: 80%;
+  --box-shadow: none;
+  --background: var(--cm-main-color);
+  height: 45px;
+  --border-radius: 10px;
+  margin-top: 10%;
+  font-weight: bold;
+  margin-bottom:20px;
+}
+
+.sub_img{
+    position: absolute;
+    top: -15%;
+    .image{
+      position: fixed;
+      height: 130px;
+      width: 130px;
+      z-index: 1000;
+      left: 0px;
+      right: 0px;
+      display: block;
+      margin: auto;
+      background: #fff;
+      padding-top: 5px;
+      border-radius: 50%;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    .close{
+      position: fixed;
+      z-index: 1000;
+      right: 10px;
+      background: #f01219;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      padding-top: 9px;
+      font-size: 20px;
+    }
+}
+
+.sub_content{
+  padding:10px;
+  padding-top:23%;
+
+  .item{
+    border-radius: 21px;
+    border: 1px solid #f2f2f2;
+    margin: 12px;
+    /* height: 45px; */
+    --background: #fff;
+    outline: none;
+
+    ion-label{
+      h5{
+        font-size: 20px;
+        color: var(--cm-p-color);
+        font-weight: bold;
+      }
+    }
+
+    ion-radio{
+      --color-checked:var(--cm-main-color);
+    }
+}
+.item_active{
+    border-radius: 21px;
+    border: 1px solid var(--cm-main-color);
+    margin: 12px;
+    /* height: 45px; */
+    --background: var(--cm-text-background);
+    outline: none;
+
+    ion-label{
+        h5{
+        font-size: 20px;
+        color: var(--cm-p-color);
+        font-weight: bold;
+        }
+    }
+
+    ion-radio{
+        --color-checked:var(--cm-main-color);
+    }
+}
+}

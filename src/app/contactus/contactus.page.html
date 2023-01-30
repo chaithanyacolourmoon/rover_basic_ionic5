@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Contact-Us')">Contact Us</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Contact-Us')">{{utilserv.getTranslation('Contact-Us')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="padding:10px;">
+    <h4><span *ngIf="!utilserv.getTranslation('Contact-Us')">Contact Us</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Contact-Us')">{{utilserv.getTranslation('Contact-Us')}}</span>
+    </h4>
+    <ion-row style="padding-top:10px;">
+      <ion-col size="2">
+          <div class="call">
+            <ion-icon name="call"></ion-icon>
+          </div>
+      </ion-col>
+      <ion-col size="10" style="padding-top:10px;">
+        <p style="margin:0px;">{{phone}}</p>
+        <p style="margin:0px;">{{customercare}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-top:10px;">
+      <ion-col size="2">
+          <div class="call">
+            <ion-icon name="mail"></ion-icon>
+          </div>
+      </ion-col>
+      <ion-col size="10" style="padding-top:10px;">
+        <p style="margin:0px;">{{email}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-top:10px;">
+      <ion-col size="2">
+          <div class="call">
+            <ion-icon name="mail"></ion-icon>
+          </div>
+      </ion-col>
+      <ion-col size="10" style="padding-top:5px;">
+        <p style="margin:0px;">{{address}}</p>
+      </ion-col>
+    </ion-row>
+  </div>
+  
+  <!-- <ion-row>
+    <ion-col size="12">
+      <div class="defaultaddress">
+        <h4 style="margin-top: -2%;">
+          {{title}}
+        </h4>
+        <p>
+          <ion-icon name="location-outline"></ion-icon> {{address}}
+        </p>
+        <p>
+          <ion-icon name="call-outline"></ion-icon>{{phone}}. {{customercare}}.
+        </p>
+        <p>
+          <ion-icon name="mail-open-outline"></ion-icon> {{email}}
+        </p>
+      </div>
+    </ion-col>
+  </ion-row> -->
+</ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col size="6" style="background:var(--cm-footer-color);padding: 12px;">
+      <!-- <div> -->
+        <ion-icon name="call" style="color: var(--cm-footer-color);
+        background: #fff;
+        padding: 6px;
+        border-radius: 50%;"></ion-icon>
+      <!-- </div> -->
+      <!-- <ion-icon name="heart" class="wishlist"
+      style="color:#fff;">
+      </ion-icon> -->
+      <span style="position: relative;
+      top: -7px;
+      left: 10px;
+      color: #fff;"><a href="tel:{{phone}}" style="color: #fff;
+    text-decoration: none;">
+    <span *ngIf="!utilserv.getTranslation('Call-Now')">Call Now</span>
+    <span class="other_lang" *ngIf="utilserv.getTranslation('Call-Now')">{{utilserv.getTranslation('Call-Now')}}</span></a></span>
+    </ion-col>
+    <ion-col size="6" class="bag" style="background: var(--cm-main-color);padding: 12px;
+    color: #fff;">
+      <ion-icon name="logo-whatsapp" style="color: var(--cm-main-color);
+        background: #fff;
+        padding: 6px;
+        border-radius: 50%;"></ion-icon>
+      <!-- </div> -->
+      <!-- <ion-icon name="heart" class="wishlist"
+      style="color:#fff;">
+      </ion-icon> -->
+      <span style="position: relative;
+      top: -7px;
+      left: 10px;
+      color: #fff;"><a href="https://wa.me/+91{{whatsapp_no}}" target="_blank" style='color: #fff;
+    text-decoration: none;'><span *ngIf="!utilserv.getTranslation('Whatsapp')">Whatsapp</span>
+    <span class="other_lang" *ngIf="utilserv.getTranslation('Whatsapp')">{{utilserv.getTranslation('Whatsapp')}}</span></a></span>
+    </ion-col>
+  </ion-row>
+</ion-footer>

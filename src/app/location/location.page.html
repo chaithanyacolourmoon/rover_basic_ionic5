@@ -1,0 +1,76 @@
+<ion-content>
+  <ion-grid>
+    <ion-row class="location">
+      <ion-col size="12">
+        <div class="center">
+          <h4>
+            <span *ngIf="!utilserv.getTranslation('Welcome-to-Klhaskaa-Creations')">Welcome to Rovor</span>
+            <span class="other_lang">{{utilserv.getTranslation('Welcome-to-Klhaskaa-Creations')}}</span>
+          </h4>
+          <h6 style="color:#979b98;margin-top:0px;">
+            <span *ngIf="!utilserv.getTranslation('Let-first-check-that-we-deliver')">
+              Let's first check that we deliver<br/>
+            </span> 
+            <span *ngIf="!utilserv.getTranslation('to-your-address')">
+              to your address
+            </span>
+           
+            <span *ngIf="utilserv.getTranslation('Let-first-check-that-we-deliver')">
+              {{utilserv.getTranslation('Let-first-check-that-we-deliver')}} <br/></span>
+            <span *ngIf="utilserv.getTranslation('to-your-address')">{{utilserv.getTranslation('to-your-address')}}</span>
+          </h6>
+        </div>
+        <img src="assets/images/Cuttings/choose_location.png">
+        <h5>
+          <span *ngIf="!utilserv.getTranslation('Choose-Location')">Choose Location</span>
+          <span class="other_lang">{{utilserv.getTranslation('Choose-Location')}}</span>
+        </h5>
+        <p style="text-align: center;
+        margin-top: 0px;
+        color: #979b98;">
+        <span *ngIf="!utilserv.getTranslation('Choose-your-location-and')">
+          Choose your location and <br/>
+        </span>
+         <span *ngIf="!utilserv.getTranslation('start-shopping')">
+          start shopping
+         </span> 
+         <span *ngIf="utilserv.getTranslation('Choose-your-location-and')">
+          {{utilserv.getTranslation('Choose-your-location-and')}}<br/>
+        </span>
+         <span *ngIf="utilserv.getTranslation('start-shopping')">
+          {{utilserv.getTranslation('start-shopping')}}
+         </span> 
+          </p>
+        <!-- <ion-item>
+          <ion-icon name="location-outline" class="loginicon"></ion-icon>
+          <ion-select interface="popover" style="width: 100%;" placeholder="Select City"
+            (ionChange)='selectcity($event)'>
+            <ion-select-option *ngFor="let city of cities" value="{{city.id}}"> {{city.city}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item> -->
+        <button *ngIf="utilserv.setting_data?.google_map_location=='Yes'" type="submit" expand="block" class="loginbtn" style="margin-top: 10%;" (click)="goMap()">
+          <!-- (click)="goMap()" -->
+          <ion-icon name="navigate" style="position: relative;
+          left: -7px;
+          top: 3px;"></ion-icon>
+          <span *ngIf="!utilserv.getTranslation('Use-Current-Location')">Use Current Location</span>
+          <span class="other_lang">{{utilserv.getTranslation('Use-Current-Location')}}</span>
+        </button>
+        <h6 class="center" style="color:var(--cm-main-color);" (click)="goCities()">
+          <span *ngIf="!utilserv.getTranslation('select-in-Manually')">Select in Manually</span>
+          <span class="other_lang">{{utilserv.getTranslation('select-in-Manually')}}</span></h6>
+        <!-- <p style="font-size:12px;color:var(--cm-no-item-color);text-align:center">
+          <span *ngIf="!utilserv.getTranslation('Hint')">Hint:</span> 
+          <span *ngIf="!utilserv.getTranslation('Please-select-Visakhapatnam')">Please select Visakhapatnam <br/></span> 
+          <span *ngIf="!utilserv.getTranslation('to-see-the-demo-products')">to see the demo products.</span>
+          <span *ngIf="utilserv.getTranslation('Hint')">{{utilserv.getTranslation('Hint')}}:</span> 
+          <span *ngIf="utilserv.getTranslation('Please-select-Visakhapatnam')">
+            {{utilserv.getTranslation('Please-select-Visakhapatnam')}} <br/></span> 
+          <span *ngIf="utilserv.getTranslation('to-see-the-demo-products')">
+            {{utilserv.getTranslation('to-see-the-demo-products')}}</span>
+          </p> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

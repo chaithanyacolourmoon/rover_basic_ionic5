@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Categories')">Categories</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Categories')">{{utilserv.getTranslation('Categories')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12">
+      <div *ngIf="!categories">
+        <ion-item *ngFor="let number of [0,1,2,3,4]">
+          <ion-avatar slot="start">
+            <ion-skeleton-text animated style="border-radius: 0px;
+            width: 45px;
+            height: 45px;
+            margin-top: -3px;"></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="categories">
+        <div class="terms" *ngFor="let c of categories" (click)="goSubCategory(c)">
+          <ion-row>
+            <ion-col size="4">
+              <img [src]="c.image" onerror="this.src='assets/images/default.png'"/>
+            </ion-col>
+            <ion-col size="8">
+              <h6>Up to {{c.off}}% OFF</h6>
+              <h4>{{c.category}}</h4>
+              <p>{{c.description}}
+                </p>
+            </ion-col>
+          </ion-row>
+          <!-- <p [innerHTML]="description"></p> -->
+        </div>
+        <div *ngIf="categories.length==0">
+          <div class="sub">
+            <img [src]='no_icon' onerror="this.src='assets/images/default.png'" style="margin:auto;display:block;padding-top:10%;" />
+            <p style="padding-top:10%;text-align:center;padding-bottom:10%;">{{no_message}}</p>
+          </div>
+        </div>
+      </div>
+      
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer>
+  <!-- <div class="footericons">
+    <img src="assets/images/facebook-icon.svg" (click)="goFacebook()">
+    <img src="assets/images/instagram.svg" (click)="goInsta()">
+    <img src="assets/images/watsapp.svg" (click)="goWhatsapp()">
+    <img src="assets/images/mail.svg" (click)="mailto()">
+  </div> -->
+  <ion-tab-bar>
+    <ion-tab-button (click)="goHomeTab()">
+      <img *ngIf="homeActive==false" src="assets/images/Cuttings/home_black.png" />
+      <img *ngIf="homeActive==true" class="active" src="assets/images/Cuttings/home.png" />
+      <ion-label [ngClass]="(homeActive==true)?'text_active':'text'">
+       <span *ngIf="!utilserv.getTranslation('Home')">Home</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Home')">{{utilserv.getTranslation('Home')}}</span>
+      </ion-label>
+      <!-- <ion-label *ngIf="home_trans" [ngClass]="(homeActive==true)?'text_active':'text'">{{home_trans}}</ion-label> -->
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goCategoryTab()">
+      <img *ngIf="categoryActive==false" src="assets/images/Cuttings/Categories_black.png" />
+      <img *ngIf="categoryActive==true" class="active" src="assets/images/Cuttings/Categories.png" />
+      <ion-label [ngClass]="(categoryActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('Categories')">Categories</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Categories')">{{utilserv.getTranslation('Categories')}}</span>
+      </ion-label>
+      <!-- <ion-label *ngIf="cat_trans" [ngClass]="(categoryActive==true)?'text_active':'text'">{{cat_trans}}</ion-label> -->
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goFavouriteTab()">
+      <img *ngIf="favouriteActive==false" src="assets/images/Cuttings/Favorites_black.png" />
+      <img *ngIf="favouriteActive==true" class="active" src="assets/images/Cuttings/Favorites.png" />
+      <ion-label [ngClass]="(favouriteActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('Favorites')">Favorites</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Favorites')">{{utilserv.getTranslation('Favorites')}}</span>
+      </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="goOrdersTab()">
+      <img *ngIf="ordersActive==false" src="assets/images/Cuttings/My_Orders_black.png" />
+      <img *ngIf="ordersActive==true" class="active" src="assets/images/Cuttings/My_Orders.png" />
+      <ion-label [ngClass]="(ordersActive==true)?'text_active':'text'">
+        <span *ngIf="!utilserv.getTranslation('My-Orders')">My Orders</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('My-Orders')">{{utilserv.getTranslation('My-Orders')}}</span>
+      </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="notification_count" (click)="goNotificationTab()">
+      <img style="position:relative;top:10px;" *ngIf="notificationActive==false" src="assets/images/Cuttings/Notification_black.png" />
+      <img style="position:relative;top:10px;" *ngIf="notificationActive==true" class="active" src="assets/images/Cuttings/Notification.png" />
+      <ion-badge color="danger" class="badge_noti" *ngIf="notification_count">{{notification_count}}</ion-badge>
+      <ion-label style="position:relative;top:-10px;" [ngClass]="(notificationActive==true)?'text_active':'text'" class="font_7">
+        <span *ngIf="!utilserv.getTranslation('Notification')">Notification </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Notification')">{{utilserv.getTranslation('Notification')}}</span>
+      </ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="!notification_count" (click)="goNotificationTab()">
+      <img *ngIf="notificationActive==false" src="assets/images/Cuttings/Notification_black.png" />
+      <img *ngIf="notificationActive==true" class="active" src="assets/images/Cuttings/Notification.png" />
+      <ion-badge color="danger" class="badge_noti" *ngIf="notification_count">{{notification_count}}</ion-badge>
+      <ion-label [ngClass]="(notificationActive==true)?'text_active':'text'" class="font_7">
+        <span *ngIf="!utilserv.getTranslation('Notification')">Notification </span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Notification')">{{utilserv.getTranslation('Notification')}}</span>
+      </ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

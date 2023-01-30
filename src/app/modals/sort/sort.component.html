@@ -1,0 +1,50 @@
+<ion-content class="main-view" style=" --background: transparent;">
+  <div class="overlay" (click)="modalHeadClose(sort_value)"></div>
+  <div class="modal_content">
+    <h5 style="margin: 15px;
+    padding-top: 15px;">
+    <span *ngIf="!utilserv.getTranslation('Filter-Results')">Filter Results</span>
+    <span class="other_lang">{{utilserv.getTranslation('Filter-Results')}}</span>
+      <span style="float: right;
+      color: #757575;" (click)="modalClose('')">
+      <span *ngIf="!utilserv.getTranslation('Reset')">Reset</span> 
+      <span class="other_lang">{{utilserv.getTranslation('Reset')}}</span></span>
+    </h5>
+    <ion-radio-group [(ngModel)]="sort_value">
+      <ion-item>
+        <ion-label class="sortlabel">
+         <span *ngIf="!utilserv.getTranslation('Price-Low-To-High')">Price Low To High</span> 
+          <span class="other_lang">{{utilserv.getTranslation('Price-Low-To-High')}}</span>
+          <span style="position: relative;
+          padding-left: 5px;
+          top: 3px;"><ion-icon name="arrow-down"></ion-icon><ion-icon name="arrow-up"></ion-icon></span></ion-label>
+        <ion-radio slot="end" name="Low" value="Low" ></ion-radio>
+        <!-- (click)="modalClose('Low')" -->
+      </ion-item>
+      <ion-item>
+        <ion-label class="sortlabel">
+         <span *ngIf="!utilserv.getTranslation('Price-High-To-Low')">
+          Price High To Low
+         </span> 
+          <span class="other_lang">{{utilserv.getTranslation('Price-High-To-Low')}}</span>
+          <span style="position: relative;
+          padding-left: 5px;
+          top: 3px;"><ion-icon name="arrow-up"></ion-icon><ion-icon name="arrow-down"></ion-icon></span>
+        </ion-label>
+        <ion-radio slot="end" name="High" value="High"></ion-radio>
+        <!-- (click)="modalClose('High')" -->
+      </ion-item>
+      <ion-item>
+        <ion-label class="sortlabel">
+          <span *ngIf="!utilserv.getTranslation('Newest-First')">Newest First</span>
+          <span class="other_lang">{{utilserv.getTranslation('Newest-First')}}</span></ion-label>
+        <ion-radio slot="end" name="Recent" value="Recent" ></ion-radio>
+        <!-- (click)="modalClose('Recent')" -->
+      </ion-item>
+    </ion-radio-group>
+
+    <ion-button (click)="modalClose(sort_value)">
+      <span *ngIf="!utilserv.getTranslation('Apply')">Apply</span>
+      <span class="other_lang">{{utilserv.getTranslation('Apply')}}</span></ion-button>
+  </div>
+</ion-content>

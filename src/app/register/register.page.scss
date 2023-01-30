@@ -1,0 +1,150 @@
+ion-header{
+  ion-title{
+    float: right;
+    margin-top: 10px;
+    color: var(--cm-main-color);
+  }
+}
+.login {
+   
+    img {
+        margin: auto;
+        width: 50%;
+        display: block;
+        padding-top: 2px;
+    }
+    ion-item{
+        border: 1px solid #bfb9b9;
+        border-radius: 10px;
+        margin: 12px;
+        /* --background: #f2f2f2; */
+        outline: none;
+    }
+
+}
+
+// .inputbox1 {
+//      border: 1px solid #d4d1d1;
+//       margin: 12px;
+//       height: 45px;
+//   }
+
+.loginbox {
+    // margin-top: -15px;
+    padding-top:10%;
+    background: #fff;
+    border-radius: 25px 25px 1px 3px;
+    h4 {
+      font-weight: 600;
+    margin-left: 20px;
+    letter-spacing: 1px;
+    text-align: left;
+    margin-bottom:0px;
+    // color: var(--cm-main-color);
+  }
+  h3 {
+    font-weight: 600;
+    margin-left: 20px;
+    letter-spacing: 1px;
+    text-align: left;
+    color: var(--cm-main-color);
+    margin-top:0px;
+  }
+  h6 {
+    text-align: left;
+    margin-top: 2px;
+    margin-left: 20px;
+    letter-spacing: 1px;
+    font-size: 15px;
+    color:#a2acba
+  }
+
+    button {
+      background: var(--cm-main-color);
+      margin: auto;
+      display: block;
+      font-size: 18px;
+      text-transform: uppercase;
+      padding: 17px;
+      width: 90%;
+      color: #fff;
+      border-radius: 10px;
+      outline: none;
+      margin-top:17%;
+    }
+}
+
+.loginicon {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #818ea1;
+  }
+  .forgot {
+    font-weight: 600;
+    margin-right: 20px;
+    float: right;
+    margin-top: -5px;
+    font-size: 13px;
+    outline: none;
+    color: #f91d1d;
+  }
+
+  .googlebtn {
+      background: #fe5555 !important;
+      width: 80% !important;
+      float: right;
+      font-size: 15px !important;
+      outline: none;
+  }
+  .facebookbtn {
+    background:#0059bf !important;
+    width: 80% !important;
+    font-size: 15px !important;
+    outline: none;
+  }
+
+.register {
+    margin-top: 30px !important;   
+    text-align: center;
+    font-size: 14px;
+    outline:none;
+}
+
+.connect {
+    font-family: sans-serif;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 15px;
+    max-width: 600px;
+    position: relative;
+  }
+
+  .connect:before {
+    content: "";
+    display: block;
+    width: 94px;
+    height: 2px;
+    background: #d0cfcf;
+    left: 6px;
+    top: 40%;
+    position: absolute;
+  }
+
+  .connect:after {
+    content: "";
+    display: block;
+    width: 94px;
+    height: 2px;
+    background: #d0cfcf;
+    right: 6px;
+    top: 40%;
+    position: absolute;
+  }
+  .checkemail {
+    color: #075782;
+    position: relative;
+    margin-left: 5px;
+    top: -3px;
+    /* bottom: 9px; */
+    font-weight: 600;
+  }

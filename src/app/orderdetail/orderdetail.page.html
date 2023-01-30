@@ -1,0 +1,414 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-button style="--background:none" routerLink="/myorders">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <!-- <ion-back-button defaultHref="myorders"></ion-back-button> -->
+    </ion-buttons>
+    <ion-title>
+      #{{order_id}}
+    </ion-title>
+    <ion-button slot="end" *ngIf="is_cancel_available=='Yes'" (click)="cancelOrder()">
+      <span *ngIf="!utilserv.getTranslation('Cancel')">Cancel</span>
+      <span class="other_lang">{{utilserv.getTranslation('Cancel')}}</span>
+    </ion-button>
+    <ion-button slot="end" *ngIf="status=='Delivered'" class="completed">
+      <span *ngIf="!utilserv.getTranslation('Completed')">Completed</span>
+      <span class="other_lang">{{utilserv.getTranslation('Completed')}}</span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="padding:0px;">
+    <div style="padding:5px;">
+      <h4 style="padding:0px 10px;">
+        <span *ngIf="!utilserv.getTranslation('Product-Details')">Product Details</span>
+        <span class="other_lang">{{utilserv.getTranslation('Product-Details')}}</span>
+        <div *ngIf="utilserv.setting_data?.rating_reviews=='Yes'">
+          <span (click)="addReview(order_id)" class="review_btn" *ngIf="!utilserv.getTranslation('Write-Review') && rating_status=='Yes'"> 
+            Write Review
+          </span>
+          <span (click)="addReview(order_id)" class="review_btn" *ngIf="utilserv.getTranslation('Write-Review') && rating_status=='Yes'"> 
+           {{utilserv.getTranslation('Write-Review')}}
+          </span>
+        </div>
+        
+      </h4>
+      <ion-row class="categorylist" *ngFor="let item of items">
+        <ion-col size="3">
+          <img [src]="item.image" onerror="this.src='assets/images/default.png'">
+        </ion-col>
+        <ion-col size="9">
+          <h6 style="margin-top:3px;color: var(--cm-main-color);
+          font-weight: bold;">&#x20B9; {{item.unit_price}}</h6>
+          <h6>{{item.name}}</h6>
+          <p style="color: #9e9e9e;
+            font-size: 12px;
+            margin: 0px;">GST Percentage: {{item.gst_percentage}} %
+              <br/>
+              GST Per Unit Amount: &#x20B9; {{item.gst_per_unit_amount}}<br/>
+              GST Total Amount: &#x20B9; {{item.gst_total_amount}}
+          </p>
+         
+          <p style="color:var(--cm-no-item-color);margin-top: 10px;
+          font-size: 14px;">{{item.size}}<span style="float:right;color:#000;">{{item.quantity}}x</span></p>
+          <!-- Qty :  -->
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="border-top: 3px solid #ececec;
+    border-bottom: 3px solid #ececec;" *ngIf="delivery_date">
+      <ion-row style="padding:10px;">
+        <ion-col size="2">
+          <div class="calendar">
+            <img src="assets/images/Cuttings/calendr.svg" />
+          </div>
+          
+          <!-- <img src="../../assets/images/Cuttings/earliest_deliver.png" /> -->
+        </ion-col>
+        <ion-col size="10" style="padding-top:10px;">
+          <h6 class="m-0 font_15">
+            <span *ngIf="!utilserv.getTranslation('Expected-Delivery-Slot')">Expected Deilvery Slot</span>
+            <span class="other_lang">{{utilserv.getTranslation('Expected-Delivery-Slot')}}</span></h6>
+          <p class="m-0 font_13" style="color:var(--cm-no-item-color)">{{delivery_date}}, {{delivery_time}}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div *ngIf="is_tracking_available=='yes'">
+      <ion-button class="track" (click)="trackOrder()">Track Order</ion-button>
+    </div>
+
+    <div style="padding:10px 20px;" *ngIf="order_log">
+      <h4 style="padding:0px;margin-top:0px;">
+        <span *ngIf="!utilserv.getTranslation('Order-Status')">
+          Order Status
+        </span>
+        <span class="other_lang">{{utilserv.getTranslation('Order-Status')}}</span>
+      </h4>
+      
+      <ion-row style="padding:6px 0px;" *ngFor="let o of order_log">
+        <ion-col size="2">
+          <img [src]="o.icon" onerror="this.src='assets/images/default.png'" />
+        </ion-col>
+        <ion-col size="1">
+          <div style="border: 1px solid var(--cm-main-color);
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;">
+            <div *ngIf="o.order_status!='Delivered'" style="width:5%;
+            height: 50px;
+            background: var(--cm-main-color);
+            position: relative;
+            left: 45%;
+            top: 100%;"></div>
+          </div>
+        </ion-col>
+        <ion-col size="9">
+          <h4 style="margin:0px;font-size:14px;">Order {{o.order_status}}</h4>
+          <h5 style="margin:0px;font-size:13px;">{{o.date}}<span style="position:relative;top:20%;">&nbsp;{{o.time}}</span></h5>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row style="padding:5px 0px;">
+        <ion-col size="2">
+          <img src="../../assets/images/Cuttings/processing.png" />
+        </ion-col>
+        <ion-col size="1">
+          <div style="border: 1px solid var(--cm-main-color);
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;">
+            <div style="width:5%;
+            height: 50px;
+            background: green;
+            position: relative;
+            left: 45%;
+            top: 100%;"></div>
+          </div>
+        </ion-col>
+        <ion-col size="9">
+          <h4 style="margin:0px;font-size:14px;">Order Processing</h4>
+          <h5 style="margin:0px;font-size:13px;">07.12.2021<span style="position:relative;top:20%;">10:00 PM</span></h5>
+        </ion-col>
+      </ion-row>
+      <ion-row style="padding:5px 0px;">
+        <ion-col size="2">
+          <img src="../../assets/images/Cuttings/order_shipped.png" />
+        </ion-col>
+        <ion-col size="1">
+          <div style="border: 1px solid var(--cm-main-color);
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;">
+            <div style="width:5%;
+            height: 50px;
+            background: green;
+            position: relative;
+            left: 45%;
+            top: 100%;"></div>
+          </div>
+        </ion-col>
+        <ion-col size="9">
+          <h4 style="margin:0px;font-size:14px;">Order Shipped</h4>
+          <h5 style="margin:0px;font-size:13px;">08.12.2021<span style="position:relative;top:20%;">09:00 PM</span></h5>
+        </ion-col>
+      </ion-row>
+      <ion-row style="padding:5px 0px;">
+        <ion-col size="2">
+          <img src="../../assets/images/Cuttings/delivery.png" />
+        </ion-col>
+        <ion-col size="1">
+          <div style="border: 1px solid var(--cm-main-color);
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;">
+            <div style="width:5%;
+            height: 50px;
+            background: green;
+            position: relative;
+            left: 45%;
+            top: 100%;"></div>
+          </div>
+        </ion-col>
+        <ion-col size="9">
+          <h4 style="margin:0px;font-size:14px;">Delivery</h4>
+          <h5 style="margin:0px;font-size:13px;">09.12.2021<span style="position:relative;top:20%;">02:00 PM</span></h5>
+        </ion-col>
+      </ion-row> -->
+    </div>
+    
+    <ion-col size="12">
+      <div class="billing">
+        <h6 style="margin-bottom:0px;border:none;">
+          <span *ngIf="!utilserv.getTranslation('Destination')">Destination</span>
+          <span class="other_lang">{{utilserv.getTranslation('Destination')}}</span></h6>
+        <div style="padding:0px 10px;">
+          <h4 style="color: #000;
+          font-weight: bold;
+          font-size: 16px;margin:0px;">{{address?.name}}</h4>
+          <p style="font-size:12px;margin-top:5px;color:#272525;">
+            <span *ngIf="address?.address!=''">{{address?.address}},</span>
+            <span *ngIf="address?.location!=''">{{address?.location}},</span>
+            <!-- <span *ngIf="address?.sub_location!=''" style="white-space: normal;">{{address?.sub_location}},</span> -->
+            <span *ngIf="address?.landmark!=''">{{address?.landmark}},</span>
+            <!-- {{address?.address}},{{address?.apt}},{{address?.street_address}}, -->
+            <br>{{address?.city}},{{address?.pincode}}
+            
+          </p>
+         <h4 style="color: #000;
+         font-size: 16px;margin:0px;">
+          Mobile: {{address?.mobile}}
+         </h4> 
+        </div>
+     
+      </div>
+    </ion-col>
+
+    <ion-col size="12">
+      <div class="billing">
+        <h6>
+          <span *ngIf="!utilserv.getTranslation('Order-Details')">Order Details</span>
+          <span class="other_lang">{{utilserv.getTranslation('Order-Details')}}</span></h6>
+        <ion-row>
+          <ion-col size="6" style="padding: 0px 5px;">
+            <p class="leftalign">
+              <span *ngIf="!utilserv.getTranslation('Order-ID')">Order-ID</span>
+              <span class="other_lang">{{utilserv.getTranslation('Order-ID')}}</span> </p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;">
+            <p class="rightalign">{{order_id}} </p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;"> 
+            <p class="leftalign">
+              <span *ngIf="!utilserv.getTranslation('Order-Placed-On')">Order Placed On</span>
+              <span class="other_lang">{{utilserv.getTranslation('Order-Placed-On')}}</span> </p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;">
+            <p class="rightalign">{{order_date}} </p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;" *ngIf="delivery_date">
+            <p class="leftalign">
+              <span *ngIf="!utilserv.getTranslation('Delivery-Date')"> Delivery Date</span>
+              <span class="other_lang">{{utilserv.getTranslation('Delivery-Date')}}</span> </p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;" *ngIf="delivery_date">
+            <p class="rightalign">{{delivery_date}} </p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;" *ngIf="delivery_time">
+            <p class="leftalign">
+              <span *ngIf="!utilserv.getTranslation('Delivery-Slot')">Delivery Slot</span> 
+              <span class="other_lang">{{utilserv.getTranslation('Delivery-Slot')}}</span></p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;" *ngIf="delivery_time">
+            <p class="rightalign">{{delivery_time}}</p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;">
+            <p class="leftalign">
+              <span *ngIf="!utilserv.getTranslation('Status')">Status</span>
+              <span class="other_lang">{{utilserv.getTranslation('Status')}}</span></p>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px 5px;">
+            <p class="rightalign">{{status}}</p>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-col>
+
+    <ion-row>
+      <ion-col size="12">
+        <div class="billing">
+          <h6>
+            <span *ngIf="!utilserv.getTranslation('Billing')">Billing</span> 
+            <span class="other_lang">{{utilserv.getTranslation('Billing')}}</span></h6>
+          <ion-row style="border-bottom: 1px solid #cccaca;">
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Payment-Option')">Payment Option</span>  
+                <span class="other_lang">{{utilserv.getTranslation('Payment-Option')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">{{payment_option}} </p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Payment-Status')">Payment Status </span> 
+                <span class="other_lang">{{utilserv.getTranslation('Payment-Status')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">{{payment_status}} </p>
+            </ion-col>
+              
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Sub-Total')">Sub Total </span> 
+                <span class="other_lang">{{utilserv.getTranslation('Sub-Total')}}</span>
+                {{utilserv.getTranslation('Sub-Total')}} </p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">&#x20B9; {{sub_total}} </p>
+            </ion-col>
+<!-- 
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('GST-Amount')">GST Amount</span>
+                <span class="other_lang">{{utilserv.getTranslation('GST-Amount')}} ( {{gst_per}}% )</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">&#x20B9; {{gst}}</p>
+            </ion-col> -->
+              
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Delivery-Charges')">Delivery Charges</span>
+                <span class="other_lang">{{utilserv.getTranslation('Delivery-Charges')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">&#x20B9; {{delivery_charges}}</p>
+            </ion-col>
+              
+
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="delivery_tip">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Delivery-Tip')">Delivery Tip</span>
+                <span class="other_lang">{{utilserv.getTranslation('Delivery-Tip')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="delivery_tip">
+              <p class="rightalign">&#x20B9; {{delivery_tip}}</p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Coupon-Discount')">Coupon Discount</span> 
+                <span class="other_lang">{{utilserv.getTranslation('Coupon-Discount')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">&#x20B9; {{discount}}</p>
+            </ion-col>
+
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="online_amount && online_amount!=0 && payment_option=='COD'">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('COD-Amount')">COD Amount</span> 
+                <span class="other_lang">{{utilserv.getTranslation('COD-Amount')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="online_amount && online_amount!=0 && payment_option=='COD'">
+              <p class="rightalign">&#x20B9; {{online_amount}}</p>
+            </ion-col>
+
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="online_amount && online_amount!=0 && payment_option=='Pay Online'">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Pay-Online-Amount')">Pay Online Amount</span> 
+                <span class="other_lang">{{utilserv.getTranslation('Pay-Online-Amount')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="online_amount && online_amount!=0 && payment_option=='Pay Online'">
+              <p class="rightalign">&#x20B9; {{online_amount}}</p>
+            </ion-col>
+
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="wallet_amount && wallet_amount!=0 && payment_option!='Wallet'">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Wallet-Paid')">Wallet Paid</span> 
+                <span class="other_lang">{{utilserv.getTranslation('Wallet-Paid')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;" *ngIf="wallet_amount && wallet_amount!=0 && payment_option!='Wallet'">
+              <p class="rightalign">&#x20B9; {{wallet_amount}}</p>
+            </ion-col>
+             
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="leftalign">
+                <span *ngIf="!utilserv.getTranslation('Grand-Total')">Grand Total</span> 
+                <span class="other_lang">{{utilserv.getTranslation('Grand-Total')}}</span></p>
+            </ion-col>
+            <ion-col size="6" style="padding:0px 5px;">
+              <p class="rightalign">&#x20B9; {{grand_total}}</p>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="utilserv.setting_data?.rating_reviews=='Yes'">
+      <div class='rating' align="center" *ngIf="rating">
+        <div class="star">
+          <ion-icon name="star" class="inactive_star" *ngFor="let s of [1,2,3,4,5] let i = index"
+          [ngClass]="{'active_star':s<=rating}"></ion-icon>
+          <input type="hidden" [(ngModel)]="rating" name="rating">
+        </div>
+        <p style="margin:0px;">{{rating_review}}</p>
+      </div>
+    </div>
+    
+  </ion-grid>
+</ion-content>
+
+<ion-footer style="padding: 0px 4%;
+background: var(--cm-main-color);
+color: #fff;">
+  <h5 style="margin-bottom:0px;">
+    <span *ngIf="!utilserv.getTranslation('Total-Amount')">Total Amount</span> 
+    <span class="other_lang">{{utilserv.getTranslation('Total-Amount')}}</span> <span style="float:right">&#x20B9; {{grand_total}}</span></h5>
+    <h5 *ngIf="payment_status!='Pending' && payment_option!='COD'">
+      <span *ngIf="!utilserv.getTranslation('Paid-From')">Paid From</span> 
+      <span class="other_lang">{{utilserv.getTranslation('Paid-From')}}</span>
+      <span style="float:right">{{payment_option}}</span>
+    </h5>
+    <h5 *ngIf="payment_option=='COD'">
+      <span *ngIf="!utilserv.getTranslation('Paid-From')">Paid From</span> 
+      <span class="other_lang">{{utilserv.getTranslation('Paid-From')}}</span>
+      <span style="float:right">{{payment_option}}</span>
+    </h5>
+    <div>
+        <ion-button *ngIf="payment_via=='Paytm' && fail_payment=='Yes' && utilserv.setting_data?.payment_paytm=='Yes'" class="try_again">
+          Paytm Pay
+        </ion-button>
+        <ion-button (click)="cashfreepay()" *ngIf="payment_via=='Cashfree' && fail_payment=='Yes' && utilserv.setting_data?.cashfree=='Yes'" class="try_again">
+          CashFree Pay
+        </ion-button>
+        <ion-button (click)="doOnline()" *ngIf="payment_via=='Razorpay' && fail_payment=='Yes' && utilserv.setting_data?.payment_razorpay=='Yes'" class="try_again">
+          Razorpay Pay
+        </ion-button>
+      
+      </div>
+    
+    
+    
+</ion-footer> 

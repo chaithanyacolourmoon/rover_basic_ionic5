@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('Write-A-Review')">Refer and Earn </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('Write-A-Review')">{{utilserv.getTranslation('Write-A-Review')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background:var(--cm-text-background);">
+  <div class="content" align="center">
+    <h3>Refer your Friends <br/>
+      and Earn</h3>
+    <p>{{refer_data?.referral_message}}</p>
+    <img src="assets/images/new_cuttings/refer_img.svg" />
+    <div class="code">
+      <span class="no">{{refer_data?.referral_code}}</span>
+      <span class="copy" (click)="copyString(refer_data?.referral_code)"><ion-icon name="copy"></ion-icon></span>
+    </div>
+    <p>Share Referral Code via</p>
+    <ion-row>
+      <ion-col size="1">
+
+      </ion-col>
+      <ion-col size="2" (click)="shareWhatsapp()">
+        <div class="whatsapp">
+          <ion-icon name="logo-whatsapp"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="2" (click)="shareWhatsapp()">
+        <div class="twitter">
+          <ion-icon name="logo-twitter"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="2" (click)="shareWhatsapp()">
+        <div class="facebook">
+          <ion-icon name="logo-facebook"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="2" (click)="shareWhatsapp()">
+        <div class="gmail">
+          <ion-icon name="mail"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="2" (click)="shareWhatsapp()">
+        <div class="sms">
+          <ion-icon name="paper-plane"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="1">
+        
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

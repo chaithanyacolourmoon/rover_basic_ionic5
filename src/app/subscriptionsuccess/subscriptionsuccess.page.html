@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar style="--background:#fff">
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="orderplaced">
+      <ion-col size="12">
+        <img style="width:70%;margin-top:10%" src="assets/images/Cuttings/vip_mail.png">
+
+        <h5 style="font-weight:bold;" *ngIf="!utilserv.getTranslation('Congratulations!')"> 
+          Congratulations!</h5>
+        <h5 style="font-weight:bold;" *ngIf="utilserv.getTranslation('Congratulations!')"> 
+          {{utilserv.getTranslation('Congratulations!')}}</h5>
+        <p *ngIf="!utilserv.getTranslation('Thank-you-for-purchasing-the-subscription-you-can-avail-the-offers-from-now-onwards')">
+          Thank you for purchasing the subscription,<br/>
+           you can avail the offers from now onwards
+          </p>
+          <p *ngIf="utilserv.getTranslation('Thank-you-for-purchasing-the-subscription-you-can-avail-the-offers-from-now-onwards')">
+            {{utilserv.getTranslation('Thank-you-for-purchasing-the-subscription-you-can-avail-the-offers-from-now-onwards')}}</p>
+        
+        <button class="backtohome" (click)="goHome()">
+          <span *ngIf="!utilserv.getTranslation('Back-To-Home')">
+            Back To Home
+          </span> <span class="other_lang">{{utilserv.getTranslation('Back-To-Home')}}</span></button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-title style="text-align: center;">
+      <span *ngIf="!utilserv.getTranslation('Update-App')">Update App</span>
+      <span class="other_lang">{{utilserv.getTranslation('Update-App')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="margin-top: 20%;">
+    <button class="updatebtn" (click)="updateapp()">
+      <span *ngIf="!utilserv.getTranslation('Update')">
+        Update
+      </span> <span class="other_lang">{{utilserv.getTranslation('Update')}}</span></button>
+  </div>
+  <p class="version"> 
+    <span *ngIf="!utilserv.getTranslation('Current-version-is-out-dated-Please-update-to-latest-version')">
+      Current version is out dated. Please update to latest version
+    </span>
+    <span *ngIf="utilserv.getTranslation('Current-version-is-out-dated-Please-update-to-latest-version')">
+     {{utilserv.getTranslation('Current-version-is-out-dated-Please-update-to-latest-version')}}
+    </span></p>
+</ion-content>
+
+<style>
+  .updatebtn {
+    outline: none;
+    font-size: 20px;
+    padding: 10px 20px;
+    background: var(--cm-main-color);
+    margin: auto;
+    display: block;
+    color: #fff;
+    border-radius: 7px;
+  }
+
+  .version {
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+    margin: 15px 30px;
+  }
+</style>

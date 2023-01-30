@@ -1,0 +1,31 @@
+
+<ion-content class="main-view" style=" --background: transparent;">
+  <div class="overlay" (click)="modalHeadClose()"></div>
+  <div class="modal_content">
+    <h5 style="margin: 15px;
+    padding-top: 5px;">
+    <span *ngIf="!utilserv.getTranslation('Select-Coupon')">Select Coupon</span>
+    <span class="other_lang">{{utilserv.getTranslation('Select-Coupon')}}</span>
+      <span style="float: right;
+      color: #757575;margin-top: -5px;" (click)="dismiss()">
+     <ion-icon name="close-outline" style="font-size:30px;"></ion-icon></span>
+    </h5>
+    <div style="overflow-y:scroll;height:65%;">
+      <ion-radio-group [(ngModel)]="coupon_select">
+        <ion-item *ngFor="let c of couponList">
+          <ion-radio slot="start" [value]="c.coupon_code" ></ion-radio>
+          <ion-label class="sortlabel">
+           <span>{{c.coupon_code}}</span> 
+           <p>{{c.description}}</p>
+          </ion-label>
+          <!-- (click)="modalClose('Low')" -->
+        </ion-item>
+      </ion-radio-group>
+    </div>
+    
+
+    <ion-button (click)="modalClose(coupon_select)">
+      <span *ngIf="!utilserv.getTranslation('Apply')">Apply</span>
+      <span class="other_lang">{{utilserv.getTranslation('Apply')}}</span></ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,597 @@
+<ion-app>
+  <ion-menu side="start">
+    <ion-header>
+      <ion-toolbar *ngIf="is_logged_in" style="--background:#fff;">
+        <ion-item>
+          <div style="width: 100%;padding: 10px;padding-left:0px;">
+            <ion-row>
+              <ion-col size="4">
+                <img src="../assets/images/Cuttings/logo.png" style="width: 80px;
+                padding: 3px;
+                object-fit: contain;
+                height: 70px;">
+                <!-- <img src="../assets/images/profile.svg" class="user"> -->
+              </ion-col>
+              <ion-col size="8" class="usertitle">
+                <h5>{{name}}
+                  <!-- <span><ion-icon style="    position: relative;
+                    color: var(--cm-main-color);
+                    font-size: 20px;
+                    left: 10px;
+                    top: 3px;" name="create"></ion-icon></span> -->
+                </h5>
+                <!-- <ion-menu-toggle>
+                  <ion-button style="--box-shadow: none;
+                  text-transform: none;
+                  margin: 0px;
+                  position: relative;
+                  top: -5px;
+                  left: -5px;
+                  --border-radius: 20px;
+                  --background: var(--cm-main-color);" (click)="profile()">Edit Profile</ion-button>
+                </ion-menu-toggle> -->
+                <!-- <p>{{mobile}}</p> -->
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-item>
+      </ion-toolbar>
+      <ion-toolbar *ngIf="!is_logged_in" style="--background:#fff;">
+        <ion-row>
+          <ion-col size="12" style="border-bottom:4px solid #f7f7f7;">
+            <div style="padding: 10px;">
+              <img src="../assets/images/Cuttings/logo.png" style="width: 40%;
+                margin-left: 10px;">
+              <!-- <span style="color: #027dba;font-size: 18px;
+                font-weight: 600;">Welcome</span><img src="../assets/images/Cuttings/logo.jpg" style="width: 30%;
+                margin-left: 10px;">
+              <h5>Please Login</h5> -->
+            </div>
+            <div class="signin">
+              <ion-menu-toggle>
+                <button class="bold" routerLink="/login">
+                  <span *ngIf="!utilserv.getTranslation('Login')">Login</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Login')}}</span>
+                </button>
+                <button class="bold" routerLink="/register">
+                  <span *ngIf="!utilserv.getTranslation('Sign-Up')">Sign Up</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Sign-Up')}}</span>
+                </button>
+              </ion-menu-toggle>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="sidenavcontent" *ngIf="is_logged_in">
+      <ion-list class="menutype">
+        <ion-menu-toggle>
+          <!-- <ion-item routerLink="/location">
+            <div class="location">
+              <ion-icon name="location-outline"></ion-icon> <span>{{currentcity}}</span>
+            </div>
+          </ion-item> -->
+          <ion-item *ngIf="utilserv.setting_data?.wallet=='Yes'" routerLink="/mywallet" class="menu">
+            <div class="menu_img"><img src="assets/images/new_cuttings/my_wallet.svg" /></div>
+              <span> 
+                <span *ngIf="!utilserv.getTranslation('Home')">My Wallet</span>   
+                <span class="other_lang">{{utilserv.getTranslation('Home')}}</span>
+              </span>
+              <div slot="end">
+                <span style="color: red;
+                font-weight: bold;
+                position: relative;
+                top: -5px;
+                margin-right: 10px;">{{utilserv.walletAmount}} /-</span>
+                <img src="../assets/images/new_cuttings/add_cash.svg" />
+              </div>
+              
+              <!-- <ion-icon name="add" style="color: #000;
+              margin-top: 10px;
+              font-size: 23px;" class="sideaddicon" *ngIf="!account_show" slot="end"
+              ></ion-icon> -->
+            <!-- <ion-icon name="home-outline"></ion-icon><span> Home</span> -->
+          </ion-item>
+          <ion-item routerLink="/home" class="menu">
+            <div class="menu_img"><img src="assets/images/Cuttings/home.svg" /></div><span> 
+              <span *ngIf="!utilserv.getTranslation('Home')">Home</span>   
+              <span class="other_lang">{{utilserv.getTranslation('Home')}}</span></span>
+            <!-- <ion-icon name="home-outline"></ion-icon><span> Home</span> -->
+          </ion-item>
+        </ion-menu-toggle>
+        <div *ngIf="is_logged_in==true">
+          <ion-item class="menu" (click)="accountShow()">
+            <div class="menu_img"><ion-icon name="person" style="color: #fff;
+              padding-left: 3px;
+              padding-top: 2px;"></ion-icon></div><span> 
+              <span *ngIf="!utilserv.getTranslation('My-Account')">My Account</span>     
+                <span class="other_lang">{{utilserv.getTranslation('My-Account')}}</span>
+              </span>
+              <ion-icon name="add" style="color: #000;
+              margin-top: 10px;
+              font-size: 23px;" class="sideaddicon" *ngIf="!account_show" slot="end"
+             ></ion-icon>
+            <ion-icon name="remove" style="color: #000;
+            margin-top: 10px;
+            font-size: 23px;" class="sideaddicon" *ngIf="account_show" slot="end"
+              ></ion-icon>
+          </ion-item>
+          <div class="sidemenudiv" *ngIf="account_show">
+            <ion-menu-toggle>
+              <div style="margin-left:25px;">
+                <p class="smartclas" style="margin: 0px;
+                font-weight: bold;
+                margin-bottom: 5px;" routerLink="/myorders">
+                  <span>
+                    <!-- <ion-icon name="cube" style="color: #000;
+                    padding-left: 3px;
+                    padding-top: 2px;font-size:25px;"></ion-icon> -->
+                    <img style="width:10%;" src="assets/images/Cuttings/menu_order.svg" /> 
+                    </span>
+                  <span style="
+                  position: relative;
+                  top: -7px;
+                  left: 5px;
+                ">
+                <span *ngIf="!utilserv.getTranslation('My-Orders')">My Orders</span>   
+                 <span class="other_lang">{{utilserv.getTranslation('My-Orders')}}</span>
+                </span>
+                </p>
+                <p class="smartclas" *ngIf="utilserv.setting_data?.subscription=='Yes'" style="margin: 0px;
+                  font-weight: bold;
+                  margin-bottom: 5px;" routerLink="/mysubscription">
+                    <span>
+                      <!-- <ion-icon name="newspaper" style="color: #000;
+                      padding-left: 3px;
+                      padding-top: 2px;font-size:25px;"></ion-icon> -->
+                      <img style="width:10%;" src="assets/images/Cuttings/menu_subscription.svg" />
+                    </span>
+                    <span style="
+                    position: relative;
+                    top: -7px;
+                    left: 5px;
+                  ">
+                  <span *ngIf="!utilserv.getTranslation('Subscription')">Subscription</span>   
+                   <span class="other_lang">{{utilserv.getTranslation('Subscription')}}</span>
+                  </span>
+                </p>
+                <p class="smartclas" style="margin: 0px;
+                  font-weight: bold;
+                  margin-bottom: 5px;" routerLink="/addressbook">
+                    <span>
+                      <!-- <ion-icon name="locate" style="color: #000;
+                      padding-left: 3px;
+                      padding-top: 2px;font-size:25px;"></ion-icon> -->
+                      <img style="width:10%;" src="assets/images/Cuttings/menu_address.svg" />
+                    </span>
+                    <span style="
+                    position: relative;
+                    top: -7px;
+                    left: 5px;
+                  ">
+                  <span *ngIf="!utilserv.getTranslation('Address-Book')">Address Book</span>   
+                   <span class="other_lang">{{utilserv.getTranslation('Address-Book')}}</span>
+                  </span>
+                </p>
+                <p class="smartclas" style="margin: 0px;
+                font-weight: bold;
+                margin-bottom: 5px;" routerLink="/wishlist">
+                  <span>
+                    <!-- <ion-icon name="heart" style="color: #000;
+                    padding-left: 3px;
+                    padding-top: 2px;font-size:25px;"></ion-icon> -->
+                    <img style="width:10%;" src="assets/images/Cuttings/menu_wishlist.svg" />
+                  </span>
+                  <span style="
+                  position: relative;
+                  top: -7px;
+                  left: 5px;
+                ">
+                <span *ngIf="!utilserv.getTranslation('My-Wishlist')">My Wishlist</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('My-Wishlist')}}</span></span>
+                </p>
+                <p class="smartclas" style="margin: 0px;
+                font-weight: bold;
+                margin-bottom: 5px;" (click)="profile()">
+                    <span>
+                      <!-- <ion-icon name="create" style="color: #000;
+                      padding-left: 3px;
+                      padding-top: 2px;font-size:25px;"></ion-icon> -->
+                      <img style="width:10%;" src="assets/images/Cuttings/menu_profile.svg" />
+                    </span>
+                    <span style="
+                    position: relative;
+                    top: -7px;
+                    left: 5px;
+                ">
+              <span *ngIf="!utilserv.getTranslation('Update-Profile')"> Update Profile</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Update-Profile')}}</span></span>
+                </p>
+                <p class="smartclas" style="margin: 0px;
+                font-weight: bold;
+                margin-bottom: 5px;" (click)="password()">
+                  <span>
+                    <!-- <ion-icon name="construct" style="color: #000;
+                    padding-left: 3px;
+                    padding-top: 2px;font-size:25px;"></ion-icon> -->
+                    <img style="width:10%;" src="assets/images/Cuttings/menu_password.svg" />
+                  </span>
+                  <span style="
+                  position: relative;
+                  top: -7px;
+                  left: 5px;
+              ">
+              <span *ngIf="!utilserv.getTranslation('Change-Password')">Change Password</span>   
+               <span class="other_lang">{{utilserv.getTranslation('Change-Password')}}</span></span>
+                </p>
+                
+              </div>
+             
+            </ion-menu-toggle>
+          </div>
+        </div>
+
+        <!-- <ion-menu-toggle>
+          <ion-item routerLink="/addressbook" class="menu">
+            
+            <div class="menu_img"><img style="    width: 60%;
+              position: relative;
+              left: 4px;" src="assets/images/Cuttings/address_book.svg" /></div><span>Address
+              Book</span>
+          </ion-item>
+        </ion-menu-toggle> -->
+        
+        <ion-item class="menu">
+          <div class="menu_img"><img src="assets/images/Cuttings/shop_by_category.svg" /></div><span> 
+            <span *ngIf="!utilserv.getTranslation('Shop-By-Category')">Shop By Category</span>   
+            <span class="other_lang">{{utilserv.getTranslation('Shop-By-Category')}}</span></span>
+        </ion-item>
+
+        <div *ngFor="let cat of menucategories;let arIndex=index" class="sidemenudiv">
+          <!-- <img [src]="cat.image" style="width:20px;height:20px;margin-right:13px;"> -->
+          <span class="menulabel" style="font-weight:bold;" (click)="toggle_section(arIndex)">{{cat.category}}</span>
+          <ion-icon name="add" class="sideaddicon" *ngIf="current_section_index != arIndex" slot="end"
+            (click)="toggle_section(arIndex)"></ion-icon>
+          <ion-icon name="remove" class="sideaddicon" *ngIf="current_section_index == arIndex" slot="end"
+            (click)="close_section()"></ion-icon>
+          <ion-menu-toggle>
+            <div *ngFor="let subcat of cat.sub_categories;let i=index">
+              <div *ngIf="current_section_index == arIndex">
+                <p class="smartclas" style="margin-left: 32px;" (click)="gotoProductList(cat.category,subcat.id,i)">
+                  {{subcat.sub_category}}</p>
+              </div>
+            </div>
+          </ion-menu-toggle>
+        </div>
+        <ion-menu-toggle *ngIf="utilserv.setting_data?.multi_language=='Yes'">
+          <ion-item routerLink="/language" class="menu">
+            <div class="menu_img"><ion-icon name="create" style="color: #fff;
+              padding-left: 3px;
+              padding-top: 2px;"></ion-icon></div><span> 
+                <span *ngIf="!utilserv.getTranslation('Change-Language')">Change Language</span>   
+                 <span class="other_lang">{{utilserv.getTranslation('Change-Language')}}</span>
+              </span>
+            <!-- <ion-icon name="home-outline"></ion-icon><span> Home</span> -->
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <!-- <ion-item routerLink="/profile" class="menu"> <img src="assets/images/user-account.svg"> <span>My
+              Profile</span>
+          </ion-item>
+          <ion-item routerLink="/myorders" class="menu"><img src="assets/images/my-orders.svg"><span>My Orders</span>
+          </ion-item> -->
+          <!-- <ion-item routerLink="/notifications" class="menu"> <img
+              src="assets/images/notification.svg"><span>Notifications</span>
+          </ion-item> -->
+          <!-- <ion-item routerLink="/wishlist" class="menu"> <img src="assets/images/wish-list.svg"> <span>Wishlist</span>
+          </ion-item>
+          <ion-item routerLink="/changepassword" class="menu"> <img src="assets/images/change-password.svg"
+              style="width: 5%;"> <span>Change
+              Password</span>
+          </ion-item> -->
+
+         
+          
+
+          <ion-item routerLink="/contactus" class="menu"> 
+            <div class="menu_img"><img src="assets/images/Cuttings/conatct_us.svg" /></div><span>
+              <span *ngIf="!utilserv.getTranslation('Contact-Us')">Contact Us</span>   
+              <span class="other_lang">{{utilserv.getTranslation('Contact-Us')}}</span>
+            </span>
+          </ion-item>
+          <!-- <ion-item routerLink="/cmcontact" class="menu"> 
+            <div class="menu_img"><img src="assets/images/Cuttings/conatct_us.svg" /></div><span>
+              <span *ngIf="!utilserv.getTranslation('CM-Contact')">CM Contact</span>   
+              <span class="other_lang">{{utilserv.getTranslation('CM-Contact')}}</span>
+            </span>
+          </ion-item> -->
+          <ion-item routerLink="/aboutus" class="menu">
+            <div class="menu_img"><img src="assets/images/Cuttings/about_us.svg" /></div><span> 
+              <span *ngIf="!utilserv.getTranslation('About-Us')">About Us</span>   
+              <span class="other_lang">{{utilserv.getTranslation('About-Us')}}</span>
+            </span>
+            <!-- <ion-icon name="newspaper-outline"></ion-icon><span>About Us</span> -->
+          </ion-item>
+          <ion-item class="menu" routerLink="/settings">
+            <div class="menu_img"><ion-icon name="settings-outline" style="color: #fff;
+              padding-left: 3px;
+              padding-top: 2px;"></ion-icon></div><span> 
+                <span *ngIf="!utilserv.getTranslation('Settings')">Settings</span>   
+                <span class="other_lang">{{utilserv.getTranslation('Settings')}}</span></span>
+          </ion-item>
+            <ion-item class="menu" routerLink="/privacypolicy">
+              <div class="menu_img"><ion-icon name="key" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Privacy-Policy')">Privacy Policy</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Privacy-Policy')}}</span></span>
+            </ion-item>
+            <ion-item class="menu" routerLink="/terms">
+              <div class="menu_img"><ion-icon name="clipboard" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                 <span *ngIf="!utilserv.getTranslation('Terms-Condition')">Terms & Condition</span>    
+                  <span class="other_lang">{{utilserv.getTranslation('Terms-Condition')}}</span></span>
+            </ion-item>
+            <ion-item class="menu" routerLink="/refundpolicy">
+              <div class="menu_img"><ion-icon name="cash" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Refund-Policy')">Refund Policy</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Refund-Policy')}}</span></span>
+            </ion-item>
+            <ion-item class="menu" routerLink="/cancelpolicy">
+              <div class="menu_img"><ion-icon name="close-circle" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Cancel-Policy')">Cancel Policy</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Cancel-Policy')}}</span>
+                </span>
+            </ion-item>
+            <ion-item *ngIf="utilserv.setting_data?.referral=='Yes'" routerLink="/refer" class="menu">
+              <div class="menu_img"><img src="assets/images/Cuttings/about_us.svg" /></div><span> 
+                <span *ngIf="!utilserv.getTranslation('About-Us')">Refer & Earn</span>   
+                <span class="other_lang">{{utilserv.getTranslation('About-Us')}}</span>
+              </span>
+            </ion-item>
+            <!-- <div class="sidemenudiv" *ngIf="service_show">
+              <ion-menu-toggle>
+                <div style="margin-left:25px;">
+                  <p class="smartclas" style="margin: 0px;
+                  font-weight: bold;
+                  margin-bottom: 5px;" routerLink="/privacypolicy">
+                    <span><ion-icon name="key" style="color: #000;
+                      padding-left: 3px;
+                      padding-top: 2px;font-size:25px;"></ion-icon></span>
+                    <span style="
+                    position: relative;
+                    top: -7px;
+                    left: 5px;
+                  ">{{utilserv.getTranslation('Privacy-Policy')}}</span></p>
+                    <p class="smartclas" style="margin: 0px;
+                    font-weight: bold;
+                    margin-bottom: 5px;" routerLink="/terms">
+                      <span><ion-icon name="clipboard" style="color: #000;
+                        padding-left: 3px;
+                        padding-top: 2px;font-size:25px;"></ion-icon></span>
+                      <span style="
+                      position: relative;
+                      top: -7px;
+                      left: 5px;
+                    ">{{utilserv.getTranslation('Terms & Conditions')}}</span></p>
+                    <p class="smartclas" style="margin: 0px;
+                    font-weight: bold;
+                    margin-bottom: 5px;" routerLink="/refundpolicy">
+                      <span><ion-icon name="cash" style="color: #000;
+                        padding-left: 3px;
+                        padding-top: 2px;font-size:25px;"></ion-icon></span>
+                      <span style="
+                      position: relative;
+                      top: -7px;
+                      left: 5px;
+                    ">{{utilserv.getTranslation('Refund Policy')}}</span></p>
+                 <p class="smartclas" style="margin: 0px;
+                 font-weight: bold;
+                 margin-bottom: 5px;" routerLink="/cancelpolicy">
+                    <span><ion-icon name="close-circle" style="color: #000;
+                      padding-left: 3px;
+                      padding-top: 2px;font-size:25px;"></ion-icon></span>
+                    <span style="
+                    position: relative;
+                    top: -7px;
+                    left: 5px;
+                ">{{utilserv.getTranslation('Cancel Policy')}}</span></p>
+    
+                  
+                </div>
+               
+              </ion-menu-toggle>
+            </div> -->
+          <!-- <ion-item routerLink="/privacypolicy" class="menu">
+            <ion-icon name="lock-closed-outline"></ion-icon><span>Privacy Policy</span>
+          </ion-item> -->
+          <!-- {{is_logged_in}} -->
+          <!-- <ion-item *ngIf="is_logged_in==true" (click)="logout()" class="menu"> 
+            <div class="menu_img"><img src="assets/images/Cuttings/logout.svg" /></div><span>{{utilserv.getTranslation('Logout')}}</span>
+          </ion-item> -->
+        </ion-menu-toggle>
+      </ion-list>
+      <!-- <div style="margin-top: 50px;">
+        <h6 style="text-align: center;">{{utilserv.getTranslation('Version')}} : 0.0.1</h6>
+      </div> -->
+    </ion-content>
+
+    <ion-content class="sidenavcontent" *ngIf="!is_logged_in">
+      <ion-list class="menutype">
+       
+        <ion-menu-toggle>
+          <!-- <ion-item routerLink="/location">
+            <div class="location">
+              <ion-icon name="location-outline"></ion-icon> <span>{{currentcity}}</span>
+            </div>
+          </ion-item> -->
+          <ion-item routerLink="/home" class="menu">
+            <div class="menu_img"><img src="assets/images/Cuttings/home.svg" /></div><span> 
+              <span *ngIf="!utilserv.getTranslation('Home')">Home</span>    
+              <span class="other_lang">{{utilserv.getTranslation('Home')}}</span>
+            </span>
+            <!-- <ion-icon name="home-outline"></ion-icon><span> Home</span> -->
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item class="menu">
+          <div class="menu_img"><img src="assets/images/Cuttings/shop_by_category.svg" /></div><span> 
+            <span *ngIf="!utilserv.getTranslation('Shop-By-Category')">Shop By Category</span>   
+            <span class="other_lang">{{utilserv.getTranslation('Shop-By-Category')}}</span>
+          </span>
+        </ion-item>
+
+          <div *ngFor="let cat of menucategories;let arIndex=index" class="sidemenudiv">
+          <!-- <img [src]="cat.image" style="width:20px;height:20px;margin-right:13px;"> -->
+          <span class="menulabel" style="font-weight:bold;" (click)="toggle_section(arIndex)">{{cat.category}}</span>
+          <ion-icon name="add" class="sideaddicon" *ngIf="current_section_index != arIndex" slot="end"
+            (click)="toggle_section(arIndex)"></ion-icon>
+          <ion-icon name="remove" class="sideaddicon" *ngIf="current_section_index == arIndex" slot="end"
+            (click)="close_section()"></ion-icon>
+          <ion-menu-toggle>
+            <div *ngFor="let subcat of cat.sub_categories;let i=index">
+              <div *ngIf="current_section_index == arIndex">
+                <p class="smartclas" style="margin-left: 32px;" (click)="gotoProductList(cat.category,subcat.id,i)">
+                  {{subcat.sub_category}}</p>
+              </div>
+            </div>
+          </ion-menu-toggle>
+        </div>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/language" class="menu" *ngIf="utilserv.setting_data?.multi_language=='Yes'">
+            <div class="menu_img"><ion-icon name="create" style="color: #fff;
+              padding-left: 3px;
+              padding-top: 2px;"></ion-icon></div><span> 
+               <span *ngIf="!utilserv.getTranslation('Change-Language')">Change Language</span>    
+                <span class="other_lang">{{utilserv.getTranslation('Change-Language')}}</span>
+              </span>
+            <!-- <ion-icon name="home-outline"></ion-icon><span> Home</span> -->
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <!-- <ion-item routerLink="/aboutus" class="menu">
+            <img src="assets/images/Cuttings/address_book.png" /><span> Address Book</span>
+          </ion-item> -->
+
+          <ion-item routerLink="/contactus" class="menu">
+            <div class="menu_img"><img src="assets/images/Cuttings/conatct_us.svg" /></div><span>
+              <span *ngIf="!utilserv.getTranslation('Contact-Us')">Contact Us</span>   
+              <span class="other_lang">{{utilserv.getTranslation('Contact-Us')}}</span>
+            </span>
+          </ion-item>
+          <!-- <ion-item routerLink="/cmcontact" class="menu"> 
+            <div class="menu_img"><img src="assets/images/Cuttings/conatct_us.svg" /></div><span>
+              <span *ngIf="!utilserv.getTranslation('CM-Contact')">CM Contact</span>   
+              <span class="other_lang">{{utilserv.getTranslation('CM-Contact')}}</span>
+            </span>
+          </ion-item> -->
+          <ion-item routerLink="/aboutus" class="menu">
+            <div class="menu_img"><img src="assets/images/Cuttings/about_us.svg" /></div><span> 
+              <span *ngIf="!utilserv.getTranslation('About-Us')">About Us</span>   
+              <span class="other_lang">{{utilserv.getTranslation('About-Us')}}</span>
+            </span>
+            <!-- <ion-icon name="newspaper-outline"></ion-icon><span>About Us</span> -->
+          </ion-item>
+          <ion-item class="menu" routerLink="/settings">
+            <div class="menu_img"><ion-icon name="settings-outline" style="color: #fff;
+              padding-left: 3px;
+              padding-top: 2px;"></ion-icon></div><span> 
+                <span *ngIf="!utilserv.getTranslation('Settings')">Settings</span>   
+                <span class="other_lang">{{utilserv.getTranslation('Settings')}}</span></span>
+          </ion-item>
+            <ion-item class="menu" routerLink="/privacypolicy">
+              <div class="menu_img"><ion-icon name="key" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Privacy-Policy')">Privacy Policy</span>   
+                  <span class="other_lang">{{utilserv.getTranslation('Privacy-Policy')}}</span></span>
+            </ion-item>
+            <ion-item class="menu" routerLink="/terms">
+              <div class="menu_img"><ion-icon name="clipboard" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Terms-Condition')">Terms & Condition</span>   
+                   <span class="other_lang">{{utilserv.getTranslation('Terms-Condition')}}</span>
+                </span>
+            </ion-item>
+            <ion-item class="menu" routerLink="/refundpolicy">
+              <div class="menu_img"><ion-icon name="cash" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Refund-Policy')">Refund Policy</span>   
+                   <span class="other_lang">{{utilserv.getTranslation('Refund-Policy')}}</span>
+                </span>
+            </ion-item>
+            <ion-item class="menu" routerLink="/cancelpolicy">
+              <div class="menu_img"><ion-icon name="close-circle" style="color: #fff;
+                padding-left: 3px;
+                padding-top: 2px;"></ion-icon></div><span> 
+                  <span *ngIf="!utilserv.getTranslation('Cancel-Policy')">Cancel Policy</span>   
+                   <span class="other_lang">{{utilserv.getTranslation('Cancel-Policy')}}</span>
+                </span>
+            </ion-item>
+
+          <!-- <ion-item *ngIf="is_logged_in==true" (click)="logout()" class="menu">
+            <div class="menu_img"><img src="assets/images/Cuttings/logout.svg" /></div><span> {{utilserv.getTranslation('Logout')}}</span>
+          </ion-item> -->
+         
+        </ion-menu-toggle>
+        
+        <!-- <ion-item *ngIf="is_logged_in==true" (click)="logout()" class="menu"> <img
+          src="assets/images/logout-menu.svg"><span>Logout</span>
+      </ion-item> -->
+      </ion-list>
+      <!-- <div style="margin-top: 50px;">
+        <h6 style="text-align: center;">{{utilserv.getTranslation('Version')}} : 0.0.1</h6>
+      </div> -->
+    </ion-content>
+
+    <ion-footer>
+      <div class="menu_footer" lines="none">
+        <ion-menu-toggle>
+         
+          <h4 (click)="logout()" *ngIf="is_logged_in==true" class="menu_img"><img src="assets/images/Cuttings/logout.svg" />
+            <span> 
+              <span *ngIf="!utilserv.getTranslation('Logout')">Logout</span>   
+              <span class="other_lang" style="top:-5px !important;">{{utilserv.getTranslation('Logout')}}</span></span>
+            <span style="font-size: 12px;
+            float: right;
+            top: 12px;
+            left: -10px;">
+              <span *ngIf="!utilserv.getTranslation('Version')" style="
+              left: -5px;
+              top: 0px;
+          ">Version</span>   
+                <span class="other_lang" style="
+                left: -5px !important;
+                top: 0px !important;
+            ">{{utilserv.getTranslation('Version')}}</span> : 0.0.1
+            </span>
+          </h4>
+          <h4 *ngIf="!is_logged_in" align='center' style="color:#fff;margin:10px 0px;">
+           <span style="top: 0px;
+           left: 2px;" *ngIf="!utilserv.getTranslation('Version')">Version</span>   
+            <span class="other_lang">{{utilserv.getTranslation('Version')}}</span> : 0.0.1
+          </h4>
+        </ion-menu-toggle>
+        
+      </div>
+    </ion-footer>
+
+  </ion-menu>
+  <ion-router-outlet main></ion-router-outlet>
+</ion-app>
+
+<style>
+  .menulabel {
+    font-weight: bold;
+    margin-left: 27px;
+  }
+</style>

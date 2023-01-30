@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{selected_cat?.category}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background:#f7f7f7">
+  <ion-row>
+    <ion-col size="12">
+      <div *ngIf="!selected_cat">
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-skeleton-text animated style="border-radius: 0px;
+            width: 45px;
+            height: 45px;
+            margin-top: -3px;"></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </div>
+      <div class="terms" *ngIf="selected_cat">
+        <ion-row>
+          <ion-col size="4">
+            <img [src]="selected_cat?.image" onerror="this.src='assets/images/default.png'" />
+          </ion-col>
+          <ion-col size="8">
+            <h6>Up to {{selected_cat?.off}}% OFF</h6>
+            <h4>{{selected_cat?.category}}</h4>
+            <p>{{selected_cat?.description}}
+              </p>
+          </ion-col>
+        </ion-row>
+        <!-- <p [innerHTML]="description"></p> -->
+      </div>
+    </ion-col>
+  </ion-row>
+  
+  <div class="cat">
+    <div *ngIf="!subcategorieslist" class="sub">
+      <ion-row>
+        <ion-col class="item" size="4" *ngFor="let number of [0,1,2,3,4]">
+          <div style="padding:0px 5px;">
+            <!-- <img src="../../assets/images/Cuttings/Rice_Other.png" /> -->
+            <ion-skeleton-text animated style="border-radius: 0px;
+            width: 85px;
+            height: 60px;
+            margin-top: -3px;"></ion-skeleton-text>
+           <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </div>
+            
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf="subcategorieslist">
+      <div class="sub" *ngIf="subcategorieslist.length>0">
+        <ion-row>
+          <ion-col class="item" size="4" *ngFor="let s of subcategorieslist; let i=index" (click)="gotoProductList(s.entry_id,i)">
+            <div style="padding:0px 5px;">
+              <!-- <img src="../../assets/images/Cuttings/Rice_Other.png" /> -->
+              <img [src]="s.image" onerror="this.src='assets/images/default.png'" />
+              <p>{{s.category}}</p>
+            </div>
+              
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="subcategorieslist.length==0">
+        <div class="sub">
+          <img [src]='no_icon' onerror="this.src='assets/images/default.png'" style="margin:auto;display:block;padding-top:10%;" />
+          <p style="padding-top:10%;text-align:center;padding-bottom:10%;">{{no_message}}</p>
+        </div>
+      </div>
+    </div>
+    
+   
+  </div>
+ 
+</ion-content>

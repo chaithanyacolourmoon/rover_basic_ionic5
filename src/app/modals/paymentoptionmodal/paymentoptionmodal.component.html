@@ -1,0 +1,57 @@
+<ion-content class="main-view" style=" --background: transparent;">
+    <div class="overlay" (click)="modalHeadClose(payment_method)"></div>
+    <div class="modal_content">
+      <h5 style="margin: 15px;
+      padding-top: 15px;">
+      <span *ngIf="!utilserv.getTranslation('Payment-Method')">Payment Method</span>
+      <span class="other_lang">{{utilserv.getTranslation('Payment-Method')}}</span>
+        <span style="float: right;
+        color: #757575;" (click)="modalClose('')">
+        <span *ngIf="!utilserv.getTranslation('Close')">Close</span> 
+        <span class="other_lang">{{utilserv.getTranslation('Close')}}</span></span>
+      </h5>
+      <ion-radio-group [(ngModel)]="payment_method">
+        <ion-item *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.payment_razorpay=='Yes'">
+          <ion-label class="sortlabel">
+           <span *ngIf="!utilserv.getTranslation('Pay-With-Razorpay')">Pay With Razorpay</span> 
+            <span class="other_lang">{{utilserv.getTranslation('Pay-With-Razorpay')}}</span>
+            <span style="position: relative;
+            padding-left: 5px;
+            top: 3px;"></span></ion-label>
+          <ion-radio slot="end" name="Razorpay" value="Razorpay" ></ion-radio>
+          <!-- (click)="modalClose('Low')" -->
+        </ion-item>
+        <ion-item *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.payment_paytm=='Yes'">
+          <ion-label class="sortlabel">
+           <span *ngIf="!utilserv.getTranslation('Pay-With-Paytm')">
+            Pay With Paytm
+           </span> 
+            <span class="other_lang">{{utilserv.getTranslation('Pay-With-Paytm')}}</span>
+            <span style="position: relative;
+            padding-left: 5px;
+            top: 3px;"></span>
+          </ion-label>
+          <ion-radio slot="end" name="Paytm" value="Paytm"></ion-radio>
+        </ion-item>
+        <ion-item *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.cashfree=='Yes'">
+            <ion-label class="sortlabel">
+                <span *ngIf="!utilserv.getTranslation('Pay-With-Cashfree')">
+                Pay With Cashfree
+                </span> 
+                <span class="other_lang">{{utilserv.getTranslation('Pay-With-Cashfree')}}</span>
+                <span style="position: relative;
+                padding-left: 5px;
+                top: 3px;">
+               </span>
+            </ion-label>
+            <ion-radio slot="end" name="Cashfree" value="Cashfree"></ion-radio>
+        </ion-item>
+       
+      </ion-radio-group>
+  
+      <ion-button (click)="modalClose(payment_method)">
+        <span *ngIf="!utilserv.getTranslation('Apply')">Apply</span>
+        <span class="other_lang">{{utilserv.getTranslation('Apply')}}</span>
+        </ion-button>
+    </div>
+  </ion-content>

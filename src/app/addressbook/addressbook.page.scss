@@ -1,0 +1,122 @@
+.addressbtn {
+    display: block;
+    text-transform: uppercase;
+    outline: none;
+    padding: 14px 25px;
+    border-radius: 25px;   
+    color: #fff;
+    margin: auto;
+    background: #e90d0b;
+}
+.addresstext {
+    text-align: center;
+    margin: 4px;
+}
+
+.defaultaddress {
+    margin-top: 15px;
+    background-color: #fff;
+  //  border-radius: 10px;
+   // box-shadow: 0px 10px 0px 2px #f1f1f1;
+    padding: 7px 10px;
+    p {
+        text-transform: capitalize;
+        line-height: 22px;
+        letter-spacing: 1px;
+        color: #4e4949;
+    }
+}
+
+.default {
+    color: grey;
+    float: right;
+    font-size: 11px;
+    font-weight: 600;
+    p {
+        margin: 0px 3px;
+    }
+}
+
+.editaddressbtn {
+    font-weight: 600;
+    margin-top: 13px;
+    float: right;
+    font-size: 18px;
+    margin: 3px;
+  }
+
+  ion-item{
+    --background:transparent;
+    padding: 0px 0px;
+    border-radius: 20px;
+    ion-label{
+        // padding-left:20px;
+        color:#000;
+        // font-weight:bold;
+    }
+}
+
+.item-radio-checked{
+    background-color: #fff;
+    padding: 0px 0px;
+    border-radius: 20px;
+    ion-label{
+        // padding-left:20px;
+        color:#000;
+        // font-weight:bold;
+    }
+}
+ion-radio {
+    --color-checked: var(--cm-main-color);
+}
+
+.border{
+    border-bottom:1px solid #d8d8d8;
+}
+
+.border:last-child{
+    border-bottom:none;
+}
+
+.btn{
+    position: fixed;
+    bottom: 2%;
+    right: 3%;
+    width: 50px;
+    height: 50px;
+    background: var(--cm-main-color);
+    padding: 0px 3%;
+    border-radius: 50%;
+    font-size: 40px;
+    color: #fff;
+}
+
+.noproducts{
+    h5 {
+        margin-top: 10%;
+color: #e90d0b;
+text-align: center;
+width: 100%;
+    }
+    p{
+    text-align: center;
+    color: grey;
+    }
+}
+
+ion-footer{
+    ion-button{
+        margin: auto;
+        display: block;
+        width: 80%;
+        height: 50px;
+        --border-radius: 10px;
+        --box-shadow: none;
+        --background: var(--cm-main-color);
+        margin-bottom:5%;
+      }
+}
+
+.footer-md::before{
+    background-image: none;
+}

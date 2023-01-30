@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Address-Book')">Address Book</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Address-Book')">{{utilserv.getTranslation('Address-Book')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid *ngIf="addresslist">
+    <!-- <h5 style="padding:0px 10px;">Select Deliver Address
+    <span style="float:right;color:var(--cm-main-color);" routerLink="/addaddress">Add New</span></h5> -->
+    <div class="p_10 border" *ngFor="let a of addresslist">
+      <ion-row>
+        <ion-col size="10">
+          <!-- <ion-radio-group [(ngModel)]="selected_address_id">  -->
+            <!-- (ionChange)="radioGroupChange($event)" -->
+            <ion-item lines="none">
+              <!-- <ion-radio [value]="a.id"></ion-radio> -->
+              <ion-label>
+                <ion-row>
+                  <ion-col size="10" style="padding:0px;">
+                    <h4 style="font-weight:bold"> {{a.address_type}} Address
+                    </h4>
+                    <h4 style="margin:0px;font-weight:bold;"> {{a.name}}
+                    </h4>
+                  </ion-col>
+                  <!-- <ion-col size="1" (click)="gotoeditaddress(a)">
+                    <i class="fa fa-pencil-square-o editaddressbtn" aria-hidden="true" style="color:green"></i>
+                  </ion-col>
+                  <ion-col size="1" (click)="removeAddress(a.id)">
+                    <i class="fa fa-trash-o editaddressbtn" aria-hidden="true" 
+                      style="color:var(--cm-no-item-color)"></i>
+                    
+                  </ion-col> -->
+                </ion-row>
+                <!-- <h4 style="color: #000;
+                font-weight: bold;
+                font-size: 16px;">{{a.name}}
+                </h4> -->
+                <p>
+                  {{a.address}},
+                  <br>{{a.city}},
+                  <span *ngIf="a.location!=''">{{a.location}},</span>
+                  <br>{{a.pincode}}<span *ngIf="a.landmark!=''">,{{a.landmark}}</span><br />
+                </p>
+                Mobile: {{a.mobile}}
+              </ion-label>
+            </ion-item>
+          <!-- </ion-radio-group> -->
+        </ion-col>
+        <ion-col siz="2" style="padding-top:10px;">
+            <ion-row>
+              <ion-col size="6" (click)="gotoeditaddress(a)">
+                <i class="fa fa-pencil-square-o editaddressbtn" aria-hidden="true" style="color:green"></i>
+              </ion-col>
+              <ion-col size="6" (click)="removeAddress(a.id)">
+                <i class="fa fa-trash-o editaddressbtn" aria-hidden="true" 
+                  style="color:var(--cm-no-item-color)"></i>
+                
+              </ion-col>
+            </ion-row>
+        </ion-col>
+        
+      </ion-row>
+      
+      
+    </div>
+  </ion-grid>
+
+  <div align='center' *ngIf="!addresslist" class="noproducts">
+    <div style="margin-top: 15%;width: 100%;">
+      <img [src]="no_icon" style="margin:auto;display:block" onerror="this.src='assets/images/default.png'">
+    </div>
+    <h5 *ngIf="!utilserv.getTranslation('No-Address-Added-Yet')">No Address Added Yet</h5>
+    <h5 class="other_lang" *ngIf="utilserv.getTranslation('No-Address-Added-Yet')">{{utilserv.getTranslation('No-Address-Added-Yet')}}!</h5>
+    <p>{{no_message}}</p>
+    <!-- <p style="color:var(--cm-no-item-color);padding-top:50%;font-weight:bold;"> No Address Found</p>
+    <p>Please Add New Address!</p> -->
+  </div>
+  <!-- <div class="btn" routerLink="/profileaddaddress"><span style="position: relative;top:-3px;left:3px;">+</span></div> -->
+  
+</ion-content>
+
+<ion-footer style="padding: 0px 4%;
+color: #fff;background:#fff;">
+  <div>
+    <ion-button routerLink="/profileaddaddress"> <span *ngIf="!utilserv.getTranslation('Add-Address')">Add Address </span>
+      <span class="other_lang">{{utilserv.getTranslation('Add-Address')}}</span></ion-button>
+  </div>
+</ion-footer>

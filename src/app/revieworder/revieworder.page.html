@@ -1,0 +1,357 @@
+<ion-header>
+
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('My-Cart')">My Cart </span>
+      <span class="other_lang">{{utilserv.getTranslation('My-Cart')}}</span>
+    </ion-title>
+    <!-- <ion-icon name="search-outline" slot="end" class="search"></ion-icon>
+    <img src="assets/images/shopping-cart.svg" slot="end" class="cart"> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="cart_count==0">
+    <div class="noproducts">
+      <div style="margin-top: 30%;width: 100%;">
+        <img [src]="no_icon" onerror="this.src='assets/images/default.png'" style="margin:auto;display:block">
+      </div>
+      <h5>Oppss!</h5>
+      <p>{{no_message}}</p>
+    </div>
+  </div>
+  <div *ngIf="cart_count>0" style="padding-bottom:5%;">
+    <h5 style="padding: 0px 10px;
+    color: #7c7b7b;">
+      Shipment {{cart_count}} of {{cart_count}} 
+      <span style="float:right">
+        {{cart_count}} item(s)</span>
+    </h5>
+    <ion-row class="address" *ngIf="utilserv.setting_data?.delivery_slots=='Yes'">
+      <ion-col size="2">
+        <div class="calendar">
+          <img src="assets/images/Cuttings/calendr.svg" />
+        </div>
+      </ion-col>
+      <ion-col size="6" style="padding-top:5px;">
+        <h6 class="m-0 font_15" style="font-size:14px;">{{earliest?.slot}}</h6>
+        <p class="m-0 font_13" style="color:grey">{{earliest?.delivery_message}}</p>
+        <!-- <h6 class="m-0 font_15">Today, 3 pm-7 pm
+        </h6>
+        <p class="m-0 font_13">Bharath Towers, 405, 4th Floor, 5th Ln......</p> -->
+      </ion-col>
+      <ion-col size="4">
+        <ion-button *ngIf="utilserv.setting_data?.delivery_slots=='Yes'" class="slot_btn" (click)="moreSlots()">
+          <span *ngIf="!utilserv.getTranslation('More-Slots')">
+            More Slots
+          </span>
+          <span *ngIf="utilserv.getTranslation('More-Slots')">
+            {{utilserv.getTranslation('More-Slots')}}
+          </span></ion-button>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="!cartitemslist">
+      <ion-item *ngFor="let number of [0,1,2,3,4]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated style="border-radius: 0px;
+          width: 45px;
+          height: 45px;
+          margin-top: -3px;"></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </div>
+    <div style="margin: 7px 0px;border-bottom: 2px solid #f1f1f1;" *ngIf="cartitemslist">
+      <div class="review">
+        <ion-row  *ngFor="let item of cartitemslist">
+          <ion-col size="4">
+            <div class="offer" *ngIf="item.discount">
+              {{item.discount}} OFF
+            </div>
+            <img [src]="item.image" onerror="this.src='assets/images/default.png'">
+          </ion-col>
+          <ion-col size="8">
+            <h6 style="font-size:16px;color: var(--cm-main-color);
+            font-weight: bold;">&#x20B9; {{item.unit_price}}
+              <span class="mrp" *ngIf="item.mrp_unit_price && item.discount!='0.00 %'">&#x20B9;{{item.mrp_unit_price}}</span>
+              <span style="float:right"> <ion-icon name="trash-outline" (click)="remove_cart_item(item.id)"></ion-icon></span>
+            </h6>
+            <h6 style="margin:5px 0px;">{{item.product}}</h6>
+            <p style="color: #9e9e9e;
+            font-size: 12px;
+            margin: 0px;">GST Percentage: {{item.gst_percentage}} %
+              <br/>
+              GST Per Unit Amount: &#x20B9; {{item.gst_per_unit_amount}}<br/>
+              GST Total Amount: &#x20B9; {{item.gst_total_amount}}
+            </p>
+            <p style="color:var(--cm-no-item-color);">
+              <span style="float:right">
+                <div class="quantity" *ngIf="item.quantity>=1">
+                  <div class='minus' style="float: left;" (click)="decrease(item.id)">
+                   <span>
+                    -
+                   </span> 
+                  </div>
+                  <!-- <ion-icon name="remove-circle-outline" (click)="decrease(product.id,1)">
+                  </ion-icon> -->
+                  <span style="position: relative;
+                  top: 7px;
+                  left: 3px;color:#fff;">{{item.quantity}}</span>
+                  <div class='minus' style="float: right;left:3px;" (click)="increase(item.id)">
+                    <span>
+                     +
+                    </span> 
+                   </div>
+                  <!-- <ion-icon name="add-circle-outline" (click)="increase(product.id,2)"></ion-icon> -->
+                </div>
+                <div style="color:red;font-size:12px;text-align: right;
+                padding-top: 10px;">
+                  You Save &#x20B9; {{item.saved}}
+                </div>
+              </span>
+              
+            </p>
+          </ion-col>
+          <!-- <div style="border-top: 1px solid #9f9e9e;width: 100%;">
+            <h6 class="quantity">Quantity :{{item.quantity}}</h6>
+            
+          </div> -->
+        </ion-row>
+        
+      </div>
+    </div>
+    <div>
+      <div *ngIf="utilserv.setting_data?.subscription=='Yes'">
+        <div *ngIf="sub_show=='false'" style="border-bottom:2px solid #eeeeee;">
+          <div class="subscribe">
+            <ion-row align="center">
+              <ion-col size="4" style="padding:0px;">
+                <img src="../../assets/images/adv_cuttings/vip_logo.png" />
+              </ion-col>
+              <ion-col size="8" class="content">
+                <h4>Become a VIP</h4>
+                <p>Stop paying delivery charges for all orders,
+                  become a privileged member now
+                  </p>
+                <ion-button (click)="subscribemodal()">Subscribe Now</ion-button>
+              </ion-col>
+            </ion-row>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="utilserv.setting_data?.tips=='Yes'">
+        <div class="tip" *ngIf="tip_list?.length>0">
+          <h4>Please give tip to your delivery partner
+          </h4>
+          <ion-row>
+            <ion-col size="3" *ngFor="let t of tip_list" (click)="iconClick(t.amount)">
+              <div [ngClass]="tip_amount==t.amount?'icon_active':'icon'">
+                <ion-icon name="happy-outline"></ion-icon>
+                <p>₹ {{t.amount}}</p>
+                <ion-icon name="close-outline" *ngIf="tip_amount==t.amount" style="font-size: 12px;
+                position: absolute;
+                top: 15px;
+                right: -1px;
+                margin: auto;
+                display: block;color:red"></ion-icon>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+
+      
+    </div>
+  
+    <div *ngIf="utilserv.setting_data?.coupons=='Yes'">
+      <div style="background: #fff;">
+        <!-- *ngIf="!isCouponApplied" -->
+        <h4 *ngIf="!isCouponApplied" style="margin-top: 0px;
+        padding: 10px;
+        padding-bottom: 0px;color: var(--cm-main-color)">
+        <span *ngIf="!utilserv.getTranslation('Add-Coupon')">
+          Add Coupon
+        </span>
+        <span *ngIf="utilserv.getTranslation('Add-Coupon')">
+          {{utilserv.getTranslation('Add-Coupon')}}
+        </span>
+        <span class="view" (click)="couponModal()">View All</span>
+        <span *ngIf="utilserv.getTranslation('View-All')" class="view" (click)="couponModal()">{{utilserv.getTranslation('View-All')}}</span>
+      </h4>
+      <h4 *ngIf="isCouponApplied" style="margin-top: 0px;
+      padding: 10px;
+      padding-bottom: 0px;color: var(--cm-main-color)">
+      <span *ngIf="!utilserv.getTranslation('Coupon-Applied')">
+        Coupon Applied
+      </span>
+      <span *ngIf="utilserv.getTranslation('Coupon-Applied')">
+        {{utilserv.getTranslation('Coupon-Applied')}}
+      </span>
+      <span class="view" *ngIf="!isCouponApplied" (click)="couponModal()">View All</span>
+      <span *ngIf="utilserv.getTranslation('View-All')" class="view" (click)="couponModal()">{{utilserv.getTranslation('View-All')}}</span>
+    </h4>
+        <ion-row style="margin:0px 5px;">
+          <ion-col size="8" *ngIf="!isCouponApplied">
+            <ion-input style="border-radius:10px;" type="text" [(ngModel)]="coupon_code" (ionInput)='onChangeTime()' placeholder="Select Voucher Code" class="couponinput">
+            </ion-input>
+          </ion-col>
+          <ion-col size="8" *ngIf="coupon_code && isCouponApplied">
+            <ion-input disabled style="border-radius:10px;" type="text" [(ngModel)]="coupon_code" (ionInput)='onChangeTime()' placeholder="Select Voucher Code" class="couponinput">
+            </ion-input>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button *ngIf="!isCouponApplied" class="applycouponbtn" (click)="Apply_coupon()">
+              <span *ngIf="!utilserv.getTranslation('Apply')">Apply</span> 
+              <span class="other_lang">{{utilserv.getTranslation('Apply')}}</span> 
+            </ion-button>
+            <ion-button *ngIf="isCouponApplied" class="applycouponbtn" (click)="removeCoupon()"
+            style="--background: red;
+            color: #fff;">
+              <span *ngIf="!utilserv.getTranslation('Remove')">Remove</span> 
+              <span class="other_lang">{{utilserv.getTranslation('Remove')}}</span> 
+            </ion-button>
+          </ion-col>
+          
+        </ion-row>
+        <p *ngIf="coupon_invalid" style="color:var(--cm-no-item-color);margin:0px;text-align:right;padding-right:10px;">
+          <span *ngIf="coupon_message">{{coupon_message}}! </span>
+         </p>
+      </div>
+    </div>
+
+    
+
+    <div class="billing">
+      <ion-row style="padding:3px 10px;">
+        <ion-col size="12">
+          <h5>
+            <span *ngIf="!utilserv.getTranslation('Bill-Details')">Bill Details </span>
+            <span class="other_lang">{{utilserv.getTranslation('Bill-Details')}}</span></h5>
+        </ion-col>
+        <ion-col size="8" class="titleleft">
+          <p style="color:#767575"> 
+            <span *ngIf="!utilserv.getTranslation('Sub-Total')">Sub Total</span> 
+            <span class="other_lang">{{utilserv.getTranslation('Sub-Total')}}</span></p>
+        </ion-col>
+        <ion-col size="4" class="titleright">
+          <p style='font-weight:bold;'>₹ {{subtotal}}</p>
+        </ion-col>
+        <ion-col size="8" class="titleleft">
+          <p style="color:#767575"> <span *ngIf="!utilserv.getTranslation('Coupon-Discount')">Coupon Discount </span>
+            <span class="other_lang" *ngIf="utilserv.getTranslation('Coupon-Discount')">{{utilserv.getTranslation('Coupon-Discount')}}</span></p>
+        </ion-col>
+        <ion-col size="4" class="titleright">
+          <p style="font-weight:bold;">-₹ {{discount}}</p>
+        </ion-col>
+        <!-- <ion-col size="6" class="titleleft">
+          <p style="color:#767575">
+            <span *ngIf="!utilserv.getTranslation('GST')">GST ( {{review_item?.vat_percentage}}% )</span>
+            <span class="other_lang" *ngIf="utilserv.getTranslation('GST')">{{utilserv.getTranslation('GST')}} ( {{review_item?.vat_percentage}}% )</span></p>
+        </ion-col>
+        <ion-col size="6" class="titleright">
+          <p style='font-weight:bold;'>₹ {{review_item?.vat}}</p>
+        </ion-col> -->
+        <ion-col size="8" class="titleleft" *ngIf="tip">
+          <p style="color:#767575"> <span *ngIf="!utilserv.getTranslation('Delivery-Tip')">Delivery Tip </span>
+            <span class="other_lang" *ngIf="utilserv.getTranslation('Delivery-Tip')">{{utilserv.getTranslation('Delivery-Tip')}}</span></p>
+        </ion-col>
+        <ion-col size="4" class="titleright" *ngIf="tip">
+          <p style="font-weight:bold;">+₹ {{tip}}</p>
+        </ion-col>
+        <ion-col size="8" class="titleleft">
+          <p style="color:#767575">
+            <span *ngIf="!utilserv.getTranslation('Delivery-Charges')">Delivery Charges </span>
+            <span class="other_lang">{{utilserv.getTranslation('Delivery-Charges')}}</span></p>
+        </ion-col>
+        <ion-col size="4" class="titleright">
+          <p *ngIf="shipping>0">₹ {{shipping}}</p>
+          <p *ngIf="shipping==0" style="color:var(--cm-main-color);font-weight:bold;">Free</p>
+        </ion-col>
+        <ion-col size="8" class="titleleft">
+          <p style="color:#767575"> 
+            <span *ngIf="!utilserv.getTranslation('Grand-Total')">Grand Total</span> 
+            <span class="other_lang">{{utilserv.getTranslation('Grand-Total')}}</span></p>
+        </ion-col>
+        <ion-col size="4" class="titleright">
+          <p style='font-weight:bold;'>₹ {{grandtotal}}</p>
+        </ion-col>
+          <ion-col size="8" class="titleleft" *ngIf="wallet_check==true">
+            <p style="color:#767575"> 
+              <span *ngIf="!utilserv.getTranslation('Wallet-Used-Amount')">Wallet Used Amount</span> 
+              <span class="other_lang">{{utilserv.getTranslation('Wallet-Used-Amount')}}</span></p>
+          </ion-col>
+          <ion-col size="4" class="titleright" *ngIf="wallet_check==true">
+            <p style='font-weight:bold;'>₹ {{wallet_used_amount}}</p>
+          </ion-col>
+      </ion-row>
+
+      
+      
+      <ion-row style="border-top: 2px solid #eeeeee;padding:3px 10px;">
+        <ion-col size="8" class="titleleft">
+          <p style="font-weight:bold;">
+            <span *ngIf="!utilserv.getTranslation('Need-To-Pay')">Need To Pay </span>
+            <span class="other_lang">{{utilserv.getTranslation('Need-To-Pay')}}</span></p>
+        </ion-col>
+        <ion-col size="4" class="titleright">
+          <p style="font-weight:bold;">₹ {{need_to_pay}}</p>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row style="padding:3px 10px;" *ngIf="utilserv.setting_data?.wallet=='Yes'">
+        <ion-col size="12" class="add_wallet">
+          <ion-checkbox [checked]="wallet_check" (ionChange)="addWallet($event)"></ion-checkbox>
+          <ion-label>Use Wallet <span style="color:var(--cm-no-item-color)">&nbsp; ( ₹{{utilserv.walletAmount}} )</span> </ion-label>
+        </ion-col>
+        <p class="msg" *ngIf="wallet">
+          Your Wallet didn't have sufficient amount, Pay the rest amount from payment gateways by click on proceed !</p>
+        <p class="msg" *ngIf="bal_check">
+          After placing the order, we will debit ₹ {{grandtotal}} from your wallet & later your wallet balance will be ₹ {{avail_bal}} !</p>
+      </ion-row>
+    </div>
+    
+  </div>
+
+</ion-content>
+<ion-footer style="background:white;">
+  <div *ngIf="cart_count>=1">
+    <ion-row style="background: var(--cm-main-color);padding:0px 2%;">
+      <ion-col size="2" style="padding-top:4px;">
+        <img style="width:90%;" src="assets/images/cart_new.svg" />
+      </ion-col>
+      <ion-col size="5" class="total">
+        <h6>{{cart_count}} <span *ngIf="!utilserv.getTranslation('Item')">item(s)</span>
+          <span class="other_lang" *ngIf="utilserv.getTranslation('Item')">{{utilserv.getTranslation('Item')}}</span></h6>
+        <p> ₹ {{need_to_pay}}</p>
+      </ion-col>
+      <ion-col size="5" style="text-align:right;color:#fff;" (click)="confirm_order()">
+       <h4 style='margin: 10px 0px;'>
+        <span *ngIf="!utilserv.getTranslation('Proceed')">Proceed</span> 
+         <span class="other_lang">{{utilserv.getTranslation('Proceed')}}</span>
+         <span style="position: relative;
+         top: 3px;"><ion-icon name="arrow-forward"></ion-icon></span>
+       </h4>  
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="cart_count==0">
+    <ion-button routerLink="/home"> <span *ngIf="!utilserv.getTranslation('Start-Adding ')">Start Adding </span>
+      <span class="other_lang">{{utilserv.getTranslation('Start-Adding')}}</span></ion-button>
+  </div>
+  
+</ion-footer>

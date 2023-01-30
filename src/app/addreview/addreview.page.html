@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('Write-A-Review')">Write A Review </span> 
+     <span class="other_lang" *ngIf="utilserv.getTranslation('Write-A-Review')">{{utilserv.getTranslation('Write-A-Review')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+    <div align="center" style="padding-bottom:15px;">
+      <h4>Please give rating</h4>
+      <div class="star">
+        <ion-icon name="star" class="inactive_star" (click)="setrating(s)" *ngFor="let s of [1,2,3,4,5] let i = index"
+        [ngClass]="{'active_star':s<=rating}"></ion-icon>
+        <input type="hidden" [(ngModel)]="rating" name="rating">
+      </div>
+      <p>Please share your opinion<br/>
+        about the order
+      </p>
+    </div>
+    
+    <ion-label>Your Review</ion-label>
+    <ion-item class="inputbox1">
+      <ion-textarea rows="5" type="text" placeholder="" [(ngModel)]="description"></ion-textarea>
+    </ion-item>
+
+    <ion-button (click)="addReview()">Give Rating</ion-button>
+    
+  </div>
+
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Terms-Condition')">Terms & Condition</span>
+      <span class="other_lang">{{utilserv.getTranslation('Terms-Condition')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12">
+      <div class="terms" style="padding:0px 10px;">
+        <p [innerHTML]="description"></p>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>

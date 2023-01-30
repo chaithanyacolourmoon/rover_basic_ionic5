@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "650270734369",
+    "project_id": "rovor-d3b8f",
+    "storage_bucket": "rovor-d3b8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650270734369:android:7d87fde78b79743a940b60",
+        "android_client_info": {
+          "package_name": "com.rovor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650270734369-lf0fch42rom10fmreepp6qevpcjun168.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP2Qtqeibc-yFb8Hz9E4rLsHbL9ilelgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650270734369-lf0fch42rom10fmreepp6qevpcjun168.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

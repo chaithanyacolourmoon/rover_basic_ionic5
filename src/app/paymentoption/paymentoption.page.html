@@ -1,0 +1,207 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="deliveryslots"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Payment')">Payment</span> 
+      <span class="other_lang">{{utilserv.getTranslation('Payment')}}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #fff;">
+  <div style="background:#f3fff6;">
+    <h4 style="
+    margin: 0px;
+    padding: 15px;">
+    <span *ngIf="!utilserv.getTranslation('Bill-Total')">Bill Total </span>
+    <span class="other_lang">{{utilserv.getTranslation('Bill-Total')}}</span>
+      <span style="float:right;font-weight: bold;">
+        ₹ {{grand_total}}
+      </span>
+    </h4>
+  </div>
+  <div style="padding:20px 5px;">
+    <ion-row *ngIf="utilserv.setting_data?.cod=='Yes'" [ngClass]="select_pay=='COD' ? 'back' : ''" (click)="radioGroupChange('COD')">
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/cash_on_deliver.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          <span *ngIf="!utilserv.getTranslation('Cash-on-Delivery')">
+            Cash on Delivery
+          </span>
+          <span *ngIf="utilserv.getTranslation('Cash-on-Delivery')">
+            {{utilserv.getTranslation('Cash-on-Delivery')}}
+          </span>
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color);"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.payment_razorpay=='Yes'" [ngClass]="select_pay=='Razorpay' ? 'back' : ''" (click)="radioGroupChange('Razorpay')">
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/razorpay.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          <span *ngIf="!utilserv.getTranslation('Razor-Pay')">
+           Razor Pay
+          </span>
+          <span *ngIf="utilserv.getTranslation('Razor-Pay')">
+            {{utilserv.getTranslation('Razor-Pay')}}
+          </span>
+         
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="utilserv.setting_data?.payment_gateway=='Yes' && utilserv.setting_data?.payment_paytm=='Yes'" [ngClass]="select_pay=='Paytm' ? 'back' : ''" (click)="radioGroupChange('Paytm')">
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/paytm.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          
+          <span *ngIf="!utilserv.getTranslation('Paytm')">
+            Paytm
+          </span>
+          <span *ngIf="utilserv.getTranslation('Paytm')">
+            {{utilserv.getTranslation('Paytm')}}
+          </span>
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="utilserv.setting_data?.payment_gateway=='Yes'  && utilserv.setting_data?.cashfree=='Yes'" [ngClass]="select_pay=='Cashfree' ? 'back' : ''" (click)="radioGroupChange('Cashfree')"> 
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/cash.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+          
+          <span *ngIf="!utilserv.getTranslation('Cashfree')">
+            Cash Free
+          </span>
+          <span *ngIf="utilserv.getTranslation('Cashfree')">
+            {{utilserv.getTranslation('Cashfree')}}
+          </span>
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row *ngIf="utilserv.setting_data?.payment_gateway=='Yes'" [ngClass]="select_pay=='Net' ? 'back' : ''" (click)="radioGroupChange('Net')">
+      <ion-col size="2">
+        <img src="assets/images/Cuttings/netbanking.png" />
+      </ion-col>
+      <ion-col size="8">
+        <h4 style="font-size:16px;">
+         
+          <span *ngIf="!utilserv.getTranslation('Net-Banking')">
+            Net Banking
+          </span>
+          <span *ngIf="utilserv.getTranslation('Net-Banking')">
+            {{utilserv.getTranslation('Net-Banking')}}
+          </span>
+        </h4>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+      </ion-col>
+    </ion-row> -->
+    
+    <!-- <div *ngIf="utilserv.package=='medium' || utilserv.package=='advance'">
+      <ion-row [ngClass]="select_pay=='Wallet' ? 'back' : ''" 
+      (click)="radioGroupChange('Wallet')">
+        <ion-col size="2">
+          <img src="assets/images/Cuttings/netbanking.png" />
+        </ion-col>
+        <ion-col size="8">
+          <h4 style="font-size:16px;">
+           
+            <span *ngIf="!utilserv.getTranslation('Pay-Wallet')">
+              Pay Wallet<span style="color:var(--cm-no-item-color)">&nbsp; ( ₹{{utilserv.walletAmount}} )</span> 
+            </span>
+            <span *ngIf="utilserv.getTranslation('Pay-Wallet')">
+              {{utilserv.getTranslation('Pay-Wallet')}}
+            </span>
+          </h4>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <p class="msg" *ngIf="wallet_message">
+        Your Wallet didn't have sufficient amount!</p>
+  
+        <ion-row [ngClass]="select_pay=='Pay Online And Wallet' ? 'back' : ''" 
+        (click)="radioGroupChange('Pay Online And Wallet')">
+          <ion-col size="2">
+            <img src="assets/images/Cuttings/netbanking.png" />
+          </ion-col>
+          <ion-col size="8">
+            <h4 style="font-size:16px;">
+             
+              <span *ngIf="!utilserv.getTranslation('Pay-Online-And-Wallet')">
+                Pay Online & Wallet<span style="color:var(--cm-no-item-color)">&nbsp; ( ₹{{utilserv.walletAmount}} )</span> 
+              </span>
+              <span *ngIf="utilserv.getTranslation('Pay-Online-And-Wallet')">
+                {{utilserv.getTranslation('Pay-Online-And-Wallet')}}
+              </span>
+            </h4>
+          </ion-col>
+          <ion-col size="2">
+            <ion-icon name="arrow-forward" style="padding:20px 10px;color:var(--cm-main-color)"></ion-icon>
+          </ion-col>
+        </ion-row> -->
+    <!-- </div> -->
+    
+    
+     <!-- <ion-radio-group (ionChange)="radioGroupChange($event)">
+        <div class="payment">
+          <ion-radio value="Pay Online"></ion-radio>
+          <ion-label class="label">Online Payment</ion-label>
+        </div>
+
+        <div class="payment">
+          <ion-radio value="COD" checked></ion-radio>
+          <ion-label class="label">Cash On Delivery</ion-label>
+        </div>
+      </ion-radio-group> -->
+  </div>
+  <!-- <ion-grid style="padding: 0;">
+    
+    <ion-row>
+
+      <ion-col size="12" style="padding: 15px 4px;">
+        <div style="width: 98%;margin: auto;display: block;">
+
+          <ion-radio-group (ionChange)="radioGroupChange($event)">
+            <div class="payment">
+              <ion-radio value="Pay Online"></ion-radio>
+              <ion-label class="label">Online Payment</ion-label>
+            </div>
+
+            <div class="payment">
+              <ion-radio value="COD" checked></ion-radio>
+              <ion-label class="label">Cash On Delivery</ion-label>
+            </div>
+          </ion-radio-group>
+
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+</ion-content>
+<!-- <ion-footer>
+  <button class="addressbtn" (click)="start_payment()" style="width: 100%;border-radius: 0;">
+    Next
+  </button>
+</ion-footer> -->

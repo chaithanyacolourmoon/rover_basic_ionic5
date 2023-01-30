@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <!-- <ion-back-button defaultHref="home"></ion-back-button> -->
+    </ion-buttons>
+    <!-- <ion-title>
+      Order Placed
+    </ion-title> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="orderplaced">
+      <ion-col size="12">
+        <img style="width:70%;margin-top:10%" src="assets/images/Cuttings/verified.png">
+
+        <h5 style="font-weight:bold;" *ngIf="!utilserv.getTranslation('Order-Placed-Successfully')"> 
+          Order Placed Successfully</h5>
+        <h5 style="font-weight:bold;" *ngIf="utilserv.getTranslation('Order-Placed-Successfully')"> 
+          {{utilserv.getTranslation('Order-Placed-Successfully')}}</h5>
+        <p *ngIf="!utilserv.getTranslation('Thanks-for-your-order-Your-order-has-placed-successfully-Please-continue-your-shopping')">
+          Thanks for your order. Your order has placed
+          successfully. Please continue your shopping</p>
+          <p *ngIf="utilserv.getTranslation('Thanks-for-your-order-Your-order-has-placed-successfully-Please-continue-your-shopping')">
+            {{utilserv.getTranslation('Thanks-for-your-order-Your-order-has-placed-successfully-Please-continue-your-shopping')}}</p>
+        <h5 style="color:var(--cm-main-color);font-weight:bold;">
+          <span *ngIf="!utilserv.getTranslation('Order-ID')">
+            Order ID #{{order_id}}
+          </span>
+          <span *ngIf="utilserv.getTranslation('Order-ID')">
+            {{utilserv.getTranslation('Order-ID')}} #{{order_id}}
+          </span>
+        </h5>
+        <button class="backtohome" (click)="goHome()">
+          <span *ngIf="!utilserv.getTranslation('Continue-Shopping')">
+            Continue Shopping
+          </span> <span class="other_lang">{{utilserv.getTranslation('Continue-Shopping')}}</span></button>
+        <h5 style="color:var(--cm-main-color);font-weight:bold;" (click)="goOrderDetail()">
+          <span *ngIf="!utilserv.getTranslation('Track-Order')">
+            Track Order 
+          </span><span class="other_lang">{{utilserv.getTranslation('Track-Order')}}</span></h5>
+        <!-- <h6 routerLink="/orderhistory">view order details</h6> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,249 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons> -->
+    <ion-buttons slot="start">
+      <ion-button style="--background:none" routerLink="/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+     <span *ngIf="!utilserv.getTranslation('My-Orders')">
+      My Orders 
+     </span>
+      <span class="other_lang">{{utilserv.getTranslation('My-Orders')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-row>
+    <ion-col size="12">
+      <ion-segment scrollable (ionChange)="segmentChanged($event)" value="on going">
+        <ion-segment-button value="on going">
+          <ion-label>Ongoing</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="completed">
+          <ion-label> Completed</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+  </ion-row> -->
+  <ion-segment (ionChange)="segmentChanged($event)" value="Ongoing">
+    <ion-segment-button value="Ongoing">
+      <ion-label style="margin:5px 0px;">
+       <span *ngIf="!utilserv.getTranslation('Ongoing')">
+        Ongoing
+       </span> 
+        <span class="other_lang">{{utilserv.getTranslation('Ongoing')}}</span></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Completed">
+      <ion-label style="margin:5px 0px;">
+        <span *ngIf="!utilserv.getTranslation('Completed')">Completed</span>
+        <span class="other_lang">{{utilserv.getTranslation('Completed')}}</span></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Cancelled">
+      <ion-label style="margin:5px 0px;">
+        <span *ngIf="!utilserv.getTranslation('Cancelled')">Cancelled</span>
+        <span class="other_lang">{{utilserv.getTranslation('Cancelled')}}</span>
+        </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="active_tab=='Ongoing'">
+    <div *ngIf="ongoing_list.length>0">
+      <!-- *ngIf="ongoinglists!=null" -->
+      <div *ngFor="let list of ongoing_list">
+        <div style="box-shadow: 1px 2px 3px 4px #ebebeb;
+        margin-top: 15px;padding:10px;" routerLink="/orderdetail/{{list.order_id}}">
+        <!-- *ngIf="list.order_status!='Delivered' && list.order_status!='Cancelled'" -->
+            <ion-row>
+              <ion-col size="6" style="padding:0px;">
+                <ion-button class="ongoing_btn">{{list.order_status}}</ion-button>
+              </ion-col>
+              <ion-col size="6">
+               <h4 style="text-align:right;margin-top:10px;font-size:15px;">{{list.order_date}}</h4>
+              </ion-col>
+            </ion-row>
+            <ion-row class="order_detail">
+              <ion-col size="4">
+                <h5>
+                  <span *ngIf="!utilserv.getTranslation('Order-ID')">Order-ID</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Order-ID')}}</span></h5>
+                <h4>#{{list.order_id}}</h4>
+              </ion-col>
+              <ion-col size="4">
+                <h5>
+                 <span *ngIf="!utilserv.getTranslation('Payment-Type')">Payment Type</span> 
+                  <span class="other_lang">{{utilserv.getTranslation('Payment-Type')}}</span>
+                  </h5>
+                <h4>{{list.payment_option}}</h4>
+              </ion-col>
+              <ion-col size="4">
+                <h5>
+                  <span *ngIf="!utilserv.getTranslation('Total-Payment')">Total Payment</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Total-Payment')}}</span></h5>
+                <h4>₹{{list.grand_total}}</h4>
+              </ion-col>
+            </ion-row>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="ongoing_list.length==0">
+      <div class="sub">
+        <img src='../../assets/images/Cuttings/empty_favorites.png' style="margin:auto;display:block;padding-top:10%;" />
+        <p style="padding-top:10%;text-align:center;padding-bottom:10%;color:var(--cm-no-item-color)">
+          <span *ngIf="!utilserv.getTranslation('No-Orders-Found')">No Ongoing Orders Found</span>
+          <span class="other_lang">{{utilserv.getTranslation('No-Orders-Found')}}</span></p>
+      </div>
+    </div>
+    <!-- <div *ngIf="ongoing_list.length==0">
+      <p class="no_data">No Ongoing Orders Found !</p>
+    </div> -->
+
+    <!-- <ion-row *ngIf="ongoinglists!=null">
+      <div style="width: 95%; margin:auto;display:block;" >
+        <div style="width: 95%;" *ngFor="let list of ongoinglists">
+          <div class="orderhistory" *ngIf="list.order_status=='Pending' || list.payment_status=='Pending'" 
+          routerLink="/orderdetail/{{list.order_id}}">
+            <ion-row>
+              <ion-col size="6">
+                <p class="lefttitle">Order Id</p>
+                <p class="lefttitle">Payment Status</p>
+                <p class="lefttitle">Payment Type</p>
+                <p class="lefttitle">Service Status</p>
+                <p class="lefttitle">Amount</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="righttitle">:{{list.order_id}}</p>
+                <p class="righttitle">: {{list.payment_status}}</p>
+                <p class="righttitle">: {{list.payment_option}}</p>
+                <p class="righttitle" style="color: #af4b4f;">: {{list.order_status}}</p>
+                <p class="righttitle amount">: &#x20B9; {{list.grand_total}}</p>
+              </ion-col>
+            </ion-row>
+          </div>
+  
+        </div>
+      </div>
+      <div *ngIf="ongoinglists==null" style="width: 100%;">
+        <h5 style="margin-top: 20%;text-align: center;color: var(--cm-no-item-color);">No Orders</h5>
+      </div>
+    </ion-row> -->
+  </div>
+
+  <div *ngIf="active_tab=='Completed'">
+    <div *ngIf="completed_list.length>0">
+      <div *ngFor="let list of completed_list">
+        <div style="box-shadow: 1px 2px 3px 4px #ebebeb;
+        margin-top: 15px;padding:10px;" routerLink="/orderdetail/{{list.order_id}}">
+        <!-- *ngIf="list.order_status=='Delivered' && list.payment_status=='Paid'" -->
+            <ion-row>
+              <ion-col size="6" style="padding:0px;">
+                <ion-button class="ongoing_btn">{{list.order_status}}</ion-button>
+              </ion-col>
+              <ion-col size="6">
+               <h4 style="text-align:right;margin-top:10px;font-size:15px;">{{list.order_date}}</h4>
+              </ion-col>
+            </ion-row>
+            <ion-row class="order_detail">
+              <ion-col size="4">
+                <h5>
+                  <span *ngIf="!utilserv.getTranslation('Order-ID')">Order-ID</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Order-ID')}}</span></h5>
+                <h4>#{{list.order_id}}</h4>
+              </ion-col>
+              <ion-col size="4">
+                <h5>
+                 <span *ngIf="!utilserv.getTranslation('Payment-Type')">Payment Type</span> 
+                  <span class="other_lang">{{utilserv.getTranslation('Payment-Type')}}</span>
+                  </h5>
+                <h4>{{list.payment_option}}</h4>
+              </ion-col>
+              <ion-col size="4">
+                <h5>
+                  <span *ngIf="!utilserv.getTranslation('Total-Payment')">Total Payment</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Total-Payment')}}</span></h5>
+                <h4>₹{{list.grand_total}}</h4>
+              </ion-col>
+            </ion-row>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="completed_list.length==0">
+      <div class="sub">
+        <img src='../../assets/images/Cuttings/empty_favorites.png' style="margin:auto;display:block;padding-top:10%;" />
+        <p style="padding-top:10%;text-align:center;padding-bottom:10%;color:var(--cm-no-item-color)">
+          <span *ngIf="!utilserv.getTranslation('No-Orders-Found')">No Completed Orders Found</span>
+          <span class="other_lang">{{utilserv.getTranslation('No-Orders-Found')}}</span></p>
+      </div>
+    </div>
+    <!-- <div *ngIf="completed_list.length==0">
+      <p class="no_data">No Completed Orders Found !</p>
+    </div> -->
+  </div>
+
+  <div *ngIf="active_tab=='Cancelled'">
+    <div *ngIf="cancelled_list.length>0">
+      <div *ngFor="let list of cancelled_list">
+        <div style="box-shadow: 1px 2px 3px 4px #ebebeb;
+        margin-top: 15px;padding:10px;" routerLink="/orderdetail/{{list.order_id}}">
+         <!-- *ngIf="list.order_status=='Cancelled'" -->
+            <ion-row>
+              <ion-col size="6" style="padding:0px;">
+                <ion-button class="ongoing_btn">{{list.order_status}}</ion-button>
+              </ion-col>
+              <ion-col size="6">
+               <h4 style="text-align:right;margin-top:10px;font-size:15px;">{{list.order_date}}</h4>
+              </ion-col>
+            </ion-row>
+            <ion-row class="order_detail">
+              <ion-col size="4">
+                <h5>
+                  <span *ngIf="!utilserv.getTranslation('Order-ID')">Order-ID</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Order-ID')}}</span></h5>
+                <h4>#{{list.order_id}}</h4>
+              </ion-col>
+              <ion-col size="4">
+                <h5>
+                 <span *ngIf="!utilserv.getTranslation('Payment-Type')">Payment Type</span> 
+                  <span class="other_lang">{{utilserv.getTranslation('Payment-Type')}}</span>
+                  </h5>
+                <h4>{{list.payment_option}}</h4>
+              </ion-col>
+              <ion-col size="4">
+                <h5>
+                  <span *ngIf="!utilserv.getTranslation('Total-Payment')">Total Payment</span>
+                  <span class="other_lang">{{utilserv.getTranslation('Total-Payment')}}</span></h5>
+                <h4>₹{{list.grand_total}}</h4>
+              </ion-col>
+            </ion-row>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="cancelled_list.length==0">
+      <div class="sub">
+        <img src='../../assets/images/Cuttings/empty_favorites.png' style="margin:auto;display:block;padding-top:10%;" />
+        <p style="padding-top:10%;text-align:center;padding-bottom:10%;color:var(--cm-no-item-color)">
+          <span *ngIf="!utilserv.getTranslation('No-Orders-Found')">No Cancelled Orders Found</span>
+          <span class="other_lang">{{utilserv.getTranslation('No-Orders-Found')}}</span></p>
+      </div>
+    </div>
+    <!-- <div *ngIf="cancelled_list.length==0">
+      <p class="no_data">No Cancelled Orders Found !</p>
+    </div> -->
+  </div>
+
+  <!-- <div *ngIf="ongoinglists?.length==0">
+    <div class="sub">
+      <img src='../../assets/images/Cuttings/empty_favorites.png' style="margin:auto;display:block;padding-top:10%;" />
+      <p style="padding-top:10%;text-align:center;padding-bottom:10%;">
+        <span *ngIf="!utilserv.getTranslation('No-Orders-Found')">No Orders Found</span>
+        <span class="other_lang">{{utilserv.getTranslation('No-Orders-Found')}}</span></p>
+    </div>
+  </div> -->
+  
+
+
+</ion-content>

@@ -1,0 +1,50 @@
+.noti{
+    // padding:10px;
+    background: #f3f3f3;
+    border-radius: 10px;
+    margin-top: 10px;
+    .image{
+        padding: 15px;
+        img{
+            max-width: 100%;
+        }
+    }
+    .detail{
+        // border-bottom: 2px solid #d5d5d5;
+        padding-bottom:10px;
+        p{
+            margin-top: 0px;
+            margin-bottom: 5px;
+            font-size:12px;
+            color:#6f6f6f;
+        }
+    }
+}
+
+ion-tab-button{
+    img{
+        width: 26px;
+        height: 26px;
+        max-width: 26px;
+    }
+  
+  }
+  .text{
+    padding-top:2px;
+    font-size:8px;
+    color:#000;
+  }
+  .text_active{
+    padding-top:2px;
+    font-size:8px;
+    color:var(--cm-main-color)
+  }
+  .font_7{
+    font-size:8px !important;
+  }
+  
+  .active{
+    width: 28px !important;
+    height: 28px !important;
+    max-width: 28px !important;
+  }

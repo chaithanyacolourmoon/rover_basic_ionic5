@@ -1,0 +1,95 @@
+ion-content{
+    --background: #fff !important;
+  }
+  ion-segment {
+      display: block;
+    }
+  .group {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          background: white;
+  
+          .size-filter {
+              margin-bottom: .6rem;
+              .slid-container {
+                  width: 52rem;
+                  padding: 1rem 0;
+                  display: flex;
+  
+                  .active{
+                      background: #3b6098;
+                      color: white;
+                  }
+              }
+          }
+  
+          .type-filter,
+          .size-filter {
+              width: 100%;
+              overflow: auto;
+              background: #fff;
+              span {
+                  height: 4.5rem;
+                  background: #e3e3e3;
+                  display: inline-block;
+                  margin-left: 1rem;
+                  line-height: 4.5rem;
+                  width: 4.5rem;
+                  border-radius: .5rem;
+                  font-size: 1.2rem;
+                  font-weight: 500;
+                  display: flex;
+                  justify-content: center;
+              }
+          }
+          
+          .type-filter {
+              .slid-container {
+                  width: 42rem;
+                  padding: 1rem 0;
+                  display: flex;
+                  span {
+                      border-radius: 50px;
+                      height: 2.5rem;
+                      line-height: 2.5rem;
+                      display: flex;
+                  }
+  
+                  .active{
+                      background: #3b6098;
+                      color: white;
+                  }
+              }
+          }
+      }
+      .content {
+          background: rgba(0, 0, 0, 0.6);
+          .scroll-content {
+              overflow: hidden;
+          }
+      }
+  
+      ion-col{
+          text-align: center;
+  
+          ion-button{
+              font-size: 16px;
+          }
+      }
+  
+  
+      .sub_cat{margin-left: 15px;}
+  .sub_subcat{margin-left: 15px;}
+  .checkbox .checkbox-checked {
+      border-color: #ffd300;
+      background-color: #ffd300;
+  }
+  .sub_cat .item.item .checkbox{    margin: 9px 20px 9px 4px;}
+
+  ion-button{
+      --color:var(--cm-main-color);
+  }
+  
+  
+      

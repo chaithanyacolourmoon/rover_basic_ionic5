@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-button style="--background:none" routerLink="/myorders">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Tracking Order
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <h2>Tracking Your Shipment</h2>
+    <p>Please enter your order number</p>
+    <ion-item>
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <ion-input style="--padding-start:10px;" type="tel" placeholder="Enter order number" maxlength="10" [(ngModel)]="order_id"> 
+      </ion-input>
+      <ion-icon (click)="doSubmit(order_id)" class="submit" name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+    
+    
+  </div>
+  <div class="list">
+    <ion-row>
+      <ion-col size="6" style="padding:0px;">
+        <h4 style="margin-top:0px;">History</h4>
+      </ion-col>
+      <ion-col size="6" style="padding:0px;">
+        <p style="margin-top:0px;" class="details" (click)="changeDetail()">Details<span><ion-icon name="chevron-forward-outline"></ion-icon></span></p>
+      </ion-col>
+    </ion-row>
+
+    
+    <p *ngIf="track_data?.message" style="text-align: center;
+    padding-top: 20%;">{{track_data?.message}}</p>
+
+    <div *ngIf="track_data?.data">
+      <div *ngIf="details">
+        <div class="shipping">
+          <h4>Shipment Summary</h4>
+        </div>
+        <table class="table" style="margin-top:10px;margin-bottom:10px">
+          <tbody>
+            <tr>
+              <th align="left">Order Number</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].order_id}}</td>
+            </tr>
+            <tr>
+              <th align="left">Pickup Date</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].pickup_date}}</td>
+            </tr>
+            <tr>
+              <th align="left">Current Status</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].current_status}}</td>
+            </tr>
+            <tr>
+              <th align="left">Date of Delivery</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].delivered_date}}</td>
+            </tr>
+            <tr>
+              <th align="left">Delivered To</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].delivered_to}}</td>
+            </tr>
+            <tr>
+              <th align="left">Origin City</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].origin}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="shipping">
+          <h4>Shipment Details</h4>
+        </div>
+        <table class="table" style="margin-top:10px;margin-bottom:10px;">
+          <tbody>
+            <tr>
+              <th align="left">Number of Items</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].packages}}</td>
+            </tr>
+            <tr>
+              <th align="left">Weight</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].weight}}</td>
+            </tr>
+            <tr>
+              <th align="left">Received By</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].consignee_name}}</td>
+            </tr>
+            <tr>
+              <th align="left">Destination City</th>
+              <td align="left">{{track_data?.data.tracking_data.shipment_track[0].destination}}</td>
+            </tr>
+            <tr>
+              <th align="left">Shipment Type</th>
+              <td align="left">Information not available</td>
+            </tr>
+            <tr>
+              <th align="left">Description</th>
+              <td align="left">Information not available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="shipping">
+        <h4>Activity Logs</h4>
+      </div>
+      <ion-row style="padding:6px 0px;" *ngFor="let o of track_data?.data.tracking_data.shipment_track_activities">
+        <ion-col size="3">
+          <!-- <img [src]="o.icon" onerror="this.src='assets/images/default.png'" /> -->
+          <p style="font-size:12px;font-weight:bold;margin:0px;margin-top:5px;">{{o.date}}</p>
+        </ion-col>
+        <ion-col size="1">
+          <div style="border: 1px solid var(--cm-main-color);
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;">
+            <div style="width:5%;
+            height: 50px;
+            background: var(--cm-main-color);
+            position: relative;
+            left: 45%;
+            top: 100%;"></div>
+          </div>
+        </ion-col>
+        <ion-col size="8">
+          <h4 style="margin:0px;font-size:14px;"><span style="font-weight:bold;">Activity:</span> {{o.activity}}</h4>
+          <h5 style="margin:0px;font-size:13px;"><span style="font-weight:bold;">Location:</span> {{o.location}}</h5>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>

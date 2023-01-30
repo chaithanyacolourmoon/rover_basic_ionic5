@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-toolbar style="--background:var(--cm-main-color)">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Update-Profile')">Update Profile</span> 
+      <span class="other_lang">{{utilserv.getTranslation('Update-Profile')}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12">
+      <form #profileform="ngForm" (ngSubmit)="profileSubmit(profileform.value)">
+        <ion-item>
+          <ion-input type="text" [(ngModel)]="name" name="name" placeholder="name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" [(ngModel)]="mobile" name="mobile" placeholder="mobile" disabled></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" [(ngModel)]="email" name="email" placeholder="email" disabled></ion-input>
+        </ion-item>
+        <button class="loginbtn" style="margin-top: 20px;" type="submit">
+         <span *ngIf="!utilserv.getTranslation('Save')">Save</span>  <span class="other_lang">{{utilserv.getTranslation('Save')}}</span>
+        </button>
+      </form>
+    </ion-col>
+
+  </ion-row>
+</ion-content>

@@ -1,0 +1,242 @@
+<ion-header>
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{special_tag}}
+    </ion-title>
+    <ion-icon name="search-outline" slot="end" class="search" routerLink="/searchlist"></ion-icon>
+    <div class="cart_icon" slot="end">
+      <img src="assets/images/Cuttings/cart.svg" routerLink="/revieworder" style="position: relative;
+      width: 100%;">
+      <ion-badge color="danger" class="cartcount" routerLink="/revieworder">{{cartCount}}</ion-badge>
+    </div>
+    <!-- <img src="assets/images/Cuttings/cart.png" slot="end" class="cart" routerLink="/revieworder">
+    <ion-badge color="danger" slot="end" class="cartcount" routerLink="/revieworder">{{cartCount}}</ion-badge> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="padding: 0;padding-top:10px;">
+    <div *ngIf="!products">
+      <div style="padding: 3px 11px;box-shadow:0px 5px 6px -4px #ededed">
+        <h5 style="font-size: 16px;margin-top:0px;color:#7b7b7b;">
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </h5>
+      </div>
+      <div class="product_list">
+        <ion-row *ngFor="let number of [0,1,2,3,4]" class="products">
+          <ion-col size="4">
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated style="border-radius: 0px;
+              width: 45px;
+              height: 45px;"></ion-skeleton-text>
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="8" class="content">
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <div *ngIf="totalproductscount>=1">
+      <div style="padding: 3px 11px;box-shadow:0px 5px 6px -4px #ededed">
+        <h5 style="font-size: 16px;margin-top:0px;color:#7b7b7b;">{{totalproductscount}} 
+          <span *ngIf="!utilserv.getTranslation('Products')">
+            Products
+          </span>
+          <span *ngIf="utilserv.getTranslation('Products')">
+            {{utilserv.getTranslation('Products')}}
+          </span> 
+          <span class="filter"
+           (click)="sortmodal()">
+            <ion-icon name="arrow-down" style="font-size:12px;"></ion-icon><ion-icon name="arrow-up"  style="font-size:12px;"></ion-icon>
+            <!-- <img src="assets/images/Cuttings/filters.png" /> -->
+            <span *ngIf="!utilserv.getTranslation('Sort')">
+              Sort
+            </span>
+            <span *ngIf="utilserv.getTranslation('Sort')">
+              {{utilserv.getTranslation('Sort')}}
+            </span> 
+          </span>
+          <!-- <span class="filter"
+           (click)="filtermodal()" style="margin-right:10px;">
+            <img src="assets/images/Cuttings/filters.png" />
+            <span *ngIf="!utilserv.getTranslation('Filters')">
+              Filters
+            </span>
+            <span *ngIf="utilserv.getTranslation('Filters')">
+              {{utilserv.getTranslation('Filters')}}
+            </span> 
+          </span> -->
+        </h5>
+      </div>
+      <div class="product_list">
+        <ion-row *ngFor="let product of products" class="products">
+          <ion-col size="4">
+            <div *ngFor="let price of product.price">
+              <div *ngIf="product.selectedItem == price.id">
+                  <div class="offer" *ngIf="price.discount">
+                      {{price.discount}} OFF
+                   </div>
+              </div>
+              
+            </div>
+            <img [src]="product.image" style="object-fit: contain;
+            height: 100px;
+            width: 200px;" (click)="viewProduct(product.id)" onerror="this.src='assets/images/default.png'">
+          </ion-col>
+          <ion-col size="8" class="content">
+            <div *ngFor="let price of product.price">
+              <ion-row>
+                <ion-col size="10" style="padding:0px;">
+                  <!-- [(ngModel)]="selectedprice" -->
+                  <h6 style="margin-top:3px" *ngIf="product.selectedItem == price.id">
+                    &#x20B9;{{price.price}}  <span class="mrp" *ngIf="price.discount!='0 %'">&#x20B9;{{price.mrp}}</span></h6>
+                </ion-col>
+                <ion-col size="2" style="padding:0px;" *ngIf="product.selectedItem == price.id">
+                  <div style="background: #e5e5e5;
+                  border-radius: 50%;
+                  width: 30px;
+                  height: 30px;
+                  padding: 7px;">
+                    <ion-icon name="heart" (click)="Add_to_Wishlist(product.in_wishlist,product.id)"
+                      [ngClass]="{'active_whishlist': product.in_wishlist == 'Yes', 'inactive_whishlist': product.in_wishlist == 'No'}">
+                    </ion-icon>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
+  
+            <h6>{{product.name}}</h6>
+            <p style="margin:0px;" *ngIf="product.other_language_name">({{product.other_language_name}})</p>
+            <div *ngFor="let price of product.price">
+              <div [ngClass]="(product.price.length>1)?'select_class':''" (click)="selcteQuantity(product.id,product.name,product.price,product.selectedItem)" *ngIf="product.selectedItem == price.id">
+                <!-- [ngClass]="(product.price.length>1)?'select_class':''" -->
+                {{price.quantity}}
+                <span *ngIf="product.price.length>1" style="float:right;"><ion-icon name="arrow-down"></ion-icon></span>
+              </div>
+            </div>
+            
+            
+            
+            <!-- <ion-select class='select_class()' interface="popover" [(ngModel)]="product.selectedItem" (ionChange)="SelectChange($event,product)">
+           
+              <ion-select-option *ngFor="let price of product.price" [value]="price.id">
+                {{price.quantity}}
+              </ion-select-option>
+            </ion-select> -->
+            <div *ngFor="let price of product.price">
+              <div *ngIf="price.stock_status=='In Stock'">
+                <div *ngIf="product.selectedItem == price.id">
+                  <ion-button (click)="addtocartitem(product)" *ngIf="!price.cart_qty">
+                    <span *ngIf="!utilserv.getTranslation('Add')">
+                     Add
+                    </span> <span class="other_lang">{{utilserv.getTranslation('Add')}}</span>
+                   </ion-button>
+                   <!-- <div class="bag" (click)="addtocartitem(product)" *ngIf="product.quantity<1">
+                     <h5>Add</h5>
+                   </div> -->
+                   <div class="quantity" *ngIf="price.cart_qty">
+                     <div class='minus' style="float: left;" (click)="decrease(product.id,1,product)">
+                      <span>
+                       -
+                      </span> 
+                     </div>
+                     <!-- <ion-icon name="remove-circle-outline" (click)="decrease(product.id,1)">
+                     </ion-icon> -->
+                     <span style="position: relative;
+                     top: 7px;
+                     left: 3px;color:#fff;">{{price.cart_qty}}</span>
+                     <div class='minus' style="float: right;left:3px;" (click)="increase(product.id,2,product)">
+                       <span>
+                        +
+                       </span> 
+                      </div>
+                     <!-- <ion-icon name="add-circle-outline" (click)="increase(product.id,2)"></ion-icon> -->
+                   </div>
+  
+                   <div style="color:red;font-size:12px;text-align:right">
+                    You Save &#x20B9; {{price.save}}
+                  </div>
+                </div>
+              </div>
+              
+              <div *ngIf="price.stock_status=='Out Of Stock'">
+                <div *ngIf="product.selectedItem == price.id">
+                  <p style="color: red;
+                  font-weight: bold;font-size:15px;">Out Of Stock</p>
+                  <div style="color:red;font-size:12px;text-align:right">
+                    You Save &#x20B9; {{price.save}}
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+            
+          </ion-col>
+        </ion-row>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadmoreproducts($event)">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
+    </div>
+  
+    <ion-row *ngIf="totalproductscount<1 && apirequest=='true'" class="noproducts">
+      <div style="margin-top: 10%;width: 100%;">
+        <img [src]="no_icon" style="margin:auto;display:block" onerror="this.src='assets/images/default.png'">
+      </div>
+      <h5>
+        <span *ngIf="!utilserv.getTranslation('No-Products')">
+          No Products
+        </span>
+        <span *ngIf="utilserv.getTranslation('No-Products')">
+          {{utilserv.getTranslation('No-Products')}}
+        </span> 
+        </h5>
+      <p>{{no_message}}</p>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="categorieslist==null">
+    <div class="noproducts">
+      <div style="margin-top: 10%;width: 100%;">
+        <img [src]="no_icon" onerror="this.src='assets/images/default.png'" style="margin:auto;display:block">
+      </div>
+      <h5>
+        <span *ngIf="!utilserv.getTranslation('No-Categories')">
+          No Categories
+        </span>
+        <span *ngIf="utilserv.getTranslation('No-Categories')">
+          {{utilserv.getTranslation('No-Categories')}}
+        </span> </h5>
+      <p>{{no_message}}</p>
+    </div>
+
+  </ion-grid>
+</ion-content>
+
+
+<style>
+  .active_whishlist {
+    color: #e90d0b;
+  }
+
+  .inactive_whishlist {
+    color: #807979;
+  }
+  .mrp {
+    text-decoration: line-through;
+    color: var(--cm-p-color);
+    margin-left: 10px;
+  }
+</style>

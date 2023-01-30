@@ -1,0 +1,74 @@
+<ion-header>
+  <!-- <ion-title>Select Location</ion-title> -->
+  <ion-toolbar [ngStyle]="{'--background-color':utilserv.color_data?.header_colour}">
+    <ion-searchbar placeholder="Enter your Location" (keyup.enter)="getItems($event)" mode="ios"
+    style="padding-top:10px;"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="p-10 mb-20">
+    <div class="location" *ngIf="utilserv.setting_data?.google_map_location=='Yes'">
+      <div class="gps" (click)="getAddress()">
+        <ion-row>
+          <ion-col size="1">
+            <ion-icon name="locate"></ion-icon>
+          </ion-col>
+          <ion-col size="11">
+            <h4>
+              <span *ngIf="!utilserv.getTranslation('Use-Current-Location')">Use Current Location</span>
+              <span class="other_lang">{{utilserv.getTranslation('Use-Current-Location')}}</span></h4>
+            <h6 *ngIf="currentlocation">{{currentlocation}}</h6>
+            <h6 *ngIf="!currentlocation">
+              <span *ngIf="!utilserv.getTranslation('Using-GPS')">
+                Using GPS
+              </span>
+              <span class="other_lang">{{utilserv.getTranslation('Using-GPS')}}</span></h6>
+          </ion-col>
+        </ion-row>
+      </div>
+      <p>
+       <span *ngIf="!utilserv.getTranslation('Choose-Your-Location')">
+        Choose Your Location
+       </span> 
+        <span class="other_lang">{{utilserv.getTranslation('Choose-Your-Location')}}</span></p>
+    </div>
+    
+    <div class="brand_modal">
+      <ion-radio-group [(ngModel)]="city_id">
+        <ion-item class="check" lines="none" *ngFor="let city of cities">
+          <ion-row>
+            <!-- <ion-col size="2">
+              <img [src]="brand.image" />
+            </ion-col> -->
+            <ion-col size="12">
+              <div lines="none" (click)="checkValue(city.id)">
+                <ion-label>{{city.city}}</ion-label>
+                <ion-radio slot="start" [value]="city.id"></ion-radio>
+              </div>
+            </ion-col>
+            <!-- <ion-col size="2" class="right">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-col> -->
+            
+          </ion-row>
+        </ion-item>
+      
+      </ion-radio-group>
+
+      <div *ngIf="cities.length==0">
+        <p style="padding-top:40%;text-align:center">
+          <span *ngIf="!utilserv.getTranslation('No-Cities-Found')">
+            No Cities Found
+          </span>
+          <span *ngIf="utilserv.getTranslation('No-Cities-Found')">
+            {{utilserv.getTranslation('No-Cities-Found')}}
+          </span>
+        </p>
+      </div>
+      
+      <!-- <ion-button (click)="dismiss()">Next</ion-button> -->
+    </div>
+  </div>
+  
+</ion-content>

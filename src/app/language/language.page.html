@@ -1,0 +1,80 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>language</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content style="--background:#f7fff9;">
+
+  <div align='center' class="lang">
+    <img src="../../assets/images/Cuttings/choose_languages.png" />
+    <h5>
+      <span *ngIf="!utilserv.getTranslation('Choose-Languages')">Choose Languages</span>
+      <span class="other_lang" *ngIf="utilserv.getTranslation('Choose-Languages')">{{utilserv.getTranslation('Choose-Languages')}}</span>
+    </h5>
+    <p *ngIf="!utilserv.getTranslation('Please-select-your-preferred-language-to-facilitate-communication')">
+      Please select your preferred language to
+      facilitate communication</p>
+      <p *ngIf="utilserv.getTranslation('Please-select-your-preferred-language-to-facilitate-communication')">
+        {{utilserv.getTranslation('Please-select-your-preferred-language-to-facilitate-communication')}}</p>
+      <ion-row>
+        <ion-col size="4" *ngFor="let l of languages">
+          <ion-button [ngClass]="{'active_btn': select_lang == l.language_id}"
+          (click)="langClick(l.language_id)">
+            {{l.language}}
+          </ion-button>
+        </ion-col>
+        <!-- <ion-col size="4">
+          <ion-button [ngClass]="{'active_btn': select_lang == 'hindi'}"
+          (click)="langClick('hindi')">
+            हिन्दी
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button [ngClass]="{'active_btn': select_lang == 'gujurati'}"
+          (click)="langClick('gujurati')">
+            ગુજરાતી
+          </ion-button>
+        </ion-col> -->
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col size="4">
+          <ion-button [ngClass]="{'active_btn': select_lang == 'telugu'}"
+          (click)="langClick('telugu')">
+            ಕನಡ
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button [ngClass]="{'active_btn': select_lang == 'tamil'}"
+          (click)="langClick('tamil')">
+            தழ
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button [ngClass]="{'active_btn': select_lang == 'malyalam'}"
+          (click)="langClick('malyalam')">
+            മലയാളം
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" style="text-align:right;">
+          <ion-button style="width:80%" [ngClass]="{'active_btn': select_lang == 'urdu'}"
+          (click)="langClick('urdu')">
+            اردو
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" style="text-align:left;">
+          <ion-button [ngClass]="{'active_btn': select_lang == 'nepali'}" style="width:80%"
+          (click)="langClick('nepali')">
+            नेपाली
+          </ion-button>
+        </ion-col>
+      </ion-row> -->
+
+      <ion-button class="save_btn" (click)="goSlider()">
+        <span *ngIf="!utilserv.getTranslation('Save')">Save</span>
+        <span class="other_lang" *ngIf="utilserv.getTranslation('Choose-Languages')">{{utilserv.getTranslation('Save')}}</span></ion-button>
+  </div>
+
+</ion-content>

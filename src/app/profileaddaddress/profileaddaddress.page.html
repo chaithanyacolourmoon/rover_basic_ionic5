@@ -1,0 +1,105 @@
+<ion-header>
+
+  <ion-toolbar style="--background:var(--cm-main-color)">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!utilserv.getTranslation('Add-Address')">Add Address </span>
+      <span class="other_lang">{{utilserv.getTranslation('Add-Address')}}</span></ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <div>
+      <button *ngIf="utilserv.setting_data?.google_map_location=='Yes'"  type="submit" expand="block" class="loginbtn" style="margin-top: 5%;" (click)="getAddress()">
+        <ion-icon name="navigate" style="position: relative;
+        left: -7px;
+        top: 3px;"></ion-icon>
+        <span *ngIf="!utilserv.getTranslation('Use-Current-Location')">
+          Use Current Location
+        </span>
+        <span class="other_lang">{{utilserv.getTranslation('Use-Current-Location')}}</span>
+      </button>
+      <form #useraddadress="ngForm" (ngSubmit)="addadressSubmit(useraddadress.value)" style="margin-top:20px">
+        <ion-item>
+          <ion-input type="text" placeholder="Name *" name="name" ngModel></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea rows="4" cols="20" style="--padding-top:0px;" type="text" placeholder="Address *" name="address" [(ngModel)]="address"></ion-textarea>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-input type="text" placeholder="Apartment Name" name="apt" ngModel></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" placeholder="Street Name" name="street_address" ngModel></ion-input>
+        </ion-item> -->
+        <ion-item>
+          <ion-input type="text" placeholder="Landmark" name="landmark" ngModel></ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col size="6" style="padding:0px;">
+            <ion-item style="margin:0px 12px;">
+              <ion-input type="text" placeholder="City" name="cityId" [(ngModel)]="cityId"></ion-input>
+              <!-- <ion-select interface="popover" style="width: 100%;" placeholder="Select City *"
+                (ionChange)='selectcity($event)' name="cityId" [(ngModel)]="cityId">
+                <ion-select-option *ngFor="let city of cities" value="{{city.id}}"> {{city.city}}
+                </ion-select-option>
+              </ion-select> -->
+            </ion-item>
+          </ion-col>
+          <ion-col size="6" style="padding:0px;">
+            <ion-item style="margin:0px 12px;margin-left:0px;"> 
+              <ion-input maxlength="6" type="tel" placeholder="Pincode" name="pincodeId" [(ngModel)]="pincodeId"></ion-input>
+              <!-- <ion-select interface="popover" style="width: 100%;" placeholder="Select Pincode *"
+                (ionChange)='selectpincode($event)' name="pincodeId" [(ngModel)]="pincodeId">
+                <ion-select-option *ngFor="let pincode of pincodes" value="{{pincode.entry_id}}"> {{pincode.pincode}}
+                </ion-select-option>
+              </ion-select> -->
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-input type="text" placeholder="Location" name="location" ngModel></ion-input>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-input type="text" placeholder="Sub Location" name="sub_location" ngModel></ion-input>
+        </ion-item> -->
+        <!-- <ion-item>
+          <ion-select interface="popover" style="width: 100%;" placeholder="Select Area"
+            (ionChange)='selectarea($event)' name="location_link" ngModel>
+            <ion-select-option *ngFor="let area of areas" value="{{area.entry_id}}"> {{area.area}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select interface="popover" style="width: 100%;" placeholder="Select sub location"
+            (ionChange)='selectsubarea($event)' name="sub_location_link" ngModel>
+            <ion-select-option *ngFor="let sub of subareas" value="{{sub.entry_id}}"> {{sub.sub_area}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item> -->
+        <ion-item>
+          <ion-input maxlength="10" type="tel" placeholder="Mobile number *" name="contact_no" ngModel></ion-input>
+        </ion-item>
+        <ion-row align='center' style="margin:12px;">
+          <ion-col size="3">
+            <ion-button [ngClass]="(address_type=='Home')?'active_button':'button_cls'" (click)="addressTypeClick('Home')">Home</ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button [ngClass]="(address_type=='Office')?'active_button':'button_cls'" (click)="addressTypeClick('Office')">Office</ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button [ngClass]="(address_type=='Others')?'active_button':'button_cls'" (click)="addressTypeClick('Others')">Others</ion-button>
+          </ion-col>
+        </ion-row>
+        <button class="loginbtn" type="submit" style="margin-top: 15%;">
+         <span *ngIf="!utilserv.getTranslation('Save-Continue')"> Save & Continue </span>
+          <span class="other_lang">{{utilserv.getTranslation('Save-Continue')}}</span>
+        </button>
+      </form>
+    </div>
+  </ion-grid>
+</ion-content>
