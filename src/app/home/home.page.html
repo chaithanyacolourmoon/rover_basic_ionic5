@@ -131,17 +131,8 @@
           <span class="other_lang" *ngIf="utilserv.getTranslation('See-All')">{{utilserv.getTranslation('See-All')}}</span>
         </span>
       </h4>
+   
       <!-- <ion-slides [options]="slidesOptsHeader" loop="true">
-        <ion-slide *ngFor="let slider of categories">
-          <div style="width:100%;">
-            <div class="category" (click)="gotoProductList(slider)">
-              <img [src]="slider.image" onerror="this.src='assets/images/default.png'" />
-            </div>
-            <h6 class="cattitle">{{slider.category}}</h6>
-          </div>
-        </ion-slide>
-      </ion-slides> -->
-      <ion-slides [options]="slidesOptsHeader" loop="true">
         <ion-slide class="category" *ngFor="let slider of categories">
           <div style="width:100%;">
             <div class="catimg" (click)="gotoProductList(slider)">
@@ -150,7 +141,19 @@
             <h6 class="cattitle">{{slider.category}}</h6>
           </div>
         </ion-slide>
-      </ion-slides>
+      </ion-slides> -->
+      <ion-grid>
+         <ion-row>
+            <ion-col size="4" class="category" *ngFor="let slider of categories">
+              <div style="width:100%; text-align:center;">
+                <div class="catimg" (click)="gotoProductList(slider)">
+                  <img [src]="slider.image" onerror="this.src='assets/images/default.png'" />
+                </div>
+                <h6 class="cattitle">{{slider.category}}</h6>
+              </div>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
     </div>
   
 
@@ -325,7 +328,11 @@
     </div> -->
   </div>
   
+<div>
+  <a href="https://wa.me/+91{{whatsapp_no}}" target="_blank" style='text-decoration: none;'> <ion-icon name="logo-whatsapp" class="watsappicon"></ion-icon></a>
 
+  <a href="tel:{{phone}}" style="text-decoration: none;"><ion-icon name="call" class="callicon"></ion-icon></a>
+</div>
 </ion-content>
 
 

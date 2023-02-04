@@ -83,13 +83,13 @@ ion-header{
   margin: 1px;
   outline: none;
   background: #eaf3f0;
-  padding: 3px;
+  padding: 12px;
   width: 100%;
   border-radius:10px;
-  height:80px;
+  // height:80px;
     img {
       height: 80px;
-      width: 100%;
+      //width: 100%;
       border-radius: 10px;
       object-fit: cover;
      } 
@@ -100,6 +100,7 @@ ion-header{
     div{
       .catimg{
     background-color:#eaf3de;
+  
      }
     }
   }
@@ -619,4 +620,34 @@ ion-header{
     border-radius: 20px;
     object-fit: cover;
   }
+}
+
+.watsappicon {
+  bottom: 62px;
+    position: fixed;
+    color: var(--cm-main-color);
+    background: #fff;
+    padding: 6px;
+    border-radius: 50%;
+    z-index: 9999;
+    right: 7px;
+    background: green;
+    color: #fff;
+    font-size: 24px;
+}
+
+.callicon {
+  bottom: 107px;
+  position: fixed;
+  color: var(--cm-main-color);
+  background: #fff;
+  padding: 6px;
+  border-radius: 50%;
+  z-index: 9999;
+  right: 7px;
+  background: #001646;
+  color: #fff;
+  font-size: 18px;
+  padding: 9px;
+
 }

@@ -20,6 +20,8 @@ export class HomePage {
   is_logged_in: any;
   sid: any;
   user_id:any;
+  whatsapp_no:any;
+  phone:any;
 
   slidesOptsHeader = {
     autoplay: true,
@@ -100,6 +102,7 @@ export class HomePage {
     this.categoryActive=false;
     this.ordersActive=false;
     this.notificationActive=false;
+    this.getcontact();
      this.ref.detectChanges();
     if(this.user_id){
       this.utilserv.getWallet();
@@ -646,5 +649,15 @@ export class HomePage {
       this.router.navigate(['mysubscription']);
     }
     
+  }
+
+  getcontact() {
+    this.apiserv.getcontactus().subscribe(data => {
+      console.log(data);
+      var response = data['response'][0];     
+      this.phone = response['phone'];      
+      this.whatsapp_no =response['whatsapp_no'];
+
+    })
   }
 }
